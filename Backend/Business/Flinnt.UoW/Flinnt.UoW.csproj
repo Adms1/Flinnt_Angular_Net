@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flinnt.Interfaces\Flinnt.Interfaces.csproj" />
+    <ProjectReference Include="..\Flinnt.Repositories\Flinnt.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

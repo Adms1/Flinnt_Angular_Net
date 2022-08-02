@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.24" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flinnt.Business\Flinnt.Business.csproj" />
+    <ProjectReference Include="..\Flinnt.UoW\Flinnt.UoW.csproj" />
+  </ItemGroup>
+
+</Project>
