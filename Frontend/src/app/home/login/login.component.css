@@ -1,0 +1,436 @@
+.header_login {
+    position: relative;
+    float: right;
+    max-width: 710px;
+    height: 70px;
+}
+
+.header_login_ss {
+    display: none;
+}
+
+.header_login_ss .drop-menu-content {
+    display: none;
+}
+
+.header_login form {
+    position: relative;
+    display: inline-block;
+}
+.header_login .login_user, .header_login .login_pwd {
+    margin-top: 10px;
+    display: inline-block;
+    width: 180px;
+    position: relative;
+}
+.header_login .login_btn {
+    position: relative;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 27px;
+    line-height:25px;
+    padding: 0 12px;
+    font-size: 12px;
+    background:#006fc0 ;
+    border-color:#006fc0 ;
+}
+.header_login .login_btn:hover{background:#0061b2!important; border-color:#0061b2!important;   }
+.header_login input {
+    padding: 3px;
+}
+.header_login .forgot_link {
+    position: absolute;
+    left: 192px;
+    top: 40px;
+    color: #FFF;
+}
+.header_login .forgot_link:active, .header_login .forgot_link:visited {
+    color: #FFF;
+}
+.header_login .forgot_link:hover {
+    color: #000000;
+}
+/*.header_login .btn, #signarea .btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    font-size: 13px;
+    white-space: nowrap;
+    padding: 0px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    left: 0;
+    right: 0;
+}
+.header_login .btn {
+    margin-bottom: 5px;
+}*/
+#signup hr {
+    background-color: #999;
+    height: 1px;
+    margin: 10px 0 10px 0;
+}
+#footer .col_one_third,
+#footer .col_one_sixth,
+#footer .col_one_fourth {
+    margin-right: 3%;
+}
+#site-index #footer {
+    border-top: none;
+}
+@-moz-document url-prefix() {
+    .header_login .login_btn {
+        margin: -3px 0 0;
+    }
+}
+.inst-signup a:link, .inst-signup a:visited, .inst-signup a:active {
+    color: #1c90fd;
+}
+.inst-signup a:hover {
+    color: #000000;
+}
+/*.header_login .btn:hover, .header_login .btn:focus, #signarea .btn:hover,
+.btn:focus { text-decoration: none; }
+
+.header_login .btn:focus, #signarea .btn:focus { outline: 0; }
+.header_login .btn::-moz-focus-inner, #signarea .btn::-moz-focus-inner {
+    border: 0;
+}
+
+.header_login .btn:active, #signarea .btn:active {
+    outline: 0;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset
+}
+
+#signarea .btn-signup {
+    background: url(../images/home/signup-btn.png) top left no-repeat;
+    width: 116px;
+    height: 34px;
+}
+
+.header_login .btn-login, #signarea .btn-login {
+    background: url(../images/home/login-btn.png) top left no-repeat;
+    width: 116px;
+    height: 34px;
+}
+
+#signarea .btn-facebook {
+    background: url(../images/home/facebook_bg.png) top left no-repeat;
+    width: 180px;
+    height: 38px;
+    color: #FFF;
+    line-height: 35px;
+    padding-left: 40px
+}
+
+#signarea .btn-facebook:active { box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset }
+
+#signarea .btn-facebook:focus { outline: 0; }
+
+#signarea .btn-forgetpwd {
+    background: rgb(222, 99, 106);
+    text-align: center;
+    width: 116px;
+    line-height: 34px;
+    border-radius: 5px;
+    color: #EEC8CB;
+    overflow: hidden;
+    text-shadow: 1px 1px rgb(140, 53, 67), 2px 2px rgb(140, 53, 67), 3px 3px rgb(140, 53, 67), 4px 4px rgb(140, 53, 67), 5px 5px rgb(140, 53, 67), 6px 6px rgb(140, 53, 67), 7px 7px rgb(140, 53, 67), 8px 8px rgb(140, 53, 67), 9px 9px rgb(140, 53, 67), 10px 10px rgb(140, 53, 67), 11px 11px rgb(140, 53, 67), 12px 12px rgb(140, 53, 67), 13px 13px rgb(140, 53, 67), 14px 14px rgb(140, 53, 67), 15px 15px rgb(140, 53, 67), 16px 16px rgb(140, 53, 67), 17px 17px rgb(140, 53, 67), 18px 18px rgb(140, 53, 67), 19px 19px rgb(140, 53, 67), 20px 20px rgb(140, 53, 67), 21px 21px rgb(140, 53, 67), 22px 22px rgb(140, 53, 67), 23px 23px rgb(140, 53, 67), 24px 24px rgb(140, 53, 67), 25px 25px rgb(140, 53, 67), 26px 26px rgb(140, 53, 67), 27px 27px rgb(140, 53, 67), 28px 28px rgb(140, 53, 67);
+}*/
+.login_form {
+    width: 37.6%;
+    position: relative;
+    margin: 0 auto;
+}
+.term-link {
+    color: #2b2b2b !important;
+    font-size: 10px;
+}
+.term-link a{
+    text-decoration: none;
+    color: #1c90fd;
+}
+
+/*#signup label {
+    margin: 0;
+}
+
+#signup input {
+    margin: 0;
+    margin-top: 2px;
+}
+#signup input.last {
+    margin-bottom: 2px;
+}*/
+#logo {
+    height: 70px;
+}
+
+#signup-institute, #signup {
+    padding: 20px;
+    width: 270px;
+    background: rgba(255,255,255, 0.75) none repeat scroll 0 0;
+    border-radius: 5px;
+    border: 1px solid #EEE;
+    position: relative;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.3);
+    float: right !important;
+}
+
+#signup-institute input[type="text"], #signup-institute input[type="password"],
+#signup input[type="text"], #signup input[type="password"]{
+    border-color: #B2B2B2;
+    margin-top:10px!important;
+    margin-bottom:0px;
+}
+#signup-institute #signupform label.error{
+    text-align: left!important;
+    margin-bottom: 2px!important;
+}
+
+.blurred-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+.blur {
+    -webkit-filter: blur(10px);
+    filter: url("#blur-effect-1");
+    filter: blur(10px);
+}
+.svg-image-blur {
+    left: -50000px;
+    top: -50000px;
+    position: absolute;
+}
+
+.product-feature3 {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: #FFFFFF;
+}
+#institute_signup .container {
+    /*width: 1024px;*/
+}
+.signup-contents {
+    border:1px #e6e6e6 solid ;
+    padding-bottom:15px;
+}
+.signup-contents h1{font-size:18px; margin: 0px; padding: 8px 15px; color:#087ccd   }
+.signup-contents img {
+    width: 100%;
+}
+.signup-contents ul li {
+    line-height: 24px;
+    font-size:13px;
+}
+.signup-contents ul{padding:0px 15px 0px 11px; margin-bottom: 0px;  }
+.signup-contents .col_full{ margin-bottom:0px;  }
+.signup-contents ul li{list-style: disc; padding:0px 0px 8px 0px; line-height: 20px;  }
+.signup-contents ul li i{font-size:12px;  }
+#site-index .promo-action {
+    max-width: 250px;
+}
+#institute_signup #landing-area {
+    /*background: #FFF url(../images/home/institute-banner.png) repeat scroll center top / cover;*/
+
+    /*background: #FFF url(../images/home/institute-banner-1.jpg) repeat scroll center bottom / cover;*/
+    /*FINAL*/
+    /*background: #FFF url(../images/home/institute-banner-1.jpg) repeat scroll 0 70% / cover;*/
+
+    /*background: #FFF url(../images/home/institute-banner-2.jpg) repeat scroll center bottom / cover;*/
+    /*FINAL*/
+    /*background: #FFF url(../images/home/institute-banner-2.jpg) repeat scroll 0 50% / cover;*/
+
+    /*background: #FFF url(../images/home/institute-banner-3.jpg) repeat scroll center bottom / cover;*/
+    /*FINAL*/
+    /*background: #FFF url(../images/home/institute-banner-3.jpg) repeat scroll 0 40% / cover;*/
+
+    /* TODO: KISHAN */
+    /* background: #FFF url(../images/home/institute-banner.jpg) repeat scroll center top / cover; */
+
+    /* height: calc(100vh - 115px); */
+    box-sizing: border-box;
+}
+#institute_signup #landing-area h1, #site-index #landing-area h1 {
+    text-shadow: none;
+    color: #FFF;
+    padding: 0;
+    margin: 0;
+}
+#institute_signup #landing-area h1.line1 {
+    font: 50px "Raleway";
+    font-weight: 900;
+}
+#institute_signup #landing-area h1.line2 {
+    font: 65px "Raleway";
+    font-weight: normal;
+}
+#institute_signup #landing-area h1.line3 {
+    font: 28px "Roboto";
+    padding-top: 15px;
+}
+#institute_signup #landing-area .intro {
+    margin-top: 13%;
+}
+
+#site-index #landing-area h1.line1 {
+    font: 45px "Raleway";
+    font-weight: 900;
+}
+#site-index #landing-area h1.line2 {
+    font: 65px "Raleway";
+    font-weight: normal;
+}
+#site-index #landing-area h1.line3 {
+    font: 28px "Roboto";
+    padding-top: 15px;
+}
+#site-index #landing-area .intro {
+    margin-top: 8%;
+}
+#site-index #landing-area .popover, #institute_signup #landing-area .popover {
+    background: #C71715;
+    color: #FFFFFF;
+    max-width: 320px;
+}
+#site-index #landing-area .popover.left .arrow::after,
+#institute_signup #landing-area .popover.left .arrow::after {
+    border-left-color: #C71715;
+}
+
+#site-index #landing-area .popover.right .arrow::after,
+#institute_signup #landing-area .popover.right .arrow::after {
+    border-right-color: #C71715;
+}
+
+#site-index #landing-area .popover.top .arrow::after,
+#institute_signup #landing-area .popover.top .arrow::after {
+    border-top-color: #C71715;
+}
+
+#site-index #landing-area .popover.bottom .arrow::after,
+#institute_signup #landing-area .popover.bottom .arrow::after {
+    border-bottom-color: #C71715;
+}
+
+#institute_signup .modal-backdrop{
+    z-index: 999!important;
+}
+
+/*@media only screen and (max-width: 767px) {
+    #institute_signup #landing-area h1 {
+        display: none;
+    }
+
+}*/
+#signup-login {
+    position: absolute;
+    width: 180px;
+    top: 50%;
+    left: auto;
+    right: 0;
+    margin-top: -20px;
+}
+
+#signup-login .login {
+    display: block;
+}
+
+#signup-login .login-mobile {
+    margin-top: -5px;
+    display: none;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 979px) {
+
+    #institute_signup #landing-area, #site-index #landing-area {
+        height: auto;
+    }
+    #institute_signup #landing-area .intro, #site-index #landing-area .intro {
+        display: none;
+    }
+
+    #signup-institute, #signup {
+        display: table;
+        margin: 0 auto;
+        float: none !important;
+    }
+
+    #signup-login .login {
+        display: none;
+    }
+
+    #signup-login .login-mobile {
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width: 480px) {
+    .header_login_ss {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+    }
+    .header_login_ss a {
+        color: #FFF;
+    }
+    .header_login_ss .drop-menu-content {
+        position: relative;
+        display: block;
+    }
+
+    .header_login_ss .drop-menu-content form {
+        width: 200px;
+        margin: 0 auto;
+        display: inline-block;
+    }
+    .header_login_ss .drop-menu-content form input {
+        width: 100%;
+    }
+    
+    #signup-institute, #signup {
+        width: 240px;
+    }
+
+    #signup-login .login {
+        display: none;
+    }
+
+    #signup-login .login-mobile {
+        display: block;
+    }
+
+}
+
+@media only screen and (min-width: 480px) and (max-width: 800px) {
+    #logo {
+        width: 100px;
+        float: left;
+    }
+
+    #signup-login .login {
+        display: none;
+    }
+
+    #signup-login .login-mobile {
+        display: block;
+    }
+}
