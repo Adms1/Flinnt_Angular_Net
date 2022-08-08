@@ -3,16 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
-import { LoaderModule } from '../loader-module/loader-module.module';
+import { commonModule } from '../common-module/common-module.module';
+import { UserSignupComponent } from './user-signup/user-signup.component';
+import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    UserSignupComponent,
+    InstituteSignupComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    LoaderModule
+    commonModule
   ],
   exports:[
   ]
