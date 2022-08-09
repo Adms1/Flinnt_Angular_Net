@@ -3,7 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { commonModule } from './common-module/common-module.module';
+import { commonModule } from './common/common-module.module';
 
 @NgModule({
   declarations: [
