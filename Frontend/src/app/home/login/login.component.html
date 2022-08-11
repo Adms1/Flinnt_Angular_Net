@@ -8,109 +8,42 @@
         <div id="content">
             <div id="page-title">
                 <div class="container clearfix">
-
                     <h2 class="v4">Login</h2>
-
                 </div>
             </div>
-
             <div class="content-wrap">
                 <div class="container clearfix">
-
-
                     <div id="backdropbox" class="login_form">
-
                         <form class="nobottommargin" id="fmlogin" name="loginform"
                             action="https://www.flinnt.com/app/login/" method="post" novalidate="novalidate">
-
                             <div class="col_two nobottommargin">
                                 <input type="text" name="usernm" id="usernm" value="" class="input-block-level"
                                     placeholder="Email Or Mobile Number" autofocus="true">
                             </div>
-
                             <div class="col_full nobottommargin">
                                 <input type="password" name="pwd" id="pwd" class="input-block-level"
                                     placeholder="Password" autocomplete="off">
                             </div>
-
                             <div class="col_full marginB10">
                                 <button type="submit" name="sgibtn" id="sgibtn"
                                     class="btn btn-success btn-lg input-block-level"><i class="fa fa-key"></i>
                                     Login</button>
-                                <!-- <br><br>
-                            <div class="clearfix col_full nobottommargin fleft">
-                                <div class="fleft">
-                                    <a href="{login_forgot_password_url}" class="links">Forgot password?</a>
-                                </div>
-
-                                <div class="fright">
-                                    <a id="sbsignup" href="{login_signup_url}" class="links">New User? Click here</a>
-                                </div>
-                            </div> -->
+                            </div>
+                            <div class="divider d-flex align-items-center my-4">
+                                <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+                            </div>
+                            <div class="col_full marginB10">
+                                <button type="button" [routerLink]="'/user/signup'" name="usgupbtn" id="usgupbtn"
+                                    class="btn btn-primary btn-sm input-block-level">
+                                    User SignUp</button>
+                            </div>
+                            <div class="col_full marginB10">
+                                <button type="button" [routerLink]="'/institute/signup'" name="isgupbtn" id="isgupbtn"
+                                    class="btn btn-secondary btn-sm input-block-level">
+                                    Institute SignUp</button>
                             </div>
                         </form>
-
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>

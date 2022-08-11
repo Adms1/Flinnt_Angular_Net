@@ -433,4 +433,47 @@
     #signup-login .login-mobile {
         display: block;
     }
+    
 }
+
+/* divider start */
+.my-4 {
+    margin-top: 1.5rem!important;
+    margin-bottom: 1.5rem!important;
+}
+.align-items-center {
+    align-items: center!important;
+}
+.d-flex {
+    display: flex!important;
+}
+.divider:after, .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+.text-center {
+    text-align: center!important;
+}v
+
+.fw-bold {
+    font-weight: 700!important;
+}
+
+.mb-0 {
+    margin-bottom: 0!important;
+}
+
+.mx-3 {
+    margin-right: 1rem!important;
+    margin-left: 1rem!important;
+}
+
+.text-muted {
+    --mdb-text-opacity: 1;
+    color: #757575!important;
+}
+
+/* divider end */
