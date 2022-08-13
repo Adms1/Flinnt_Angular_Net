@@ -149,11 +149,7 @@
     overflow: hidden;
     text-shadow: 1px 1px rgb(140, 53, 67), 2px 2px rgb(140, 53, 67), 3px 3px rgb(140, 53, 67), 4px 4px rgb(140, 53, 67), 5px 5px rgb(140, 53, 67), 6px 6px rgb(140, 53, 67), 7px 7px rgb(140, 53, 67), 8px 8px rgb(140, 53, 67), 9px 9px rgb(140, 53, 67), 10px 10px rgb(140, 53, 67), 11px 11px rgb(140, 53, 67), 12px 12px rgb(140, 53, 67), 13px 13px rgb(140, 53, 67), 14px 14px rgb(140, 53, 67), 15px 15px rgb(140, 53, 67), 16px 16px rgb(140, 53, 67), 17px 17px rgb(140, 53, 67), 18px 18px rgb(140, 53, 67), 19px 19px rgb(140, 53, 67), 20px 20px rgb(140, 53, 67), 21px 21px rgb(140, 53, 67), 22px 22px rgb(140, 53, 67), 23px 23px rgb(140, 53, 67), 24px 24px rgb(140, 53, 67), 25px 25px rgb(140, 53, 67), 26px 26px rgb(140, 53, 67), 27px 27px rgb(140, 53, 67), 28px 28px rgb(140, 53, 67);
 }*/
-.login_form {
-    width: 37.6%;
-    position: relative;
-    margin: 0 auto;
-}
+
 .term-link {
     color: #2b2b2b !important;
     font-size: 10px;

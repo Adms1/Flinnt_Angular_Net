@@ -4204,6 +4204,9 @@ body .header_login .forgot_link:hover {
 }
 
 .login_form {
+    width: 37.6%;
+    position: relative;
+    margin: 0 auto;
     padding-top: 35px;
     padding-bottom: 35px;
 }
