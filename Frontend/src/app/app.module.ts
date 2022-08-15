@@ -13,9 +13,10 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    commonModule
+    commonModule,
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
