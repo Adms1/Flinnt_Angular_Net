@@ -1175,15 +1175,15 @@ a.ui-button:active {
 
 .ui-icon,
 .ui-widget-content .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_444444_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_444444_256x240.png')
 }
 
 .ui-widget-header .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_444444_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_444444_256x240.png')
 }
 
 .ui-button .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_777777_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_777777_256x240.png')
 }
 
 .ui-button:focus .ui-icon,
@@ -1191,22 +1191,22 @@ a.ui-button:active {
 .ui-state-default .ui-icon,
 .ui-state-focus .ui-icon,
 .ui-state-hover .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_555555_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_555555_256x240.png')
 }
 
 .ui-button:active .ui-icon,
 .ui-state-active .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_ffffff_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_ffffff_256x240.png')
 }
 
 .ui-button .ui-state-highlight.ui-icon,
 .ui-state-highlight .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_777620_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_777620_256x240.png')
 }
 
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-    background-image: url('../../../assets/templates/images/jui-latest/ui-icons_cc0000_256x240.png')
+    background-image: url('/assets/templates/images/jui-latest/ui-icons_cc0000_256x240.png')
 }
 
 .ui-icon-blank {
@@ -2130,7 +2130,7 @@ body {
     line-height: 1;
     color: #777;
     font: 12px/20px "Open Sans", Helvetica, Arial, sans-serif;
-    background: #eee url('../../../assets/templates/images/patterns/light/pattern10.png') repeat fixed
+    background: #eee url('/assets/templates/images/patterns/light/pattern10.png') repeat fixed
 }
 
 input,
@@ -2574,7 +2574,7 @@ span.page-divider span {
 
 .dotted-divider {
     clear: both;
-    background: url('../../../assets/templates/images/divider.png') repeat-x;
+    background: url('/assets/templates/images/divider.png') repeat-x;
     margin: 30px 0;
     height: 5px
 }
@@ -2584,7 +2584,7 @@ span.page-divider span {
     display: block;
     width: 100%;
     height: 100%;
-    background: url('../../../assets/templates/images/preloader.gif') center center no-repeat #fff
+    background: url('/assets/templates/images/preloader.gif') center center no-repeat #fff
 }
 
 .preloader2 {
@@ -3040,7 +3040,7 @@ form small {
 }
 
 #top-social li.ts-facebook .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/facebook.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/facebook.png') no-repeat center center
 }
 
 #top-social li.ts-twitter a {
@@ -3048,7 +3048,7 @@ form small {
 }
 
 #top-social li.ts-twitter .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/twitter.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/twitter.png') no-repeat center center
 }
 
 #top-social li.ts-gplus a {
@@ -3056,7 +3056,7 @@ form small {
 }
 
 #top-social li.ts-gplus .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/gplus.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/gplus.png') no-repeat center center
 }
 
 #top-social li.ts-dribbble a {
@@ -3064,7 +3064,7 @@ form small {
 }
 
 #top-social li.ts-dribbble .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/dribbble.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/dribbble.png') no-repeat center center
 }
 
 #top-social li.ts-forrst a {
@@ -3072,7 +3072,7 @@ form small {
 }
 
 #top-social li.ts-forrst .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/forrst.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/forrst.png') no-repeat center center
 }
 
 #top-social li.ts-blogger a {
@@ -3080,7 +3080,7 @@ form small {
 }
 
 #top-social li.ts-blogger .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/blogger.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/blogger.png') no-repeat center center
 }
 
 #top-social li.ts-flickr a {
@@ -3088,7 +3088,7 @@ form small {
 }
 
 #top-social li.ts-flickr .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/flickr.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/flickr.png') no-repeat center center
 }
 
 #top-social li.ts-pinterest a {
@@ -3096,7 +3096,7 @@ form small {
 }
 
 #top-social li.ts-pinterest .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/pinterest.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/pinterest.png') no-repeat center center
 }
 
 #top-social li.ts-rss a {
@@ -3104,7 +3104,7 @@ form small {
 }
 
 #top-social li.ts-rss .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/rss.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/rss.png') no-repeat center center
 }
 
 #top-social li.ts-vimeo a {
@@ -3112,7 +3112,7 @@ form small {
 }
 
 #top-social li.ts-vimeo .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/vimeo.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/vimeo.png') no-repeat center center
 }
 
 #top-social li.ts-youtube a {
@@ -3120,7 +3120,7 @@ form small {
 }
 
 #top-social li.ts-youtube .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/youtube.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/youtube.png') no-repeat center center
 }
 
 #top-social li.ts-phone a {
@@ -3128,7 +3128,7 @@ form small {
 }
 
 #top-social li.ts-phone .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/phone.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/phone.png') no-repeat center center
 }
 
 #top-social li.ts-mail a {
@@ -3136,7 +3136,7 @@ form small {
 }
 
 #top-social li.ts-mail .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/mail.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/mail.png') no-repeat center center
 }
 
 #top-social li.ts-linkedin a {
@@ -3144,7 +3144,7 @@ form small {
 }
 
 #top-social li.ts-linkedin .ts-icon {
-    background: url('../../../assets/templates/images/icons/social/linkedin.png') no-repeat center center
+    background: url('/assets/templates/images/icons/social/linkedin.png') no-repeat center center
 }
 
 #top-bar.top-bar2 #top-menu {
@@ -3232,7 +3232,7 @@ form small {
     position: relative;
     float: left;
     height: 120px;
-    background: url('../../../assets/templates/images/icons/menu-divider.png') no-repeat left center;
+    background: url('/assets/templates/images/icons/menu-divider.png') no-repeat left center;
     margin-left: 1px
 }
 
@@ -3416,7 +3416,7 @@ form small {
 
 #primary-menu ul>li.sub-menu>a>div,
 .sticky-menu-wrap ul>li.sub-menu>a>div {
-    background-image: url('../../../assets/templates/images/icons/mainsubmenu.png');
+    background-image: url('/assets/templates/images/icons/mainsubmenu.png');
     background-position: right top;
     background-repeat: no-repeat;
     padding-right: 16px
@@ -3440,14 +3440,14 @@ form small {
 .sticky-menu-wrap>ul>li.current-menu-ancestor.sub-menu>a>div,
 .sticky-menu-wrap>ul>li.current-menu-item.sub-menu>a>div,
 .sticky-menu-wrap>ul>li.current-menu-parent.sub-menu>a>div {
-    background-image: url('../../../assets/templates/images/icons/mainsubmenuh.png')
+    background-image: url('/assets/templates/images/icons/mainsubmenuh.png')
 }
 
 #primary-menu ul ul>li.sub-menu:hover>a,
 #primary-menu ul ul>li.sub-menu>a,
 .sticky-menu-wrap ul ul>li.sub-menu:hover>a,
 .sticky-menu-wrap ul ul>li.sub-menu>a {
-    background-image: url('../../../assets/templates/images/icons/submenu.png');
+    background-image: url('/assets/templates/images/icons/submenu.png');
     background-position: right center;
     background-repeat: no-repeat
 }
@@ -3606,11 +3606,11 @@ form small {
 }
 
 #header.header6 #primary-menu>div>ul>li.sub-menu>a>div {
-    background-image: url('../../../assets/templates/images/icons/mainsubmenuh.png')
+    background-image: url('/assets/templates/images/icons/mainsubmenuh.png')
 }
 
 #header.header6 #primary-menu ul li {
-    background-image: url('../../../assets/templates/images/icons/menu-dividerd.png');
+    background-image: url('/assets/templates/images/icons/menu-dividerd.png');
     background-position: left center;
     background-repeat: no-repeat
 }
@@ -3650,7 +3650,7 @@ form small {
 }
 
 #header.header7 #primary-menu>ul>li.sub-menu>a>div {
-    background-image: url('../../../assets/templates/images/icons/mainsubmenu.png');
+    background-image: url('/assets/templates/images/icons/mainsubmenu.png');
     background-position: bottom center;
     padding: 0 0 24px 0
 }
@@ -3721,7 +3721,7 @@ form small {
     margin-left: 1px;
     width: 50px;
     height: 60px;
-    background: url('../../../assets/templates/images/icons/menu-divider.png') no-repeat left center
+    background: url('/assets/templates/images/icons/menu-divider.png') no-repeat left center
 }
 
 #sticky-menu .sticky-search-area-close a,
@@ -4013,7 +4013,7 @@ html[xmlns] .slider-wrap {
     width: 36px !important;
     height: 36px !important;
     text-indent: -9999px;
-    background: url('../../../assets/templates/images/icons/slider-nav.png') no-repeat 0 0;
+    background: url('/assets/templates/images/icons/slider-nav.png') no-repeat 0 0;
     background-color: #111;
     background-color: rgba(11, 11, 11, .8);
     transition: background-color .2s linear;
@@ -4026,7 +4026,7 @@ html[xmlns] .slider-wrap {
 .tp-leftarrow.default,
 .tp-rightarrow.default {
     z-index: 30;
-    background: url('../../../assets/templates/images/icons/slider-nav.png') no-repeat 0 0 !important;
+    background: url('/assets/templates/images/icons/slider-nav.png') no-repeat 0 0 !important;
     background-color: #111 !important;
     background-color: rgba(11, 11, 11, .8) !important;
     transition: opacity .25s ease-in-out, background-color .2s linear;
@@ -4081,7 +4081,7 @@ html[xmlns] .slider-wrap {
     bottom: 0;
     width: 28px !important;
     height: 28px !important;
-    background-image: url('../../../assets/templates/images/icons/portfolio-slider-nav.png');
+    background-image: url('/assets/templates/images/icons/portfolio-slider-nav.png');
     transition: background-color .2s linear;
     -moz-transition: background-color .2s linear;
     -webkit-transition: background-color .2s linear;
@@ -4215,7 +4215,7 @@ html[xmlns] .slider-wrap {
 
 #top-search input {
     width: 131px;
-    background-image: url('../../../assets/templates/images/icons/search.png');
+    background-image: url('/assets/templates/images/icons/search.png');
     background-repeat: no-repeat;
     background-position: left;
     padding-left: 38px;
@@ -4414,7 +4414,7 @@ ul.landing-features li:hover {
     padding: 13px 12px 11px 46px;
     font-size: 16px;
     color: #999;
-    background: url('../../../assets/templates/images/icons/subscribe.png') left no-repeat;
+    background: url('/assets/templates/images/icons/subscribe.png') left no-repeat;
     margin: 0 !important
 }
 
@@ -4758,7 +4758,7 @@ ul.landing-features li:hover {
     text-indent: -9999px;
     background-color: #222;
     background-repeat: no-repeat;
-    background-image: url('../../../assets/templates/images/icons/portfolio-overlay.png')
+    background-image: url('/assets/templates/images/icons/portfolio-overlay.png')
 }
 
 .p-overlay-icons a:first-child {
@@ -4996,7 +4996,7 @@ ul.landing-features li:hover {
     text-indent: -9999px;
     width: 32px;
     height: 32px;
-    background: #e5e5e5 url('../../../assets/templates/images/icons/portfolio-nav.png') no-repeat 0 0;
+    background: #e5e5e5 url('/assets/templates/images/icons/portfolio-nav.png') no-repeat 0 0;
     transition: background-color .2s linear, background-position .3s linear;
     -moz-transition: background-color .2s linear, background-position .3s linear;
     -webkit-transition: background-color .2s linear, background-position .3s linear;
@@ -6113,7 +6113,7 @@ p.wp-caption-text {
 
 .promo {
     position: relative;
-    background: url('../../../assets/templates/images/promo.png') repeat;
+    background: url('/assets/templates/images/promo.png') repeat;
     padding: 15px 18px;
     border-left: 3px solid #57b3df;
     margin-bottom: 30px
@@ -6233,7 +6233,7 @@ p.wp-caption-text {
     border: none;
     width: 48px;
     height: 48px;
-    background: #57b3df url('../../../assets/templates/images/icons/search-404.png') no-repeat center center;
+    background: #57b3df url('/assets/templates/images/icons/search-404.png') no-repeat center center;
     text-indent: -9999px;
     border-radius: 24px;
     -moz-border-radius: 24px;
@@ -6453,12 +6453,12 @@ p.wp-caption-text {
     font-size: 15px;
     font-family: 'Open Sans', sans-serif;
     color: #333;
-    background: url('../../../assets/templates/images/icons/toggle-plus.png') no-repeat left
+    background: url('/assets/templates/images/icons/toggle-plus.png') no-repeat left
 }
 
 .toggle .toggleta {
     font-weight: 700;
-    background: url('../../../assets/templates/images/icons/toggle-minus.png') no-repeat left
+    background: url('/assets/templates/images/icons/toggle-minus.png') no-repeat left
 }
 
 .toggle .togglec {
@@ -6876,7 +6876,7 @@ p.wp-caption-text {
 }
 
 .quote {
-    background: url('../../../assets/templates/images/icons/quote.png') left top no-repeat;
+    background: url('/assets/templates/images/icons/quote.png') left top no-repeat;
     margin: 10px 0;
     padding: 0 0 0 15px;
     font-size: 15px;
@@ -7428,7 +7428,7 @@ blockquote.quote-right {
     white-space: nowrap;
     margin: 5px;
     padding: 0;
-    background-image: url('../../../assets/templates/images/button.png');
+    background-image: url('/assets/templates/images/button.png');
     background-repeat: repeat-x;
     background-position: 0 0;
     border: 1px solid rgba(114, 114, 114, .4);
@@ -7442,7 +7442,7 @@ blockquote.quote-right {
 }
 
 .button:hover {
-    background-image: url('../../../assets/templates/images/button.png');
+    background-image: url('/assets/templates/images/button.png');
     background-position: 0 -30px;
     background-color: #666 !important;
     text-decoration: none;
@@ -7843,11 +7843,11 @@ button.button span {
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color: #333;
-    background: url('../../../assets/templates/images/icons/toggle-plus.png') no-repeat left
+    background: url('/assets/templates/images/icons/toggle-plus.png') no-repeat left
 }
 
 .acctitlec {
-    background: url('../../../assets/templates/images/icons/toggle-minus.png') no-repeat left;
+    background: url('/assets/templates/images/icons/toggle-minus.png') no-repeat left;
     cursor: auto
 }
 
@@ -7888,7 +7888,7 @@ button.button span {
 }
 
 #twitter-panel .preloader2 {
-    background-image: url('../../../assets/templates/images/preloader-dark.gif')
+    background-image: url('/assets/templates/images/preloader-dark.gif')
 }
 
 #twitter-panel-icon {
@@ -8328,7 +8328,7 @@ body>iframe {
 
 .widget_search input[type=text] {
     margin: 0 !important;
-    background: url('../../../assets/templates/images/icons/search.png') no-repeat left center;
+    background: url('/assets/templates/images/icons/search.png') no-repeat left center;
     padding-left: 39px;
     width: 163px
 }
@@ -8346,11 +8346,11 @@ body>iframe {
 .twitter-widget ul li {
     padding: 0 0 0 18px;
     margin-top: 15px;
-    background: url('../../../assets/templates/images/icons/twitter.png') top left no-repeat
+    background: url('/assets/templates/images/icons/twitter.png') top left no-repeat
 }
 
 #footer.footer-dark .twitter-widget ul li {
-    background: url('../../../assets/templates/images/icons/ftwitter.png') top left no-repeat
+    background: url('/assets/templates/images/icons/ftwitter.png') top left no-repeat
 }
 
 .twitter-widget ul li:first-child {
@@ -8567,12 +8567,12 @@ a.twitter-follow-me:hover {
 
 .widget_recent_comments li {
     display: block;
-    background: url('../../../assets/templates/images/icons/sidebar-comment.png') left top no-repeat;
+    background: url('/assets/templates/images/icons/sidebar-comment.png') left top no-repeat;
     padding: 4px 0 4px 20px
 }
 
 #footer.footer-dark .widget_recent_comments li {
-    background: url('../../../assets/templates/images/icons/footer-comment.png') left top no-repeat
+    background: url('/assets/templates/images/icons/footer-comment.png') left top no-repeat
 }
 
 .widget_archive li a,
@@ -8583,7 +8583,7 @@ a.twitter-follow-me:hover {
 .widget_pages li a,
 .widget_recent_comments li a,
 .widget_recent_entries li a {
-    background: url('../../../assets/templates/images/icons/sidebar-link.png') left top no-repeat;
+    background: url('/assets/templates/images/icons/sidebar-link.png') left top no-repeat;
     border: none !important;
     color: #444;
     font-size: 13px
@@ -8608,7 +8608,7 @@ a.twitter-follow-me:hover {
 #footer.footer-dark .widget_pages li a,
 #footer.footer-dark .widget_recent_comments li a,
 #footer.footer-dark .widget_recent_entries li a {
-    background: url('../../../assets/templates/images/icons/footer-link.png') left top no-repeat
+    background: url('/assets/templates/images/icons/footer-link.png') left top no-repeat
 }
 
 .widget_recent_comments li a {
@@ -8736,7 +8736,7 @@ a.twitter-follow-me:hover {
     top: 0;
     left: auto;
     right: 26px;
-    background: #444 url('../../.../../../assets/templates/images/icons/widget-scroll.png') no-repeat 0 0;
+    background: #444 url('/assets/templates/images/icons/widget-scroll.png') no-repeat 0 0;
     transition: background-color .2s linear;
     -moz-transition: background-color .2s linear;
     -webkit-transition: background-color .2s linear;
@@ -8965,7 +8965,7 @@ a.twitter-follow-me:hover {
     display: block;
     border: none;
     height: 11px;
-    background: transparent url('../../../assets/templates/images/slider-shadow.png') repeat-x
+    background: transparent url('/assets/templates/images/slider-shadow.png') repeat-x
 }
 
 .stretched #page-title {
@@ -10967,13 +10967,13 @@ input[type=submit].btn-block {
 
 @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.eot');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.woff') format('woff');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.woff') format('woff');
-    src: url('../../../assets/templates/css/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.eot');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.woff') format('woff');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.woff') format('woff');
+    src: url('/assets/templates/css/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
 .glyphicon {
@@ -14795,12 +14795,12 @@ blockquote {
  */
 @font-face {
     font-family: FontAwesome;
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.eot?v=4.7.0');
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype');
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.woff2?v=4.7.0') format('woff2');
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.woff?v=4.7.0') format('woff');
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.ttf?v=4.7.0') format('truetype');
-    src: url('../../../assets/templates/css/font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    src: url('/assets/templates/css/font/fontawesome-webfont.eot?v=4.7.0');
+    src: url('/assets/templates/css/font/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype');
+    src: url('/assets/templates/css/font/fontawesome-webfont.woff2?v=4.7.0') format('woff2');
+    src: url('/assets/templates/css/font/fontawesome-webfont.woff?v=4.7.0') format('woff');
+    src: url('/assets/templates/css/font/fontawesome-webfont.ttf?v=4.7.0') format('truetype');
+    src: url('/assets/templates/css/font/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
     font-weight: 400;
     font-style: normal
 }
@@ -18342,7 +18342,7 @@ screen and (max-height:300px) {
     div.responsive-menu,
     div.responsive-menu span {
         /* TODO:Kishan - not found */
-        /* background: url('../../../assets/templates/images/responsive-menu.png'); */
+        /* background: url('/assets/templates/images/responsive-menu.png'); */
         -webkit-font-smoothing: antialiased
     }
 
@@ -18479,7 +18479,7 @@ screen and (max-height:300px) {
 
     #header.header6 #primary-menu>div>ul>li.current.sub-menu>a>div,
     #header.header6 #primary-menu>div>ul>li.sub-menu:hover>a>div {
-        background-image: url('../../../assets/templates/images/icons/mainsubmenuh.png')
+        background-image: url('/assets/templates/images/icons/mainsubmenuh.png')
     }
 
     #header.header6 #primary-menu ul li {
@@ -18513,7 +18513,7 @@ screen and (max-height:300px) {
 
     #header.header6 #primary-menu>div>ul>li.sub-menu>a>div,
     #header.header7 #primary-menu ul>li.sub-menu>a>div {
-        background-image: url('../../../assets/templates/images/icons/mainsubmenu.png');
+        background-image: url('/assets/templates/images/icons/mainsubmenu.png');
         background-position: right top;
         background-repeat: no-repeat;
         padding: 0 15px 0 0
@@ -21314,7 +21314,7 @@ div#notification-badge .notification-count {
 }
 
 .c-sblst li a:hover {
-    background: transparent url('../../../assets/templates/images/icons/c-arrow.jpg') 0 center no-repeat
+    background: transparent url('/assets/templates/images/icons/c-arrow.jpg') 0 center no-repeat
 }
 
 .cedit h1 {
@@ -23115,7 +23115,7 @@ img .lazy {
     height: 100%;
     z-index: 1;
     opacity: .9;
-    background: #fff url('../../../assets/templates/images/object.png') repeat fixed;
+    background: #fff url('/assets/templates/images/object.png') repeat fixed;
     background-repeat: no-repeat;
     background-position: 0 0;
     -ms-background-size: cover;
@@ -24614,7 +24614,7 @@ div.valueLabel {
 }
 
 .url_preview {
-    background-image: url('../../../assets/templates/images/icons/link-preview.png');
+    background-image: url('/assets/templates/images/icons/link-preview.png');
     background-position: top right;
     background-repeat: no-repeat;
     overflow: hidden;
@@ -24840,7 +24840,7 @@ a.morelink.less {
 }
 
 #page-guide-wrapper .page-guide-toggle::before {
-    background: transparent url('../../../assets/templates/images/icons/page_guide.png') no-repeat scroll 0 0;
+    background: transparent url('/assets/templates/images/icons/page_guide.png') no-repeat scroll 0 0;
     content: " ";
     display: block;
     height: 70px;
@@ -28307,7 +28307,7 @@ div#notification-badge .notification-count {
 }
 
 .about-section h2 {
-    background: url('../../../assets/templates/images/icons/about_us/about-title-sep.png') no-repeat center bottom;
+    background: url('/assets/templates/images/icons/about_us/about-title-sep.png') no-repeat center bottom;
     font-size: 28px;
     padding: 0 0 45px 0;
     font-family: 'Open Sans', sans-serif;
@@ -28612,13 +28612,13 @@ textarea {
 }
 
 .camera_fakehover .camera_prev>span {
-    background: rgba(0, 0, 0, .5) url('../../../assets/templates/images/banner-arrow-left.png') no-repeat center;
+    background: rgba(0, 0, 0, .5) url('/assets/templates/images/banner-arrow-left.png') no-repeat center;
     height: 60px;
     transition-duration: .2s
 }
 
 .camera_fakehover .camera_next>span {
-    background: rgba(0, 0, 0, .5) url('../../../assets/templates/images/banner-arrow-right.png') no-repeat center;
+    background: rgba(0, 0, 0, .5) url('/assets/templates/images/banner-arrow-right.png') no-repeat center;
     height: 60px;
     transition-duration: .2s
 }
@@ -29370,7 +29370,7 @@ span.readonly.radio {
     width: 22px;
     margin: 0 auto;
     display: block;
-    background: transparent url('../../../assets/templates/images/icons/blue.png') -120px 0
+    background: transparent url('/assets/templates/images/icons/blue.png') -120px 0
 }
 
 .post-share-container {
@@ -29534,13 +29534,13 @@ span.readonly.radio {
     }
 
     #site-index #popular_courses_container .slider .slick-prev {
-        background: rgba(0, 0, 0, 1) url('../../../assets/templates/images/banner-arrow-left.png') no-repeat scroll center center/12px auto;
+        background: rgba(0, 0, 0, 1) url('/assets/templates/images/banner-arrow-left.png') no-repeat scroll center center/12px auto;
         bottom: -29px;
         height: 58px !important
     }
 
     #site-index #popular_courses_container .slider .slick-next {
-        background: rgba(0, 0, 0, 1) url('../../../assets/templates/images/banner-arrow-right.png') no-repeat scroll center center/12px auto;
+        background: rgba(0, 0, 0, 1) url('/assets/templates/images/banner-arrow-right.png') no-repeat scroll center center/12px auto;
         bottom: -29px;
         height: 58px !important
     }
@@ -31670,7 +31670,7 @@ only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
     #page-guide-wrapper .page-guide-toggle:before {
-        background-image: url('../../../assets/templates/images/icons/page_guide@2x.png');
+        background-image: url('/assets/templates/images/icons/page_guide@2x.png');
         background-size: 40px 50px;
         -moz-background-size: 40px 50px;
         -webkit-background-size: 40px 50px;
@@ -31915,7 +31915,7 @@ only screen and (min-resolution:2dppx) {
 }
 
 #institute_signup #landing-area {
-    background: #fff url('../../../assets/templates/images/home/institute-banner.jpg') repeat scroll center top/cover;
+    background: #fff url('/assets/templates/images/home/institute-banner.jpg') repeat scroll center top/cover;
     box-sizing: border-box
 }
 

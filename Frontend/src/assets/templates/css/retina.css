@@ -19,59 +19,59 @@ only screen and (min-resolution: 2dppx) {
     }
 
     #top-social li.ts-facebook .ts-icon {
-        background-image: url("../images/icons/social/facebook@2x.png");
+        background-image: url("/assets/templates/images/icons/social/facebook@2x.png");
     }
 
     #top-social li.ts-twitter .ts-icon {
-        background-image: url("../images/icons/social/twitter@2x.png");
+        background-image: url("/assets/templates/images/icons/social/twitter@2x.png");
     }
 
     #top-social li.ts-gplus .ts-icon {
-        background-image: url("../images/icons/social/gplus@2x.png");
+        background-image: url("/assets/templates/images/icons/social/gplus@2x.png");
     }
 
     #top-social li.ts-dribbble .ts-icon {
-        background-image: url("../images/icons/social/dribbble@2x.png");
+        background-image: url("/assets/templates/images/icons/social/dribbble@2x.png");
     }
 
     #top-social li.ts-forrst .ts-icon {
-        background-image: url("../images/icons/social/forrst@2x.png");
+        background-image: url("/assets/templates/images/icons/social/forrst@2x.png");
     }
 
     #top-social li.ts-blogger .ts-icon {
-        background-image: url("../images/icons/social/blogger@2x.png");
+        background-image: url("/assets/templates/images/icons/social/blogger@2x.png");
     }
 
     #top-social li.ts-flickr .ts-icon {
-        background-image: url("../images/icons/social/flickr@2x.png");
+        background-image: url("/assets/templates/images/icons/social/flickr@2x.png");
     }
 
     #top-social li.ts-pinterest .ts-icon {
-        background-image: url("../images/icons/social/pinterest@2x.png");
+        background-image: url("/assets/templates/images/icons/social/pinterest@2x.png");
     }
 
     #top-social li.ts-rss .ts-icon {
-        background-image: url("../images/icons/social/rss@2x.png");
+        background-image: url("/assets/templates/images/icons/social/rss@2x.png");
     }
 
     #top-social li.ts-vimeo .ts-icon {
-        background-image: url("../images/icons/social/vimeo@2x.png");
+        background-image: url("/assets/templates/images/icons/social/vimeo@2x.png");
     }
 
     #top-social li.ts-youtube .ts-icon {
-        background-image: url("../images/icons/social/youtube@2x.png");
+        background-image: url("/assets/templates/images/icons/social/youtube@2x.png");
     }
 
     #top-social li.ts-phone .ts-icon {
-        background-image: url("../images/icons/social/phone@2x.png");
+        background-image: url("/assets/templates/images/icons/social/phone@2x.png");
     }
 
     #top-social li.ts-mail .ts-icon {
-        background-image: url("../images/icons/social/mail@2x.png");
+        background-image: url("/assets/templates/images/icons/social/mail@2x.png");
     }
 
     #top-social li.ts-linkedin .ts-icon {
-        background-image: url("../images/icons/social/linkedin@2x.png");
+        background-image: url("/assets/templates/images/icons/social/linkedin@2x.png");
     }
 
     #top-social li .ts-icon {
@@ -96,7 +96,7 @@ only screen and (min-resolution: 2dppx) {
     .ls-noskin .ls-nav-next,
     .tp-leftarrow.large,
     .tp-rightarrow.large {
-        background-image: url("../images/icons/slider-nav@2x.png");
+        background-image: url("/assets/templates/images/icons/slider-nav@2x.png");
         background-size: 72px 36px;
         -moz-background-size: 72px 36px;
         -webkit-background-size: 72px 36px;
@@ -105,12 +105,12 @@ only screen and (min-resolution: 2dppx) {
 
     .tp-leftarrow.large,
     .tp-rightarrow.large {
-        background-image: url("../images/icons/slider-nav@2x.png") !important;
+        background-image: url("/assets/templates/images/icons/slider-nav@2x.png") !important;
     }
 
     .portfolio-image .flex-prev,
     .portfolio-image .flex-next {
-        background-image: url("../images/icons/portfolio-slider-nav@2x.png");
+        background-image: url("/assets/templates/images/icons/portfolio-slider-nav@2x.png");
         background-size: 56px 28px;
         -moz-background-size: 56px 28px;
         -webkit-background-size: 56px 28px;
@@ -120,7 +120,7 @@ only screen and (min-resolution: 2dppx) {
     .preloader,
     .preloader2,
     #twitter-panel .preloader2 {
-        background-image: url("../images/preloader@2x.gif");
+        background-image: url("/assets/templates/images/preloader@2x.gif");
         background-size: 24px 24px;
         -moz-background-size: 24px 24px;
         -webkit-background-size: 24px 24px;
@@ -128,12 +128,12 @@ only screen and (min-resolution: 2dppx) {
     }
 
     #twitter-panel .preloader2 {
-        background-image: url("../images/preloader-dark@2x.gif");
+        background-image: url("/assets/templates/images/preloader-dark@2x.gif");
     }
 
     #top-search input,
     .widget_search input[type="text"] {
-        background-image: url("../images/icons/search@2x.png");
+        background-image: url("/assets/templates/images/icons/search@2x.png");
         background-size: 31px 16px;
         -moz-background-size: 31px 16px;
         -webkit-background-size: 31px 16px;
@@ -141,7 +141,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     .lp-subscribe input[type="text"] {
-        background-image: url("../images/icons/subscribe@2x.png");
+        background-image: url("/assets/templates/images/icons/subscribe@2x.png");
         background-size: 38px 15px;
         -moz-background-size: 38px 15px;
         -webkit-background-size: 38px 15px;
@@ -149,7 +149,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     .p-overlay-icons a {
-        background-image: url("../images/icons/portfolio-overlay@2x.png");
+        background-image: url("/assets/templates/images/icons/portfolio-overlay@2x.png");
         background-size: 112px 28px;
         -moz-background-size: 112px 28px;
         -webkit-background-size: 112px 28px;
@@ -157,7 +157,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     #portfolio-navigation a {
-        background-image: url("../images/icons/portfolio-nav@2x.png");
+        background-image: url("/assets/templates/images/icons/portfolio-nav@2x.png");
         background-size: 96px 64px;
         -moz-background-size: 96px 64px;
         -webkit-background-size: 96px 64px;
@@ -165,7 +165,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     .error-404-meta input[type="submit"] {
-        background-image: url("../images/icons/search-404@2x.png");
+        background-image: url("/assets/templates/images/icons/search-404@2x.png");
         background-size: 17px 16px;
         -moz-background-size: 17px 16px;
         -webkit-background-size: 17px 16px;
@@ -176,7 +176,7 @@ only screen and (min-resolution: 2dppx) {
     .toggle .toggleta,
     .acctitle,
     .acctitlec {
-        background-image: url("../images/icons/toggle-plus@2x.png");
+        background-image: url("/assets/templates/images/icons/toggle-plus@2x.png");
         background-size: 24px 24px;
         -moz-background-size: 24px 24px;
         -webkit-background-size: 24px 24px;
@@ -185,11 +185,11 @@ only screen and (min-resolution: 2dppx) {
 
     .toggle .toggleta,
     .acctitlec {
-        background-image: url("../images/icons/toggle-minus@2x.png");
+        background-image: url("/assets/templates/images/icons/toggle-minus@2x.png");
     }
 
     .quote {
-        background-image: url("../images/icons/quote@2x.png");
+        background-image: url("/assets/templates/images/icons/quote@2x.png");
         background-size: 45px 29px;
         -moz-background-size: 45px 29px;
         -webkit-background-size: 45px 29px;
@@ -198,7 +198,7 @@ only screen and (min-resolution: 2dppx) {
 
     .twitter-widget ul li,
     #footer.footer-dark .twitter-widget ul li {
-        background-image: url("../images/icons/twitter@2x.png");
+        background-image: url("/assets/templates/images/icons/twitter@2x.png");
         background-size: 13px 13px;
         -moz-background-size: 13px 13px;
         -webkit-background-size: 13px 13px;
@@ -207,12 +207,12 @@ only screen and (min-resolution: 2dppx) {
 
 
     #footer.footer-dark .twitter-widget ul li {
-        background-image: url("../images/icons/ftwitter@2x.png");
+        background-image: url("/assets/templates/images/icons/ftwitter@2x.png");
     }
 
     .widget_recent_comments li,
     #footer.footer-dark .widget_recent_comments li {
-        background-image: url("../images/icons/sidebar-comment@2x.png");
+        background-image: url("/assets/templates/images/icons/sidebar-comment@2x.png");
         background-size: 15px 26px;
         -moz-background-size: 15px 26px;
         -webkit-background-size: 15px 26px;
@@ -220,7 +220,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     #footer.footer-dark .widget_recent_comments li {
-        background-image: url("../images/icons/footer-comment@2x.png");
+        background-image: url("/assets/templates/images/icons/footer-comment@2x.png");
     }
 
     .widget_nav_menu li a,
@@ -237,7 +237,7 @@ only screen and (min-resolution: 2dppx) {
     #footer.footer-dark .widget_recent_entries li a,
     #footer.footer-dark .widget_categories li a,
     #footer.footer-dark .widget_pages li a {
-        background-image: url("../images/icons/sidebar-link@2x.png");
+        background-image: url("/assets/templates/images/icons/sidebar-link@2x.png");
         background-size: 4px 26px;
         -moz-background-size: 4px 26px;
         -webkit-background-size: 4px 26px;
@@ -251,12 +251,12 @@ only screen and (min-resolution: 2dppx) {
     #footer.footer-dark .widget_recent_entries li a,
     #footer.footer-dark .widget_categories li a,
     #footer.footer-dark .widget_pages li a {
-        background-image: url("../images/icons/footer-link@2x.png");
+        background-image: url("/assets/templates/images/icons/footer-link@2x.png");
     }
 
     .widget-scroll-prev,
     .widget-scroll-next {
-        background-image: url("../images/icons/widget-scroll@2x.png");
+        background-image: url("/assets/templates/images/icons/widget-scroll@2x.png");
         background-size: 48px 24px;
         -moz-background-size: 48px 24px;
         -webkit-background-size: 48px 24px;
@@ -264,7 +264,7 @@ only screen and (min-resolution: 2dppx) {
     }
 
     #page-guide-wrapper .page-guide-toggle:before {
-        background-image: url("../images/icons/page_guide@2x.png");
+        background-image: url("/assets/templates/images/icons/page_guide@2x.png");
         background-size: 40px 50px;
         -moz-background-size: 40px 50px;
         -webkit-background-size: 40px 50px;
