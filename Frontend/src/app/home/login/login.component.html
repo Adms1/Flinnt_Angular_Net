@@ -18,12 +18,14 @@
                             [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" >
                             <div class="col_two nobottommargin">
                                 <input type="text" name="usernm" id="usernm" value="" class="input-block-level"
-                                    placeholder="Email Or Mobile Number" autofocus="true" formControlName="userName">
+                                    placeholder="Email Or Mobile Number" autofocus="true" formControlName="userName"
+                                    [ngClass]="loginForm.get('userName')?.invalid && formSubmitted ? 'error' : ''"/>
                                     <label *ngIf="loginForm.get('userName')?.invalid && formSubmitted" class="error"> This field is required.</label>
                             </div>
                             <div class="col_full nobottommargin">
                                 <input type="password" name="pwd" id="pwd" class="input-block-level"
-                                    placeholder="Password" autocomplete="off" formControlName="passWord">
+                                    placeholder="Password" autocomplete="off" formControlName="passWord"
+                                    [ngClass]="loginForm.get('passWord')?.invalid && formSubmitted ? 'error' : ''"/>
                                     <label *ngIf="loginForm.get('passWord')?.invalid && formSubmitted" class="error"> This field is required.</label>
                             </div>
                             <div class="col_full marginB10">
