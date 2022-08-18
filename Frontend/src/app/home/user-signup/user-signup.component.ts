@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-user-signup',
@@ -6,10 +8,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-signup.component.css']
 })
 export class UserSignupComponent implements OnInit {
-
-  constructor() { }
+  signUpForm = {} as FormGroup;
+  formSubmitted = false;
+  constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit(): void {
+    this.createSignUpForm();
   }
 
+  createSignUpForm(){
+    this.signUpForm = this.formBuilder.group({
+			firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      emailId: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+		});
+  }
+
+  onSignUpSubmit() {
+    this.formSubmitted = true;
+    if(this.signUpForm.invalid) return;
+
+		let data = JSON.stringify(this.signUpForm.value);
+		console.log('-----SignUp JSON Format-----');
+		console.log(data);
+    // APIs
+
+    this.resetTeamForm();
+	}
+	resetTeamForm() {
+		this.signUpForm.reset();
+	}
 }

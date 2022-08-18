@@ -27,29 +27,34 @@
                         <div id="backdropbox" class="login_form">
 
                             <form class="nobottommargin" id="fmsignup" name="signupform"
-                                action="https://devtest.flinnt.com/app/signup/" method="post">
+                            [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
 
                                 <div class="col_full nobottommargin">
                                     <input type="text" name="first_name" id="first_name" value=""
                                         class="input-block-level" placeholder="First Name" autocomplete="off"
-                                        autofocus="true" />
+                                        autofocus="true" formControlName="firstName"/>
+                                        <label *ngIf="signUpForm.get('firstName')?.invalid && formSubmitted" class="error">First Name is required.</label>
                                 </div>
                                 <div class="col_full nobottommargin">
                                     <input type="text" name="last_name" id="last_name" value=""
-                                        class="input-block-level" placeholder="Last Name" autocomplete="off" />
+                                        class="input-block-level" placeholder="Last Name" autocomplete="off" formControlName="lastName"/>
+                                        <label *ngIf="signUpForm.get('lastName')?.invalid && formSubmitted" class="error">Last Name is required.</label>
                                 </div>
                                 <div class="col_full nobottommargin">
                                     <input type="text" name="email_id" id="email_id" value="" class="input-block-level"
-                                        placeholder="Email Or Mobile Number" autocomplete="on" />
+                                        placeholder="Email Or Mobile Number" autocomplete="on" formControlName="emailId"/>
+                                        <label *ngIf="signUpForm.get('emailId')?.invalid && formSubmitted" class="error">Email id Or Mobile Number is required.</label>
                                 </div>
                                 <div class="col_full nobottommargin">
                                     <input type="password" name="loginpwd" id="loginpwd" class="input-block-level"
-                                        placeholder="Password" maxlength="15" autocomplete="off" />
+                                        placeholder="Password" maxlength="15" autocomplete="off" formControlName="password"/>
+                                        <label *ngIf="signUpForm.get('password')?.invalid && formSubmitted" class="error">Password is required.</label>
                                 </div>
                                 <div class="col_full nobottommargin marginB5">
                                     <input type="password" name="verify_password" id="verify_password"
                                         class="input-block-level last" placeholder="Confirm password"
-                                        autocomplete="on" />
+                                        autocomplete="on" formControlName="confirmPassword"/>
+                                        <label *ngIf="signUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
                                 </div>
 
                                 <div class="col_full nobottommargin">
