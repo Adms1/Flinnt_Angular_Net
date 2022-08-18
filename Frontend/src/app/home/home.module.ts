@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
-import { commonModule } from '../common/common-module.module';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
+import { AccountService } from '../services/account.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/SharedModule.module';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,15 @@ import { InstituteSignupComponent } from './institute-signup/institute-signup.co
   imports: [
     CommonModule,
     HomeRoutingModule,
-    commonModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
+    
+  ],
+  providers:[
+    AccountService
   ]
 })
 export class HomeModule { }

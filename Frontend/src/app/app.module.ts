@@ -3,7 +3,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { commonModule } from './common/common-module.module';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 @NgModule({
@@ -12,8 +11,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    commonModule,
+    AppRoutingModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy}],
