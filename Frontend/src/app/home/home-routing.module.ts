@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
 import { LoginComponent } from './login/login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
+import { VarifyAccountComponent } from './varify-account/varify-account.component';
 
 const routes: Routes = [
   { 
@@ -16,6 +17,10 @@ const routes: Routes = [
   { 
     path: 'institute/signup', 
     component: InstituteSignupComponent
+  },
+  { 
+    path: 'institute/verify-account', 
+    component: VarifyAccountComponent
   }
 ];
 

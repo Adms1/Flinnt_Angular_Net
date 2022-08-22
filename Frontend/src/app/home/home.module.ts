@@ -8,12 +8,14 @@ import { InstituteSignupComponent } from './institute-signup/institute-signup.co
 import { AccountService } from '../services/account.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/SharedModule.module';
+import { VarifyAccountComponent } from './varify-account/varify-account.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     UserSignupComponent,
-    InstituteSignupComponent
+    InstituteSignupComponent,
+    VarifyAccountComponent
   ],
   imports: [
     CommonModule,

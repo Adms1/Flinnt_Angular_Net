@@ -4,4 +4,42 @@
         <a href="/" class="retina-logo"><img src="./assets/templates/images/logo@2x.png"
                 alt="flinnt" title="flinnt" width="74" height="50"></a>
     </div>
+
+
+    <!-- institute login menu -->
+    <div id="top-menu" *ngIf="roleId == 2">
+        <ul>
+            <li><span>|</span><a href="javascript:void(null)">
+                    <img src="https://flinnt1.s3.amazonaws.com/profile_image/40x40/default.png" height="20"
+                        width="20" alt="" />
+                    Hi, Kishan Vaishnani <i class="fa fa-caret-down norightmargin"></i>
+                </a>
+                <ul class="user_menu">
+                    <li>
+                        <a href="/"><i class="fa fa-sign-out"></i>
+                            Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="bg-transparent"></div>
+    <div id="top-menu_mobile">
+        <span class="mobile-menu-link"><i class="fa fa-bars" aria-hidden="true"></i></span>
+        <ul>
+            <li class="profile-group"><a href="javascript:void(null)">
+                    <img src="https://flinnt1.s3.amazonaws.com/profile_image/40x40/default.png" height="40"
+                        width="40" alt="" />
+                    <span class="username-info">Hi, </span>
+                </a>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-sign-out"></i> Logout</a>
+            </li>
+        </ul>
+
+    </div>
+
 </div>

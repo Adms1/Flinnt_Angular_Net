@@ -27,6 +27,8 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.slim.js",
+              "src/assets/templates/jscript/app.js"
             ]
           },
           "configurations": {

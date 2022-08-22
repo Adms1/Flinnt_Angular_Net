@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class InstituteSignupComponent implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +26,7 @@ export class InstituteSignupComponent implements OnInit {
     this.instituteSignUpForm = this.formBuilder.group({
 			firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      mobile:['',Validators.required],
       emailId: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -41,6 +44,8 @@ export class InstituteSignupComponent implements OnInit {
 		console.log(data);
     // APIs
 
+    // navigate to verification link if signUp goes well
+    this.route.navigate(['institute/verify-account']);
     this.resetTeamForm();
 	}
 	resetTeamForm() {
