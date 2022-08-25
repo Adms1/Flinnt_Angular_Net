@@ -8,8 +8,8 @@ namespace Flinnt.Business.Helpers
     {
         public MapperConfiguration()
         {
-            CreateMap<AccountModel, Account>();
-            CreateMap<Account, AccountModel>();
+            CreateMap<InstituteModel, Institute>();
+            CreateMap<Institute, InstituteModel>();
         }
     }
 }

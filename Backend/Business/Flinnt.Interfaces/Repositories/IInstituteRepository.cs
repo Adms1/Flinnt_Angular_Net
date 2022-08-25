@@ -3,7 +3,7 @@ using Flinnt.Interfaces.Repository;
 
 namespace Flinnt.Interfaces.Repositories
 {
-    public interface IAccountRepository : IBaseRepository<Account>
+    public interface IInstituteRepository : IBaseRepository<Institute>
     {
     }
 }

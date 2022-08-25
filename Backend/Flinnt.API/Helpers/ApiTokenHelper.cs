@@ -5,7 +5,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Flinnt.Business.ViewModels.Account;
 
 namespace AAT.API.Helpers
 {

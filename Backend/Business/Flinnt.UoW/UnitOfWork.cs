@@ -7,15 +7,15 @@ namespace Flinnt.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly FlinntContext Context;
+        private readonly edplexdbContext Context;
 
-        public UnitOfWork(FlinntContext context)
+        public UnitOfWork(edplexdbContext context)
         {
             this.Context = context;
-            AccountRepository = new AccountRepository(Context);
+            InstituteRepository = new InstituteRepository(context);
         }
 
-        public IAccountRepository AccountRepository { get; }
+        public IInstituteRepository InstituteRepository { get; }
 
         private bool disposed;
 

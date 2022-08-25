@@ -1,0 +1,59 @@
+﻿using AutoMapper;
+using Flinnt.Business.ViewModels;
+using Flinnt.Domain;
+using Flinnt.Interfaces.Services;
+using Flinnt.UoW;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Flinnt.Services
+{
+    public class InstituteService : ServiceBase, IInstituteService
+    {
+        public InstituteService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
+        {
+        }
+
+        public async Task<List<InstituteModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<InstituteModel>>(await unitOfWork.InstituteRepository.GetAllAsync());
+            return result.ToList();
+        }
+
+        public async Task<InstituteModel> GetAsync(int id)
+        {
+            return mapper.Map<InstituteModel>(await unitOfWork.InstituteRepository.GetAsync(id));
+        }
+
+        public async Task<bool> AddAsync(Institute model)
+        {
+            await unitOfWork.InstituteRepository.AddAsync(model);
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> UpdateAsync(Institute model)
+        {
+            var institute = await unitOfWork.InstituteRepository.GetAsync(model.InstituteId);
+            if (institute != null)
+            {
+                institute.InstituteId = model.InstituteId;
+                //MAP other fields
+                await unitOfWork.InstituteRepository.UpdateAsync(institute);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var institute = unitOfWork.InstituteRepository.GetAsync(id).Result;
+            if (institute != null)
+            {
+                await unitOfWork.InstituteRepository.DeleteAsync(institute);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
+    }
+}

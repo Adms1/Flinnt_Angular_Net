@@ -5,6 +5,6 @@ namespace Flinnt.UoW
 {
     public interface IUnitOfWork : IDisposable
     {
-        IAccountRepository AccountRepository { get; }
+        IInstituteRepository InstituteRepository { get; }
     }
 }

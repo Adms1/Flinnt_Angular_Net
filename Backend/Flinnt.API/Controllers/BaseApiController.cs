@@ -1,4 +1,3 @@
-using AAT.API.Filters;
 using Flinnt.Business.Enums.General;
 using Flinnt.Business.ViewModels.General;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
 {
-    [JwtAuthenticationFilter]
+    //[JwtAuthenticationFilter]
     public class BaseApiController : Controller
     {
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();

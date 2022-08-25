@@ -1,5 +1,4 @@
 using Flinnt.Business.Helpers;
-using Flinnt.Business.ViewModels.Account;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Repositories;
@@ -43,7 +42,7 @@ namespace Flinnt.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<FlinntContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<edplexdbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDistributedMemoryCache();
             services.AddAutoMapper(c => c.AddProfile<MapperConfiguration>(), typeof(Startup));
 
@@ -110,12 +109,12 @@ namespace Flinnt.API
 
         private static void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IInstituteService, InstituteService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
         {
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IInstituteRepository, InstituteRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

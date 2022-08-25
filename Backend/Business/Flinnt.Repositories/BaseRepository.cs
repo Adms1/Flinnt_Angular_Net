@@ -10,9 +10,9 @@ namespace Flinnt.Repositories
 {
     public abstract class BaseRepository<T> : IBaseRepository<T>, IDisposable where T : BaseEntity
     {
-        protected FlinntContext Context;
+        protected edplexdbContext Context;
 
-        protected BaseRepository(FlinntContext context)
+        protected BaseRepository(edplexdbContext context)
         {
             Context = context;
         }
