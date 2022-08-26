@@ -1,0 +1,18 @@
+using Flinnt.Business.ViewModels;
+using Flinnt.Domain;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Flinnt.Interfaces.Services
+{
+    public interface IUserService : IBaseService<User>
+    {
+        Task<UserModel> GetAsync(int id);
+
+        Task<bool> AddAsync(User model);
+
+        Task<bool> UpdateAsync(User model);
+
+        Task<bool> DeleteAsync(int id);
+    }
+}

@@ -13,9 +13,13 @@ namespace Flinnt.UoW
         {
             this.Context = context;
             InstituteRepository = new InstituteRepository(context);
+            UserRepository = new UserRepository(context);
+            UserProfileRepository = new UserProfileRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
+        public IUserRepository UserRepository { get; }
+        public IUserProfileRepository UserProfileRepository { get; }
 
         private bool disposed;
 

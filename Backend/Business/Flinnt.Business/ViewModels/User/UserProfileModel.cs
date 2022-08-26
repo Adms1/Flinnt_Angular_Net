@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-#nullable disable
-
-namespace Flinnt.Domain
+namespace Flinnt.Business.ViewModels
 {
-    public partial class UserProfile : BaseEntity
+    public class UserProfileModel
     {
         public int UserProfileId { get; set; }
         public int UserId { get; set; }
@@ -25,11 +23,5 @@ namespace Flinnt.Domain
         public string PublicIdSalt { get; set; }
         public DateTime? CreateDateTime { get; set; }
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual City City { get; set; }
-        public virtual Country Country { get; set; }
-        public virtual Gender Gender { get; set; }
-        public virtual State State { get; set; }
-        public virtual User User { get; set; }
     }
 }

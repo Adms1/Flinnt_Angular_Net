@@ -110,11 +110,15 @@ namespace Flinnt.API
         private static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IInstituteService, InstituteService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserProfileService, UserProfileService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
         {
             services.AddScoped<IInstituteRepository, InstituteRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserProfileRepository, UserProfileRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

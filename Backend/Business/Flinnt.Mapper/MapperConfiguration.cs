@@ -10,6 +10,12 @@ namespace Flinnt.Business.Helpers
         {
             CreateMap<InstituteModel, Institute>();
             CreateMap<Institute, InstituteModel>();
+
+            CreateMap<UserModel, User>();
+            CreateMap<User, UserModel>();
+
+            CreateMap<UserProfileModel, UserProfile>();
+            CreateMap<UserProfile, UserProfileModel>();
         }
     }
 }
