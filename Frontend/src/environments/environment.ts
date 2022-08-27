@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  APP_URL:"https://api.com"
+  APP_URL:"http://api.skool360.com/api"
 };
 
 /*

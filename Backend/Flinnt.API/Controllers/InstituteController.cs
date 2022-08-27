@@ -79,8 +79,8 @@ namespace Flinnt.API.Controllers
                     AuthenticationTypeId = 1, // static for now
                     IsActive = true,
                     IsDeleted = false,
-                    Password = model.User.Password,
-                    OneTimePassword = model.User.Password,
+                    Password = model.Password,
+                    OneTimePassword = model.Password,
                     UserTypeId = 4, // static for now
                     RegistrationDateTime = DateTime.Now
                 };

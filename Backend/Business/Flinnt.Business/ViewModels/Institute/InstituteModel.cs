@@ -32,6 +32,7 @@ namespace Flinnt.Business.ViewModels
         public string BannerPicture { get; set; }
         public DateTime? CreateDateTime { get; set; }
         public DateTime? UpdateDateTime { get; set; }
-        public  UserModel User { get; set; }
+        public string Password { get; set; }
+        public string OneTimePassword { get; set; }
     }
 }
