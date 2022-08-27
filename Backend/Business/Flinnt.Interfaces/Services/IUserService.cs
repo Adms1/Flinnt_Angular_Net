@@ -9,7 +9,7 @@ namespace Flinnt.Interfaces.Services
     {
         Task<UserModel> GetAsync(int id);
 
-        Task<bool> AddAsync(User model);
+        Task<User> AddAsync(User model);
 
         Task<bool> UpdateAsync(User model);
 

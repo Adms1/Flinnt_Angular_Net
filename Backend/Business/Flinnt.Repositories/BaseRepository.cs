@@ -22,6 +22,11 @@ namespace Flinnt.Repositories
             return await Context.Set<T>().ToListAsync();
         }
 
+        public async Task<T> FindByFirstOrDefaultAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().Where(predicate).FirstOrDefaultAsync();
+
+        }
         public async Task<IEnumerable<T>> FindByAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
             return await Context.Set<T>().Where(predicate).ToListAsync();

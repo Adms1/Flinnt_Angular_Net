@@ -8,9 +8,17 @@ namespace Flinnt.Business.ViewModels
         public int InstituteId { get; set; }
         public string InstituteName { get; set; }
         public byte InstituteTypeId { get; set; }
+        [Required]
+        [StringLength(255)]
         public string FirstName { get; set; }
+        [Required]
+        [StringLength(255)]
         public string LastName { get; set; }
+        [Required]
+        [StringLength(255)]
         public string EmailId { get; set; }
+        [Required]
+        [StringLength(10)]
         public string MobileNo { get; set; }
         public string Address { get; set; }
         public int? CityId { get; set; }
@@ -24,5 +32,6 @@ namespace Flinnt.Business.ViewModels
         public string BannerPicture { get; set; }
         public DateTime? CreateDateTime { get; set; }
         public DateTime? UpdateDateTime { get; set; }
+        public  UserModel User { get; set; }
     }
 }

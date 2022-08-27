@@ -11,9 +11,9 @@ namespace Flinnt.Interfaces.Services
 
         Task<InstituteModel> GetAsync(int id);
 
-        Task<bool> AddAsync(Institute model);
+        Task<InstituteModel> AddAsync(InstituteModel model);
 
-        Task<bool> UpdateAsync(Institute model);
+        Task<bool> UpdateAsync(InstituteModel model);
 
         Task<bool> DeleteAsync(int id);
     }

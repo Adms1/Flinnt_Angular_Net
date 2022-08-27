@@ -23,11 +23,15 @@ namespace Flinnt.API.Controllers
         private readonly IHtmlLocalizer<InstituteController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public InstituteController(IInstituteService instituteService, IUserService userService, IUserProfileService userProfileService)
+        public InstituteController(IInstituteService instituteService, 
+            IUserService userService, 
+            IUserProfileService userProfileService, 
+            IHtmlLocalizer<InstituteController> htmlLocalizer)
         {
             _instituteService = instituteService;
             _userService = userService;
             _userProfileService = userProfileService;
+            _localizer = htmlLocalizer;
         }
 
         [HttpGet]
@@ -44,7 +48,7 @@ namespace Flinnt.API.Controllers
 
         [HttpPost]
         [Route("AddOrUpdateRecord")]
-        public async Task<object> Post([FromBody] Institute model)
+        public async Task<object> Post([FromBody] InstituteModel model)
         {
             return await GetDataWithMessage(async () =>
             {
@@ -57,25 +61,53 @@ namespace Flinnt.API.Controllers
             });
         }
 
-        private async Task<Tuple<Institute, string, DropMessageType>> AddAsync(Institute model)
+        private async Task<Tuple<InstituteModel, string, DropMessageType>> AddAsync(InstituteModel model)
         {
-            var flag = await _instituteService.AddAsync(model);
-            if (flag)
+            if(await _userProfileService.GetByEmailAsync(model.EmailId) != null)
             {
-                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
-
-                // save userObj
-                //User user = new User
-                //{
-                //};
-                //await _userService.AddAsync(user);
-
-                return Response(model, _localizer["RecordAddSuccess"].Value.ToString());
+                // check if emailId exist
+                return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), DropMessageType.Error);
             }
-            return Response(model, _localizer["RecordNotAdded"].Value.ToString(), DropMessageType.Error);
+            model.InstituteTypeId = 1; // static for now
+            var extInstitute = await _instituteService.AddAsync(model);
+            if (extInstitute != null)
+            {
+                // save userObj
+                User user = new User
+                {
+                    LoginId = Guid.NewGuid().ToString(), // need to verify
+                    AuthenticationTypeId = 1, // static for now
+                    IsActive = true,
+                    IsDeleted = false,
+                    Password = model.User.Password,
+                    OneTimePassword = model.User.Password,
+                    UserTypeId = 4, // static for now
+                    RegistrationDateTime = DateTime.Now
+                };
+
+                var userRes = await _userService.AddAsync(user);
+                if(userRes != null)
+                {
+                    UserProfile userProfile = new UserProfile
+                    {
+                        UserId = userRes.UserId,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        EmailId = model.EmailId,
+                        MobileNo = model.MobileNo,
+                        CreateDateTime = DateTime.Now
+                    };
+
+                    await _userProfileService.AddAsync(userProfile);
+                }
+
+                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
+                return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
+            }
+            return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), DropMessageType.Error);
         }
 
-        private async Task<Tuple<Institute, string, DropMessageType>> UpdateAsync(Institute model)
+        private async Task<Tuple<InstituteModel, string, DropMessageType>> UpdateAsync(InstituteModel model)
         {
             var flag = await _instituteService.UpdateAsync(model);
             if (flag)
