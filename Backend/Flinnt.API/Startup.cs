@@ -191,6 +191,7 @@ namespace Flinnt.API
                 options.AddPolicy(MyAllowSpecificOrigins,
                     builder => builder
                     .WithOrigins(webUrl)
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
                     //.SetIsOriginAllowed(origin => true) // allow any origin
                     .AllowAnyHeader()
                     .AllowAnyMethod()

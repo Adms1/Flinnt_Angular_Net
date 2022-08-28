@@ -10,6 +10,6 @@ export class InstituteService {
   constructor(private apiService: ApiService) { }
 
   saveInstitute(params) {
-    return this.apiService.post(`${API.INSTITUTE_ROUTES.saveInstitute}`, params, false);
+    return this.apiService.post(`${API.INSTITUTE_ROUTES.saveInstitute}`, params, true);
   }
 }

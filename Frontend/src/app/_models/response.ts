@@ -1,5 +1,5 @@
 export class ApiResponse {
-    Data: any;
-    Message: string;
-    MessageType:number;
+    data: any;
+    message: string;
+    messageType:number;
 }

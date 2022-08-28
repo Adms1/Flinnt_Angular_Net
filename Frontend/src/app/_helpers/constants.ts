@@ -22,7 +22,11 @@ export const Constants = {
         },
     },
     USER_ADD_SUCCESS_MSG: 'User added sucessfully!',
-    NO_INTERNET_CONNECTION_MSG: 'No internet connection!'
+    NO_INTERNET_CONNECTION_MSG: 'No internet connection!',
+    
+    INSTITUTE_PAGE:{
+        INSTITUTE_OBJ:"CurrentInstitute"
+    }
 }
 
 export const roleList = [

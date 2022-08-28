@@ -3,8 +3,8 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UtilityService } from './utility.service';
 import { Router } from '@angular/router';
-import { Constants } from '../constant/constants';
 import { map } from 'rxjs/operators';
+import { Constants } from '../_helpers/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -274,8 +274,13 @@ export class ApiService {
   showToastrMsg(res) {
     if (res) {
       const msg = res.message || res.msg || (res.result && res.result.msg);
-      if (msg) {
-        this.utility.showSuccessToast(msg);
+      if(res.messageType == 0){
+        if (msg) {
+          this.utility.showSuccessToast(msg);
+        }
+      }
+      else{
+        this.utility.showErrorToast(msg);
       }
     }
   }
@@ -302,7 +307,7 @@ export class ApiService {
         : 'Session Expired';
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
-      localStorage.clearStorage();
+      localStorage.clear();
       this.router.navigate(['/']);
     } else if (err.status === 403) {
       const error = err.error.error
@@ -310,7 +315,7 @@ export class ApiService {
         : 'Insufficient Rights';
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
-      localStorage.clearStorage();
+      localStorage.clear();
       this.router.navigate(['/']);
     } else if (err.status === 404) {
       const error = err.error.error
