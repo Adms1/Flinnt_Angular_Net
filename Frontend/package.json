@@ -22,7 +22,7 @@
     "bootstrap": "^5.2.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
-    "ngx-spinner": "^13.1.1",
+    "ngx-spinner": "^11.0.0",
     "ngx-toastr": "^13.2.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
