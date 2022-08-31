@@ -2,6 +2,6 @@ import { environment } from "src/environments/environment";
 
 export class API {
     public static INSTITUTE_ROUTES = {
-      saveInstitute: `/${environment.API_Version}/institute//create-institute`
+      saveInstitute: `/institute/${environment.API_Version}/create-institute`
     };
 }

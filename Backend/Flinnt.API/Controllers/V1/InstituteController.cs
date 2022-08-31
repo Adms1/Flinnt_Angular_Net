@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/{v:apiVersion}/institute")]
     public class InstituteController : BaseApiController
     {
         private readonly IInstituteService _instituteService;
@@ -35,7 +36,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("institute-list")]
         public async Task<object> GetAll()
         {
             Logger.Info("GetAll");
@@ -47,41 +48,55 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpPost]
-        [Route("AddOrUpdateRecord")]
+        [Route("create-institute")]
         public async Task<object> Post([FromBody] InstituteModel model)
         {
             return await GetDataWithMessage(async () =>
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    return model.InstituteId <= 0 ? await AddAsync(model) : await UpdateAsync(model);
+                    return await AddAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(model, string.Join(",", errors), DropMessageType.Error);
             });
         }
 
+
+        [HttpPut]
+        [Route("update-institute")]
+        public async Task<object> Put([FromBody] InstituteModel model)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                if (ModelState.IsValid && model != null)
+                {
+                    return await UpdateAsync(model);
+                }
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
+                return Response(model, string.Join(",", errors), DropMessageType.Error);
+            });
+        }
         private async Task<Tuple<InstituteModel, string, DropMessageType>> AddAsync(InstituteModel model)
         {
             if(await _userProfileService.GetByEmailAsync(model.EmailId) != null)
             {
-                // check if emailId exist
                 return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), DropMessageType.Error);
             }
-            model.InstituteTypeId = 1; // static for now
+            model.InstituteTypeId = 1;
             var extInstitute = await _instituteService.AddAsync(model);
             if (extInstitute != null)
             {
                 // save userObj
                 User user = new User
                 {
-                    LoginId = Guid.NewGuid().ToString(), // need to verify
-                    AuthenticationTypeId = 1, // static for now
+                    LoginId = Guid.NewGuid().ToString(),
+                    AuthenticationTypeId = 1,
                     IsActive = true,
                     IsDeleted = false,
                     Password = model.Password,
                     OneTimePassword = model.Password,
-                    UserTypeId = 4, // static for now
+                    UserTypeId = 4,
                     RegistrationDateTime = DateTime.Now
                 };
 
