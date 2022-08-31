@@ -36,7 +36,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("institute-list")]
+        [Route("list")]
         public async Task<object> GetAll()
         {
             Logger.Info("GetAll");
@@ -48,7 +48,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-institute")]
+        [Route("create")]
         public async Task<object> Post([FromBody] InstituteModel model)
         {
             return await GetDataWithMessage(async () =>
@@ -64,7 +64,7 @@ namespace Flinnt.API.Controllers
 
 
         [HttpPut]
-        [Route("update-institute")]
+        [Route("update")]
         public async Task<object> Put([FromBody] InstituteModel model)
         {
             return await GetDataWithMessage(async () =>
@@ -132,6 +132,7 @@ namespace Flinnt.API.Controllers
 
 
         [HttpDelete]
+        [Route("delete")]
         public async Task<object> Delete(int id)
         {
             return await GetDataWithMessage(async () =>

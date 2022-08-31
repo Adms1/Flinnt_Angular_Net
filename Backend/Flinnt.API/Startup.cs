@@ -121,6 +121,9 @@ namespace Flinnt.API
             services.AddScoped<IInstituteService, InstituteService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IStateService, StateService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -128,6 +131,9 @@ namespace Flinnt.API
             services.AddScoped<IInstituteRepository, InstituteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IStateRepository, StateRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

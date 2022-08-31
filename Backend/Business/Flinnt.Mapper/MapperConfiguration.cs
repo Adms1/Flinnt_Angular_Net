@@ -16,6 +16,15 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<UserProfileModel, UserProfile>();
             CreateMap<UserProfile, UserProfileModel>();
+
+            CreateMap<CountryViewModel, Country>();
+            CreateMap<Country, CountryViewModel>();
+
+            CreateMap<CityViewModel, Country>();
+            CreateMap<Country, CityViewModel>();
+
+            CreateMap<StateViewModel, State>();
+            CreateMap<State, StateViewModel>();
         }
     }
 }

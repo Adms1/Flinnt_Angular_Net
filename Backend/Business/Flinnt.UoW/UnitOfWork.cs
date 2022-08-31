@@ -15,11 +15,17 @@ namespace Flinnt.UoW
             InstituteRepository = new InstituteRepository(context);
             UserRepository = new UserRepository(context);
             UserProfileRepository = new UserProfileRepository(context);
+            CityRepository = new CityRepository(context);
+            StateRepository = new StateRepository(context);
+            CountryRepository = new CountryRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
         public IUserRepository UserRepository { get; }
         public IUserProfileRepository UserProfileRepository { get; }
+        public ICityRepository CityRepository { get; }
+        public IStateRepository StateRepository { get; }
+        public ICountryRepository CountryRepository { get; }
 
         private bool disposed;
 
