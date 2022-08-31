@@ -82,6 +82,15 @@
                                     <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
                             </div>
                             <div class="col_full nobottommargin">
+                                <input type="text" name="address" id="address" value=""
+                                    class="input-block-level" placeholder="Address" autocomplete="on" formControlName="address"
+                                    [ngClass]="instituteSignUpForm.get('address')?.invalid && formSubmitted ? 'error' : ''"/>
+                                    <label *ngIf="instituteSignUpForm.get('address')?.invalid && formSubmitted" class="error">Addresss is required.</label>
+                            </div>
+                            <div class="col_full nobottommargin">
+                                <!-- <ng-select2 [data]="exampleData"></ng-select2> -->
+                            </div>
+                            <div class="col_full nobottommargin">
                                 <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
                                     placeholder="First Name" autocomplete="off" autofocus="true" formControlName="firstName"
                                     [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''"/>
@@ -116,119 +125,6 @@
                                     class="input-block-level last" placeholder="Confirm password" autocomplete="on" formControlName="confirmPassword"
                                     [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''"/>
                                     <label *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
-                            </div>
-                            
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="public_page_name" id="public_page_name" value=""
-                                    class="input-block-level" placeholder="Learning page name" autocomplete="on" formControlName="pageName"
-                                    [ngClass]="instituteSignUpForm.get('pageName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('pageName')?.invalid && formSubmitted" class="error">Learning page name is required.</label>
-                                <p class="tleft dark2 notopmargin marginB15">Learning page name can't be changed once
-                                    assigned. <a href="javascript:void(null)" data-target="#pub_page"
-                                        data-toggle="modal">What is Learning page name?</a></p>
-                                <div aria-hidden="true" aria-labelledby="pubtitle" role="dialog" tabindex="-1"
-                                    id="pub_page" class="modal fade" style="display: none">
-                                    <div class="modal-dialog" style="z-index: 995!important; padding-top:40px;">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button aria-hidden="true" data-dismiss="modal" class="close"
-                                                    type="button">×</button>
-                                                <h3 id="pubtitle" class="modal-title nobottompadding">Learning Page</h3>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="tleft fs13 dark2">The Learning page name should reflect the
-                                                    name of your institution or your brand. Your learning page will have
-                                                    the custom url: <span
-                                                        class="blue">www.flinnt.com/yourlearningpagename/</span></p>
-                                                <p class="tleft fs14 blue marginT20">What is learning page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">It is the gateway from where
-                                                    learners can discover and join your blended as well as online
-                                                    learning courses. It helps you engage with your existing learners
-                                                    and connect with prospective learners.</p>
-
-                                                <p class="tleft fs14 blue marginT20">What is displayed on the Page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">It gives a summary of the courses,
-                                                    number of learners and how active is your digital learning
-                                                    community. The page displays your private, public as well as paid
-                                                    courses. Obviously the private courses remain private, users cannot
-                                                    directly join them from here, they can at the most send you a
-                                                    request so that you can vet their request and permit them to join on
-                                                    merit.</p>
-
-                                                <p class="tleft fs14 blue marginT20">What can I do with the Flinnt
-                                                    Learning Page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">You can promote this page to get
-                                                    existing and prospective learners to learn with you. Users can
-                                                    search for your institution or your courses, showcase the teaching
-                                                    learning expertise that you have and enable a large number of
-                                                    learners to benefit from it.</p>
-
-                                                <p class="tleft fs14 blue marginT20">Explore how other institutions and
-                                                    experts are using Flinnt:</p>
-                                                <p class="tleft fs13 dark2 marginT5">School:</p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Euro Kids Nadiad - <a
-                                                            href="https://www.flinnt.com/eurokidsnadiad/"
-                                                            target="_blank">https://www.flinnt.com/eurokidsnadiad/</a>
-                                                    </li>
-                                                    <li>DAV International School - <a
-                                                            href="https://www.flinnt.com/davahmedabad/"
-                                                            target="_blank">https://www.flinnt.com/davahmedabad/</a>
-                                                    </li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Institutions of Higher Education:
-                                                </p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Amrapali Institute of Technology and Sciences - <a
-                                                            href="https://www.flinnt.com/AGI/"
-                                                            target="_blank">https://www.flinnt.com/AGI/</a></li>
-                                                    <li>Atmiya Institute of Technology & Science - <a
-                                                            href="https://www.flinnt.com/atmiya/"
-                                                            target="_blank">https://www.flinnt.com/atmiya/</a></li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Training and Coaching Institutions:
-                                                </p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Scope Gujarat - <a href="https://www.flinnt.com/scopegujarat/"
-                                                            target="_blank">https://www.flinnt.com/scopegujarat/</a>
-                                                    </li>
-                                                    <li>Cambridge English India Network - <a
-                                                            href="https://www.flinnt.com/cambridgeenglishindianetwork/"
-                                                            target="_blank">https://www.flinnt.com/cambridgeenglishindianetwork/</a>
-                                                    </li>
-                                                    <li>Cambridge English Parents Network - <a
-                                                            href="https://www.flinnt.com/cambridgeenglishparentsnetwork/"
-                                                            target="_blank">https://www.flinnt.com/cambridgeenglishparentsnetwork/</a>
-                                                    </li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Preschools:</p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Tree House - <a
-                                                            href="https://www.flinnt.com/treehouseahmedabad/"
-                                                            target="_blank">https://www.flinnt.com/treehouseahmedabad/</a>
-                                                    </li>
-                                                    <li>9 Kids - <a href="https://www.flinnt.com/9kids/"
-                                                            target="_blank">https://www.flinnt.com/9kids/</a></li>
-                                                    <li>Shanti Juniors South Bopal - <a
-                                                            href="https://www.flinnt.com/shantijuniorssouthbopal/"
-                                                            target="_blank">https://www.flinnt.com/shantijuniorssouthbopal/</a>
-                                                    </li>
-                                                    <li>Rajshree Kidzee - <a
-                                                            href="https://www.flinnt.com/rajshreekidzee/"
-                                                            target="_blank">https://www.flinnt.com/rajshreekidzee/</a>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                            <div class="modal-footer notopmargin">
-                                                <button data-dismiss="modal" class="btn btn-default"
-                                                    type="button">Close</button>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div>
                             </div>
                             <div class="col_full nobottommargin site-home-sign-area">
                                 <input type="hidden" name="reg_now" id="reg_now" value="1" />

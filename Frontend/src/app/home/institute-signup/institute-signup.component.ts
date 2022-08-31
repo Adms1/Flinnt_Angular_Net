@@ -15,7 +15,7 @@ import { UtilityService } from 'src/app/_services/utility.service';
 export class InstituteSignupComponent implements OnInit {
   instituteSignUpForm = {} as FormGroup;
   formSubmitted = false;
-
+  //exampleData: Array<Select2OptionData>;
   constructor(
     private formBuilder: FormBuilder,
     private instituteService: InstituteService,
@@ -26,6 +26,25 @@ export class InstituteSignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.utilityService.showLoading();
+    // this.exampleData = [
+    //   {
+    //     id: 'basic1',
+    //     text: 'Basic 1'
+    //   },
+    //   {
+    //     id: 'basic2',
+    //     disabled: true,
+    //     text: 'Basic 2'
+    //   },
+    //   {
+    //     id: 'basic3',
+    //     text: 'Basic 3'
+    //   },
+    //   {
+    //     id: 'basic4',
+    //     text: 'Basic 4'
+    //   }
+    // ];
     this.createSignUpForm();
   }
 
@@ -41,8 +60,7 @@ export class InstituteSignupComponent implements OnInit {
       emailId: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      instituteName: ['', Validators.required],
-      pageName: [''],
+      instituteName: ['', Validators.required]
     });
   }
 
