@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserAccountVerification
     {
         public int UserAccountVerificationId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public string VerificationCode { get; set; }
         public DateTime? ExpireDateTime { get; set; }
         public bool? IsVerified { get; set; }

@@ -20,8 +20,8 @@ namespace Flinnt.Business.Helpers
             CreateMap<CountryViewModel, Country>();
             CreateMap<Country, CountryViewModel>();
 
-            CreateMap<CityViewModel, Country>();
-            CreateMap<Country, CityViewModel>();
+            CreateMap<CityViewModel, City>();
+            CreateMap<City, CityViewModel>();
 
             CreateMap<StateViewModel, State>();
             CreateMap<State, StateViewModel>();

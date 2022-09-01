@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Select2OptionData } from 'ng-select2';
 import { FormService } from 'src/app/core/form.service';
 import { Constants } from 'src/app/_helpers/constants';
 import { ApiResponse } from 'src/app/_models/response';
+import { CountryService } from 'src/app/_services/country.service';
 import { InstituteService } from 'src/app/_services/institute.service';
+import { StateService } from 'src/app/_services/state.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
 @Component({
@@ -15,36 +18,22 @@ import { UtilityService } from 'src/app/_services/utility.service';
 export class InstituteSignupComponent implements OnInit {
   instituteSignUpForm = {} as FormGroup;
   formSubmitted = false;
-  //exampleData: Array<Select2OptionData>;
+  stateData: Array<Select2OptionData>;
+  countryData: Array<Select2OptionData>;
+  countryId:string;
   constructor(
     private formBuilder: FormBuilder,
     private instituteService: InstituteService,
     private route: Router,
     private formService: FormService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private countryService: CountryService,
+    private stateService: StateService
   ) { }
 
   ngOnInit(): void {
     this.utilityService.showLoading();
-    // this.exampleData = [
-    //   {
-    //     id: 'basic1',
-    //     text: 'Basic 1'
-    //   },
-    //   {
-    //     id: 'basic2',
-    //     disabled: true,
-    //     text: 'Basic 2'
-    //   },
-    //   {
-    //     id: 'basic3',
-    //     text: 'Basic 3'
-    //   },
-    //   {
-    //     id: 'basic4',
-    //     text: 'Basic 4'
-    //   }
-    // ];
+    this.getCountries();
     this.createSignUpForm();
   }
 
@@ -60,8 +49,54 @@ export class InstituteSignupComponent implements OnInit {
       emailId: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-      instituteName: ['', Validators.required]
+      instituteName: ['', Validators.required],
+      address: ['', Validators.required],
+      cityName: ['', Validators.required],
+      stateId: ['', Validators.required],
+      countryId: ['', Validators.required],
+      pincode: ['']
     });
+  }
+
+  getCountries() {
+    this.countryService.getCountries()
+      .then((res: ApiResponse) => {
+        if (res.messageType == 0) {
+          if (!!res.data) {
+            this.countryData = res.data.map(x => {
+              return {
+                id: x.countryId,
+                text: x.countryName
+              }
+            })
+          }
+        }
+      });
+  }
+
+  getStates(countryId) {
+    this.stateService.getStateByCountryId(Number(countryId))
+      .then((res: ApiResponse) => {
+        if (res.messageType == 0) {
+          if (!!res.data) {
+            this.stateData = res.data.map(x => {
+              return {
+                id: x.stateId,
+                text: x.stateName
+              }
+            })
+          }
+        }
+      });
+  }
+  countryValueChanged(countryId: string){
+    if(!!countryId){
+      if(countryId == this.countryId) return;
+      this.countryId = countryId;
+
+      //get state data
+      this.getStates(countryId);
+    }
   }
 
   onSignUpSubmit() {

@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserDevice
     {
         public int UserDeviceId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public string DeviceType { get; set; }
         public string DeviceId { get; set; }
         public string NotificationId { get; set; }

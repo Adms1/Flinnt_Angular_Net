@@ -42,7 +42,7 @@ namespace Flinnt.API.Controllers
 
 
         [HttpGet]
-        [Route("get/{id}")]
+        [Route("get/{Id}")]
         public async Task<object> Get(int Id)
         {
             Logger.Info("Get");
@@ -54,13 +54,13 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("get/{CountryId}")]
-        public async Task<object> GetByCountryId(int CountryiId)
+        [Route("get-by-countryId/{CountryId}")]
+        public async Task<object> GetByCountryId(int CountryId)
         {
             Logger.Info("Get");
             return await GetDataWithMessage(async () =>
             {
-                var result = (await _stateService.GetAsync(CountryiId));
+                var result = (await _stateService.GetByCountryIdAsync(CountryId));
                 return Response(result, string.Empty);
             });
         }

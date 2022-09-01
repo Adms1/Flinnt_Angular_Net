@@ -26,9 +26,9 @@ namespace Flinnt.Services
             return mapper.Map<StateViewModel>(await unitOfWork.StateRepository.GetAsync(id));
         }
 
-        public async Task<List<StateViewModel>> GetByCountryIdAsync(int CountryiId)
+        public async Task<List<StateViewModel>> GetByCountryIdAsync(int CountryId)
         {
-            return mapper.Map<List<StateViewModel>>(await unitOfWork.StateRepository.FindByAsync(x=>x.CountryId == CountryiId));
+            return mapper.Map<List<StateViewModel>>(await unitOfWork.StateRepository.FindByAsync(x=>x.CountryId == CountryId));
         }
     }
 }

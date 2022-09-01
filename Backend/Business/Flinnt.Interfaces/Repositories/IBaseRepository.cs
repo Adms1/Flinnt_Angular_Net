@@ -16,6 +16,8 @@ namespace Flinnt.Interfaces.Repository
         
         Task<T> GetAsync(int id);
 
+        Task<T> GetAsync(long id);
+
         Task<T> AddAsync(T entity);
 
         Task<int> AddRangeAsync(IEnumerable<T> entities);

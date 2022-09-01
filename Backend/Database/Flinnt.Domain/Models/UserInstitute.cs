@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserInstitute
     {
         public int UserInstituteId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public int InstituteId { get; set; }
         public byte UserTypeId { get; set; }
         public byte RoleId { get; set; }

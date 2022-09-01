@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  API_Version:"v1",
-  APP_URL:"http://api.skool360.com/api"
+  API_Version:"1",
+ // APP_URL:"http://api.skool360.com/api",
+  APP_URL:"https://localhost:44365/api",
 };
 
 /*

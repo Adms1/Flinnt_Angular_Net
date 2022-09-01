@@ -37,6 +37,11 @@ namespace Flinnt.Repositories
             return await Context.Set<T>().FindAsync(id);
         }
 
+        public async Task<T> GetAsync(long id)
+        {
+            return await Context.Set<T>().FindAsync(id);
+        }
+
         public async Task<T> AddAsync(T entity)
         {
             await Context.Set<T>().AddAsync(entity);

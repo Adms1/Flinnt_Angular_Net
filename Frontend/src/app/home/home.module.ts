@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/SharedModule.module';
 import { VarifyAccountComponent } from './varify-account/varify-account.component';
 import { InstituteService } from '../_services/institute.service';
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { InstituteService } from '../_services/institute.service';
     HomeRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelect2Module
   ],
   exports:[
     

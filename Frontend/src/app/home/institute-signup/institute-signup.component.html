@@ -82,13 +82,28 @@
                                     <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
                             </div>
                             <div class="col_full nobottommargin">
-                                <input type="text" name="address" id="address" value=""
+                                <input multiple type="text" name="address" id="address" value=""
                                     class="input-block-level" placeholder="Address" autocomplete="on" formControlName="address"
                                     [ngClass]="instituteSignUpForm.get('address')?.invalid && formSubmitted ? 'error' : ''"/>
                                     <label *ngIf="instituteSignUpForm.get('address')?.invalid && formSubmitted" class="error">Addresss is required.</label>
                             </div>
                             <div class="col_full nobottommargin">
-                                <!-- <ng-select2 [data]="exampleData"></ng-select2> -->
+                                <ng-select2 [data]="countryData" formControlName="countryId" (valueChanged)="countryValueChanged($event)" [width]="270"></ng-select2>
+                            </div>
+                            <div class="col_full nobottommargin">
+                                <ng-select2 [data]="stateData" formControlName="stateId" [width]="270"></ng-select2>
+                            </div>
+                            <div class="col_full nobottommargin">
+                                <input type="text" name="cityName" id="cityName" value=""
+                                    class="input-block-level" placeholder="City" autocomplete="on" formControlName="cityName"
+                                    [ngClass]="instituteSignUpForm.get('cityName')?.invalid && formSubmitted ? 'error' : ''"/>
+                                    <label *ngIf="instituteSignUpForm.get('cityName')?.invalid && formSubmitted" class="error">City is required.</label>
+                            </div>
+                            <div class="col_full nobottommargin">
+                                <input type="text" name="pincode" id="pincode" value=""
+                                    class="input-block-level" placeholder="Pincode" autocomplete="on" formControlName="pincode"
+                                    [ngClass]="instituteSignUpForm.get('pincode')?.invalid && formSubmitted ? 'error' : ''"/>
+                                    <label *ngIf="instituteSignUpForm.get('pincode')?.invalid && formSubmitted" class="error">Pincode is required.</label>
                             </div>
                             <div class="col_full nobottommargin">
                                 <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
@@ -125,6 +140,7 @@
                                     class="input-block-level last" placeholder="Confirm password" autocomplete="on" formControlName="confirmPassword"
                                     [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''"/>
                                     <label *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
+                                    <p></p>
                             </div>
                             <div class="col_full nobottommargin site-home-sign-area">
                                 <input type="hidden" name="reg_now" id="reg_now" value="1" />

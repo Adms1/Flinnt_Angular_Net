@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
+using Flinnt.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Logging;
@@ -20,18 +21,21 @@ namespace Flinnt.API.Controllers
     {
         private readonly IInstituteService _instituteService;
         private readonly IUserService _userService;
+        private readonly ICityService _cityService;
         private readonly IUserProfileService _userProfileService;
         private readonly IHtmlLocalizer<InstituteController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public InstituteController(IInstituteService instituteService, 
             IUserService userService, 
-            IUserProfileService userProfileService, 
+            IUserProfileService userProfileService,
+            ICityService cityService,
             IHtmlLocalizer<InstituteController> htmlLocalizer)
         {
             _instituteService = instituteService;
             _userService = userService;
             _userProfileService = userProfileService;
+            _cityService = cityService;
             _localizer = htmlLocalizer;
         }
 
@@ -83,7 +87,18 @@ namespace Flinnt.API.Controllers
             {
                 return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), DropMessageType.Error);
             }
+            //save city
+            CityViewModel cityViewModel = new CityViewModel
+            {
+                CityName = model.CityName,
+                CreateDateTime = DateTime.Now,
+                StateId = model.StateId.Value,
+                IsActive = true
+            };
+            var city = await _cityService.AddAsync(cityViewModel);
+
             model.InstituteTypeId = 1;
+            model.CityId = city.CityId;
             var extInstitute = await _instituteService.AddAsync(model);
             if (extInstitute != null)
             {
@@ -96,8 +111,9 @@ namespace Flinnt.API.Controllers
                     IsDeleted = false,
                     Password = model.Password,
                     OneTimePassword = model.Password,
-                    UserTypeId = 4,
-                    RegistrationDateTime = DateTime.Now
+                    UserTypeId = 1,
+                    RegistrationDateTime = DateTime.Now,
+                    LastLoginDateTime = DateTime.Now
                 };
 
                 var userRes = await _userService.AddAsync(user);
