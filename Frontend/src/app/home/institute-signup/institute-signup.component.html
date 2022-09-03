@@ -64,83 +64,97 @@
         <div class="clear"></div>
         <div id="landing-area">
             <div class="container clearfix">
-                <div class="fleft intro">
+                <!-- <div class="fleft intro">
                     <h1 class="line1">COMMUNICATE AND</h1>
                     <h1 class="line2">TEACH ONLINE</h1>
                     <h1 class="line3">Deliver Engaging Learning Experiences</h1>
-                </div>
+                </div> -->
                 <div class="nobottommargin" id="signup-institute">
                     <div class="logintitle onlymobile">Sign up</div>
                     <div class="col_full nobottommargin">
                         <form name="instituteSignUpForm" id="instituteSignUpForm" class="nobottommargin"
                             autocomplete="off" [formGroup]="instituteSignUpForm" (ngSubmit)="onSignUpSubmit()">
 
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="institute_name" id="institute_name" value=""
-                                    class="input-block-level" placeholder="Institute name" autocomplete="on" formControlName="instituteName"
-                                    [ngClass]="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input multiple type="text" name="address" id="address" value=""
-                                    class="input-block-level" placeholder="Address" autocomplete="on" formControlName="address"
-                                    [ngClass]="instituteSignUpForm.get('address')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('address')?.invalid && formSubmitted" class="error">Addresss is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <ng-select2 [data]="countryData" formControlName="countryId" (valueChanged)="countryValueChanged($event)" [width]="270"></ng-select2>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <ng-select2 [data]="stateData" formControlName="stateId" [width]="270"></ng-select2>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="cityName" id="cityName" value=""
-                                    class="input-block-level" placeholder="City" autocomplete="on" formControlName="cityName"
-                                    [ngClass]="instituteSignUpForm.get('cityName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('cityName')?.invalid && formSubmitted" class="error">City is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="pincode" id="pincode" value=""
-                                    class="input-block-level" placeholder="Pincode" autocomplete="on" formControlName="pincode"
-                                    [ngClass]="instituteSignUpForm.get('pincode')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('pincode')?.invalid && formSubmitted" class="error">Pincode is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
-                                    placeholder="First Name" autocomplete="off" autofocus="true" formControlName="firstName"
-                                    [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('firstName')?.invalid && formSubmitted" class="error">First Name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="last_name" id="last_name" value="" class="input-block-level"
-                                    placeholder="Last Name" autocomplete="off" formControlName="lastName"
-                                    [ngClass]="instituteSignUpForm.get('lastName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('lastName')?.invalid && formSubmitted" class="error">Last Name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="mobile" id="mobile" value="" class="input-block-level"
-                                    placeholder="Mobile number" autocomplete="on" formControlName="mobileNo"
-                                    [ngClass]="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted" class="error">Mobile Number is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="email_id" id="email_id" value="" class="input-block-level"
-                                    placeholder="Email" autocomplete="on" formControlName="emailId"
-                                    [ngClass]="instituteSignUpForm.get('emailId')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('emailId')?.invalid && formSubmitted" class="error">Email Id is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="password" name="loginpwd" id="loginpwd" class="input-block-level"
-                                    placeholder="Password" maxlength="15" autocomplete="off" formControlName="password"
-                                    [ngClass]="instituteSignUpForm.get('password')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('password')?.invalid && formSubmitted" class="error">Password is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="password" name="verify_password" id="verify_password"
-                                    class="input-block-level last" placeholder="Confirm password" autocomplete="on" formControlName="confirmPassword"
-                                    [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
-                                    <p></p>
+                            <div class="content-wrap">
+                                <div class="container clearfix">
+                                    <div class="col_full center">
+                                        <div class="col_half nobottommargin norightmargin marginL15 marginR10">
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="institute_name" id="institute_name" value=""
+                                                    class="input-block-level" placeholder="Institute name" autocomplete="on" formControlName="instituteName"
+                                                    [ngClass]="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input multiple type="text" name="address" id="address" value=""
+                                                    class="input-block-level" placeholder="Address" autocomplete="on" formControlName="address"
+                                                    [ngClass]="instituteSignUpForm.get('address')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('address')?.invalid && formSubmitted" class="error">Addresss is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <ng-select2 [data]="countryData" formControlName="countryId" (valueChanged)="countryValueChanged($event)" 
+                                                [ngClass]="instituteSignUpForm.get('countryId')?.invalid && formSubmitted ? 'error' : ''"></ng-select2>
+                                                <label *ngIf="instituteSignUpForm.get('countryId')?.invalid && formSubmitted" class="error">Country is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <ng-select2 [data]="stateData" formControlName="stateId"
+                                                [ngClass]="instituteSignUpForm.get('stateId')?.invalid && formSubmitted ? 'error' : ''"></ng-select2>
+                                                <label *ngIf="instituteSignUpForm.get('stateId')?.invalid && formSubmitted" class="error">State is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="cityName" id="cityName" value=""
+                                                    class="input-block-level" placeholder="City" autocomplete="on" formControlName="cityName"
+                                                    [ngClass]="instituteSignUpForm.get('cityName')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('cityName')?.invalid && formSubmitted" class="error">City is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="pincode" id="pincode" value=""
+                                                    class="input-block-level" placeholder="Pincode" autocomplete="on" formControlName="pincode"
+                                                    [ngClass]="instituteSignUpForm.get('pincode')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('pincode')?.invalid && formSubmitted" class="error">Pincode is required.</label>
+                                            </div>
+                                        </div>
+                                        <div class="col_half nobottommargin norightmargin">
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
+                                                    placeholder="First Name" autocomplete="off" autofocus="true" formControlName="firstName"
+                                                    [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('firstName')?.invalid && formSubmitted" class="error">First Name is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="last_name" id="last_name" value="" class="input-block-level"
+                                                    placeholder="Last Name" autocomplete="off" formControlName="lastName"
+                                                    [ngClass]="instituteSignUpForm.get('lastName')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('lastName')?.invalid && formSubmitted" class="error">Last Name is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="mobile" id="mobile" value="" class="input-block-level"
+                                                    placeholder="Mobile number" autocomplete="on" formControlName="mobileNo"
+                                                    [ngClass]="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted" class="error">Mobile Number is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="email_id" id="email_id" value="" class="input-block-level"
+                                                    placeholder="Email" autocomplete="on" formControlName="emailId"
+                                                    [ngClass]="instituteSignUpForm.get('emailId')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('emailId')?.invalid && formSubmitted" class="error">Email Id is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="password" name="loginpwd" id="loginpwd" class="input-block-level"
+                                                    placeholder="Password" maxlength="15" autocomplete="off" formControlName="password"
+                                                    [ngClass]="instituteSignUpForm.get('password')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('password')?.invalid && formSubmitted" class="error">Password is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="password" name="verify_password" id="verify_password"
+                                                    class="input-block-level last" placeholder="Confirm password" autocomplete="on" formControlName="confirmPassword"
+                                                    [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''"/>
+                                                    <label *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
+                                                    <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col_full nobottommargin site-home-sign-area">
                                 <input type="hidden" name="reg_now" id="reg_now" value="1" />

@@ -1,1 +1,10 @@
 @import '../../../assets/templates/css/signup.css';
+
+.content-wrap {
+    min-height: 0px !important;
+}
+
+::ng-deep .select2-container {
+    width: 100% !important;
+    margin-top: 1.7% !important;
+}
