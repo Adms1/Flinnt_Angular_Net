@@ -80,7 +80,7 @@
                                     <div class="col_full center">
                                         <div class="col_half nobottommargin norightmargin marginL15 marginR10">
                                             <div class="col_full nobottommargin">
-                                                <input type="text" name="institute_name" id="institute_name" value=""
+                                                <input type="text" name="institute_name" autofocus="true" id="institute_name" value=""
                                                     class="input-block-level" placeholder="Institute name" autocomplete="on" formControlName="instituteName"
                                                     [ngClass]="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted ? 'error' : ''"/>
                                                     <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
@@ -117,7 +117,7 @@
                                         <div class="col_half nobottommargin norightmargin">
                                             <div class="col_full nobottommargin">
                                                 <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
-                                                    placeholder="First Name" autocomplete="off" autofocus="true" formControlName="firstName"
+                                                    placeholder="First Name" autocomplete="off"  formControlName="firstName"
                                                     [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''"/>
                                                     <label *ngIf="instituteSignUpForm.get('firstName')?.invalid && formSubmitted" class="error">First Name is required.</label>
                                             </div>
