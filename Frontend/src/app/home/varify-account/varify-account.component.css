@@ -1,7 +1,10 @@
 #form {
-    max-width: 35%;
     margin: 25px auto 0;
     display: flex;
+}
+
+#verification{
+    display: grid;
 }
 
 #form>input {
@@ -15,6 +18,7 @@
     width: 20%;
     transition: all .2s ease-in-out;
     border-radius: 3px;
+    max-width: 50px;
 }
 
 #form>input:focus {
