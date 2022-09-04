@@ -7,4 +7,9 @@
 ::ng-deep .select2-container {
     width: 100% !important;
     margin-top: 1.7% !important;
+    text-align: left;
+}
+
+#sgnupbtn{
+    width: 200px !important;
 }

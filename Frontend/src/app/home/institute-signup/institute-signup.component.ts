@@ -20,6 +20,7 @@ export class InstituteSignupComponent implements OnInit {
   formSubmitted = false;
   stateData: Array<Select2OptionData>;
   countryData: Array<Select2OptionData>;
+  defultCountry:any;
   countryId:string;
   constructor(
     private formBuilder: FormBuilder,
@@ -68,7 +69,14 @@ export class InstituteSignupComponent implements OnInit {
                 id: x.countryId,
                 text: x.countryName
               }
-            })
+            });
+
+            let country = this.countryData.find(x=>x.text.toLowerCase() == "india");
+
+            if(!!country){
+              this.instituteSignUpForm.controls["countryId"].setValue(country.id);
+            }
+
           }
         }
       });
