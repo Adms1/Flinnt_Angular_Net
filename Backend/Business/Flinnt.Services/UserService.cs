@@ -15,15 +15,15 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<UserModel>> GetAllAsync()
+        public async Task<List<ApplicationUser>> GetAllAsync()
         {
-            var result = mapper.Map<List<UserModel>>(await unitOfWork.UserRepository.GetAllAsync());
+            var result = mapper.Map<List<ApplicationUser>>(await unitOfWork.UserRepository.GetAllAsync());
             return result.ToList();
         }
 
-        public async Task<UserModel> GetAsync(int id)
+        public async Task<ApplicationUser> GetAsync(int id)
         {
-            return mapper.Map<UserModel>(await unitOfWork.UserRepository.GetAsync(id));
+            return mapper.Map<ApplicationUser>(await unitOfWork.UserRepository.GetAsync(id));
         }
 
         public async Task<User> AddAsync(User model)

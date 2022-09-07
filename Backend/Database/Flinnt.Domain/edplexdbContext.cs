@@ -1,12 +1,15 @@
 ﻿using System;
+using Flinnt.Business.ViewModels.Account;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Flinnt.Business.ViewModels;
 
 #nullable disable
 
 namespace Flinnt.Domain
 {
-    public partial class edplexdbContext : DbContext
+    public partial class edplexdbContext : IdentityDbContext<ApplicationUser>
     {
         public edplexdbContext()
         {

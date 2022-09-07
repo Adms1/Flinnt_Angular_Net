@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Flinnt.Business.ViewModels
 {
-    public class UserModel
+    public class ApplicationUser : IdentityUser
     {
         public long UserId { get; set; }
         public string LoginId { get; set; }
