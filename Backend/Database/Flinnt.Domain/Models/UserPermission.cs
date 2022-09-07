@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserPermission
     {
         public int UserPermissionId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public short PermissionId { get; set; }
         public int? InstituteId { get; set; }
         public int? CourseId { get; set; }

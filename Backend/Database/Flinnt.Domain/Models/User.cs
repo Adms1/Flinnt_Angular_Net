@@ -19,7 +19,7 @@ namespace Flinnt.Domain
             UserSettings = new HashSet<UserSetting>();
         }
 
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public string LoginId { get; set; }
         public string Password { get; set; }
         public string OneTimePassword { get; set; }

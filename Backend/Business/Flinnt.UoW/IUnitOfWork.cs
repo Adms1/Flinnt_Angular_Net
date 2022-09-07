@@ -8,5 +8,8 @@ namespace Flinnt.UoW
         IInstituteRepository InstituteRepository { get; }
         IUserRepository UserRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
+        ICityRepository CityRepository { get; }
+        IStateRepository StateRepository { get; }
+        ICountryRepository CountryRepository { get; }
     }
 }

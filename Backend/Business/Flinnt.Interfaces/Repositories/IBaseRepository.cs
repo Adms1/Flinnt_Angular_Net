@@ -12,7 +12,11 @@ namespace Flinnt.Interfaces.Repository
 
         Task<IEnumerable<T>> FindByAsync(Expression<Func<T, bool>> predicate);
 
+        Task<T> FindByFirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        
         Task<T> GetAsync(int id);
+
+        Task<T> GetAsync(long id);
 
         Task<T> AddAsync(T entity);
 

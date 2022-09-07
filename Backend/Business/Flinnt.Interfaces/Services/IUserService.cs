@@ -7,9 +7,9 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IUserService : IBaseService<User>
     {
-        Task<UserModel> GetAsync(int id);
+        Task<ApplicationUser> GetAsync(int id);
 
-        Task<bool> AddAsync(User model);
+        Task<User> AddAsync(User model);
 
         Task<bool> UpdateAsync(User model);
 

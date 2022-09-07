@@ -179,8 +179,8 @@
 }
 
 #signup-institute, #signup {
-    padding: 20px;
-    width: 270px;
+    /* padding: 20px; */
+    /* width: 270px; */
     background: rgba(255,255,255, 0.75) none repeat scroll 0 0;
     border-radius: 5px;
     border: 1px solid #EEE;
@@ -406,7 +406,7 @@
     }
     
     #signup-institute, #signup {
-        width: 240px;
+        /* width: 240px; */
     }
 
     #signup-login .login {

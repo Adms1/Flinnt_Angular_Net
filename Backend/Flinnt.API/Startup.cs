@@ -1,4 +1,5 @@
 using Flinnt.Business.Helpers;
+using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Repositories;
@@ -12,11 +13,14 @@ using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -41,8 +45,17 @@ namespace Flinnt.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddApiVersioning(x =>
+            {
+                x.DefaultApiVersion = new ApiVersion(1, 0);
+                x.AssumeDefaultVersionWhenUnspecified = true;
+                x.ReportApiVersions = true;
+            });
+
             services.AddMvc();
             services.AddDbContext<edplexdbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<edplexdbContext>().AddDefaultTokenProviders();
             services.AddDistributedMemoryCache();
             services.AddAutoMapper(c => c.AddProfile<MapperConfiguration>(), typeof(Startup));
 
@@ -112,6 +125,9 @@ namespace Flinnt.API
             services.AddScoped<IInstituteService, InstituteService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IStateService, StateService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -119,6 +135,9 @@ namespace Flinnt.API
             services.AddScoped<IInstituteRepository, InstituteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IStateRepository, StateRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)
@@ -145,25 +164,25 @@ namespace Flinnt.API
 
         private static void RegisterJwt(IServiceCollection services)
         {
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(option =>
-            //{
-            //    option.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = new Jwt().Issuer,
-            //        ValidAudience = new Jwt().Issuer,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(new Jwt().Key))
-            //    };
-            //});
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = new Jwt().Issuer,
+                    ValidAudience = new Jwt().Issuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(new Jwt().Key))
+                };
+            });
         }
 
         private void RegisterHangfire(IServiceCollection services)
@@ -191,7 +210,8 @@ namespace Flinnt.API
                 options.AddPolicy(MyAllowSpecificOrigins,
                     builder => builder
                     .WithOrigins(webUrl)
-                    //.SetIsOriginAllowed(origin => true) // allow any origin
+                    //.SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .SetIsOriginAllowed(origin => true) // allow any origin
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()

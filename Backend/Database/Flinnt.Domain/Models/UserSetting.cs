@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserSetting
     {
         public short UserSettingId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public bool? ReceiveUpdate { get; set; }
         public bool? ReceiveNewsletter { get; set; }
         public bool? MuteComments { get; set; }

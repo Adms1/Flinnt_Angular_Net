@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class City
+    public partial class City : BaseEntity
     {
         public City()
         {

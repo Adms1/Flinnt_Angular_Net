@@ -26,6 +26,11 @@ namespace Flinnt.Services
             return mapper.Map<UserProfileModel>(await unitOfWork.UserProfileRepository.GetAsync(id));
         }
 
+        public async Task<UserProfile> GetByEmailAsync(string emailId)
+        {
+            return await Task.FromResult(await unitOfWork.UserProfileRepository.FindByFirstOrDefaultAsync(x=>x.EmailId == emailId));
+        }
+
         public async Task<bool> AddAsync(UserProfile model)
 
         {

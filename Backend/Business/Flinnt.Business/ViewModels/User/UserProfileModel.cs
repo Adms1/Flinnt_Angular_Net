@@ -6,7 +6,7 @@ namespace Flinnt.Business.ViewModels
     public class UserProfileModel
     {
         public int UserProfileId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailId { get; set; }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountService } from 'src/app/services/account.service';
+import { UtilityService } from 'src/app/_services/utility.service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +12,16 @@ export class LoginComponent implements OnInit {
   formSubmitted = false;
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
+    this.utilityService.showLoading();
     this.createLoginForm()
+  }
+  
+  ngAfterViewInit(){
+    this.utilityService.hideLoading();
   }
 
   createLoginForm(){

@@ -64,181 +64,148 @@
         <div class="clear"></div>
         <div id="landing-area">
             <div class="container clearfix">
-                <div class="fleft intro">
+                <!-- <div class="fleft intro">
                     <h1 class="line1">COMMUNICATE AND</h1>
                     <h1 class="line2">TEACH ONLINE</h1>
                     <h1 class="line3">Deliver Engaging Learning Experiences</h1>
-                </div>
+                </div> -->
                 <div class="nobottommargin" id="signup-institute">
                     <div class="logintitle onlymobile">Sign up</div>
                     <div class="col_full nobottommargin">
                         <form name="instituteSignUpForm" id="instituteSignUpForm" class="nobottommargin"
                             autocomplete="off" [formGroup]="instituteSignUpForm" (ngSubmit)="onSignUpSubmit()">
 
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="institute_name" id="institute_name" value=""
-                                    class="input-block-level" placeholder="Institute name" autocomplete="on" formControlName="instituteName"
-                                    [ngClass]="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted" class="error">Institute name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="first_name" id="first_name" value="" class="input-block-level"
-                                    placeholder="First Name" autocomplete="off" autofocus="true" formControlName="firstName"
-                                    [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('firstName')?.invalid && formSubmitted" class="error">First Name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="last_name" id="last_name" value="" class="input-block-level"
-                                    placeholder="Last Name" autocomplete="off" formControlName="lastName"
-                                    [ngClass]="instituteSignUpForm.get('lastName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('lastName')?.invalid && formSubmitted" class="error">Last Name is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="mobile" id="mobile" value="" class="input-block-level"
-                                    placeholder="Mobile number" autocomplete="on" formControlName="mobile"
-                                    [ngClass]="instituteSignUpForm.get('mobile')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('mobile')?.invalid && formSubmitted" class="error">Mobile Number is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="email_id" id="email_id" value="" class="input-block-level"
-                                    placeholder="Email" autocomplete="on" formControlName="emailId"
-                                    [ngClass]="instituteSignUpForm.get('emailId')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('emailId')?.invalid && formSubmitted" class="error">Email Id is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="password" name="loginpwd" id="loginpwd" class="input-block-level"
-                                    placeholder="Password" maxlength="15" autocomplete="off" formControlName="password"
-                                    [ngClass]="instituteSignUpForm.get('password')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('password')?.invalid && formSubmitted" class="error">Password is required.</label>
-                            </div>
-                            <div class="col_full nobottommargin">
-                                <input type="password" name="verify_password" id="verify_password"
-                                    class="input-block-level last" placeholder="Confirm password" autocomplete="on" formControlName="confirmPassword"
-                                    [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted" class="error">Confirm password is required.</label>
-                            </div>
-                            
-                            <div class="col_full nobottommargin">
-                                <input type="text" name="public_page_name" id="public_page_name" value=""
-                                    class="input-block-level" placeholder="Learning page name" autocomplete="on" formControlName="pageName"
-                                    [ngClass]="instituteSignUpForm.get('pageName')?.invalid && formSubmitted ? 'error' : ''"/>
-                                    <label *ngIf="instituteSignUpForm.get('pageName')?.invalid && formSubmitted" class="error">Learning page name is required.</label>
-                                <p class="tleft dark2 notopmargin marginB15">Learning page name can't be changed once
-                                    assigned. <a href="javascript:void(null)" data-target="#pub_page"
-                                        data-toggle="modal">What is Learning page name?</a></p>
-                                <div aria-hidden="true" aria-labelledby="pubtitle" role="dialog" tabindex="-1"
-                                    id="pub_page" class="modal fade" style="display: none">
-                                    <div class="modal-dialog" style="z-index: 995!important; padding-top:40px;">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button aria-hidden="true" data-dismiss="modal" class="close"
-                                                    type="button">×</button>
-                                                <h3 id="pubtitle" class="modal-title nobottompadding">Learning Page</h3>
+                            <div class="content-wrap">
+                                <div class="container clearfix">
+                                    <div class="col_full center">
+                                        <div class="col_half nobottommargin norightmargin marginL15 marginR10">
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="institute_name" autofocus="true"
+                                                    id="institute_name" value="" class="input-block-level"
+                                                    placeholder="Institute name" autocomplete="on"
+                                                    formControlName="instituteName"
+                                                    [ngClass]="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('instituteName')?.invalid && formSubmitted"
+                                                    class="error">Institute name is required.</label>
                                             </div>
-                                            <div class="modal-body">
-                                                <p class="tleft fs13 dark2">The Learning page name should reflect the
-                                                    name of your institution or your brand. Your learning page will have
-                                                    the custom url: <span
-                                                        class="blue">www.flinnt.com/yourlearningpagename/</span></p>
-                                                <p class="tleft fs14 blue marginT20">What is learning page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">It is the gateway from where
-                                                    learners can discover and join your blended as well as online
-                                                    learning courses. It helps you engage with your existing learners
-                                                    and connect with prospective learners.</p>
-
-                                                <p class="tleft fs14 blue marginT20">What is displayed on the Page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">It gives a summary of the courses,
-                                                    number of learners and how active is your digital learning
-                                                    community. The page displays your private, public as well as paid
-                                                    courses. Obviously the private courses remain private, users cannot
-                                                    directly join them from here, they can at the most send you a
-                                                    request so that you can vet their request and permit them to join on
-                                                    merit.</p>
-
-                                                <p class="tleft fs14 blue marginT20">What can I do with the Flinnt
-                                                    Learning Page?</p>
-                                                <p class="tleft fs13 dark2 marginT5">You can promote this page to get
-                                                    existing and prospective learners to learn with you. Users can
-                                                    search for your institution or your courses, showcase the teaching
-                                                    learning expertise that you have and enable a large number of
-                                                    learners to benefit from it.</p>
-
-                                                <p class="tleft fs14 blue marginT20">Explore how other institutions and
-                                                    experts are using Flinnt:</p>
-                                                <p class="tleft fs13 dark2 marginT5">School:</p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Euro Kids Nadiad - <a
-                                                            href="https://www.flinnt.com/eurokidsnadiad/"
-                                                            target="_blank">https://www.flinnt.com/eurokidsnadiad/</a>
-                                                    </li>
-                                                    <li>DAV International School - <a
-                                                            href="https://www.flinnt.com/davahmedabad/"
-                                                            target="_blank">https://www.flinnt.com/davahmedabad/</a>
-                                                    </li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Institutions of Higher Education:
-                                                </p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Amrapali Institute of Technology and Sciences - <a
-                                                            href="https://www.flinnt.com/AGI/"
-                                                            target="_blank">https://www.flinnt.com/AGI/</a></li>
-                                                    <li>Atmiya Institute of Technology & Science - <a
-                                                            href="https://www.flinnt.com/atmiya/"
-                                                            target="_blank">https://www.flinnt.com/atmiya/</a></li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Training and Coaching Institutions:
-                                                </p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Scope Gujarat - <a href="https://www.flinnt.com/scopegujarat/"
-                                                            target="_blank">https://www.flinnt.com/scopegujarat/</a>
-                                                    </li>
-                                                    <li>Cambridge English India Network - <a
-                                                            href="https://www.flinnt.com/cambridgeenglishindianetwork/"
-                                                            target="_blank">https://www.flinnt.com/cambridgeenglishindianetwork/</a>
-                                                    </li>
-                                                    <li>Cambridge English Parents Network - <a
-                                                            href="https://www.flinnt.com/cambridgeenglishparentsnetwork/"
-                                                            target="_blank">https://www.flinnt.com/cambridgeenglishparentsnetwork/</a>
-                                                    </li>
-                                                </ol>
-
-                                                <p class="tleft fs13 dark2 marginT5">Preschools:</p>
-                                                <ol class="dark2 tleft">
-                                                    <li>Tree House - <a
-                                                            href="https://www.flinnt.com/treehouseahmedabad/"
-                                                            target="_blank">https://www.flinnt.com/treehouseahmedabad/</a>
-                                                    </li>
-                                                    <li>9 Kids - <a href="https://www.flinnt.com/9kids/"
-                                                            target="_blank">https://www.flinnt.com/9kids/</a></li>
-                                                    <li>Shanti Juniors South Bopal - <a
-                                                            href="https://www.flinnt.com/shantijuniorssouthbopal/"
-                                                            target="_blank">https://www.flinnt.com/shantijuniorssouthbopal/</a>
-                                                    </li>
-                                                    <li>Rajshree Kidzee - <a
-                                                            href="https://www.flinnt.com/rajshreekidzee/"
-                                                            target="_blank">https://www.flinnt.com/rajshreekidzee/</a>
-                                                    </li>
-                                                </ol>
+                                            <div class="col_full nobottommargin">
+                                                <input multiple type="text" name="address" id="address" value=""
+                                                    class="input-block-level" placeholder="Address" autocomplete="on"
+                                                    formControlName="address"
+                                                    [ngClass]="instituteSignUpForm.get('address')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('address')?.invalid && formSubmitted"
+                                                    class="error">Addresss is required.</label>
                                             </div>
-                                            <div class="modal-footer notopmargin">
-                                                <button data-dismiss="modal" class="btn btn-default"
-                                                    type="button">Close</button>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="cityName" id="cityName" value=""
+                                                    class="input-block-level" placeholder="City" autocomplete="on"
+                                                    formControlName="cityName"
+                                                    [ngClass]="instituteSignUpForm.get('cityName')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('cityName')?.invalid && formSubmitted"
+                                                    class="error">City is required.</label>
                                             </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="pincode" id="pincode" value=""
+                                                    class="input-block-level" placeholder="Pincode" autocomplete="on"
+                                                    formControlName="pincode"
+                                                    [ngClass]="instituteSignUpForm.get('pincode')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('pincode')?.invalid && formSubmitted"
+                                                    class="error">Pincode is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <ng-select2 [data]="countryData" formControlName="countryId"
+                                                    (valueChanged)="countryValueChanged($event)" placeholder="Select country"
+                                                    [ngClass]="instituteSignUpForm.get('countryId')?.invalid && formSubmitted ? 'error' : ''">
+                                                </ng-select2>
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('countryId')?.invalid && formSubmitted"
+                                                    class="error">Country is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <ng-select2 [data]="stateData" formControlName="stateId" placeholder="Select state"
+                                                    [ngClass]="instituteSignUpForm.get('stateId')?.invalid && formSubmitted ? 'error' : ''">
+                                                </ng-select2>
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('stateId')?.invalid && formSubmitted"
+                                                    class="error">State is required.</label>
+                                            </div>
+                                        </div>
+                                        <div class="col_half nobottommargin norightmargin">
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="first_name" id="first_name" value=""
+                                                    class="input-block-level" placeholder="First Name"
+                                                    autocomplete="off" formControlName="firstName"
+                                                    [ngClass]="instituteSignUpForm.get('firstName')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('firstName')?.invalid && formSubmitted"
+                                                    class="error">First Name is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="last_name" id="last_name" value=""
+                                                    class="input-block-level" placeholder="Last Name" autocomplete="off"
+                                                    formControlName="lastName"
+                                                    [ngClass]="instituteSignUpForm.get('lastName')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('lastName')?.invalid && formSubmitted"
+                                                    class="error">Last Name is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="mobile" id="mobile" value=""
+                                                    class="input-block-level" placeholder="Mobile number"
+                                                    autocomplete="on" formControlName="mobileNo"
+                                                    [ngClass]="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('mobileNo')?.invalid && formSubmitted"
+                                                    class="error">Mobile Number is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="text" name="email_id" id="email_id" value=""
+                                                    class="input-block-level" placeholder="Email" autocomplete="on"
+                                                    formControlName="emailId"
+                                                    [ngClass]="instituteSignUpForm.get('emailId')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('emailId')?.invalid && formSubmitted"
+                                                    class="error">Email Id is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="password" name="loginpwd" id="loginpwd"
+                                                    class="input-block-level" placeholder="Password" maxlength="15"
+                                                    autocomplete="off" formControlName="password"
+                                                    [ngClass]="instituteSignUpForm.get('password')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('password')?.invalid && formSubmitted"
+                                                    class="error">Password is required.</label>
+                                            </div>
+                                            <div class="col_full nobottommargin">
+                                                <input type="password" name="verify_password" id="verify_password"
+                                                    class="input-block-level last" placeholder="Confirm password"
+                                                    autocomplete="on" formControlName="confirmPassword"
+                                                    [ngClass]="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted ? 'error' : ''" />
+                                                <label
+                                                    *ngIf="instituteSignUpForm.get('confirmPassword')?.invalid && formSubmitted"
+                                                    class="error">Confirm password is required.</label>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col_full nobottommargin site-home-sign-area center">
+                                        <input type="hidden" name="reg_now" id="reg_now" value="1" />
+                                        <button type="submit" class="btn btn-success input-block-level" name="sgpbtn"
+                                            id="sgnupbtn">Sign Up</button>
+
+                                        <p class="term-link">By signing up, you agree to our <a
+                                                href="https://devtest.flinnt.com/app/static/professional-id-terms/"
+                                                target="_blank">Terms and Conditions</a>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col_full nobottommargin site-home-sign-area">
-                                <input type="hidden" name="reg_now" id="reg_now" value="1" />
-                                <button type="submit" class="btn btn-success input-block-level" name="sgpbtn"
-                                    id="sgnupbtn">Sign Up</button>
 
-                                <p class="term-link">By signing up, you agree to our <a
-                                        href="https://devtest.flinnt.com/app/static/professional-id-terms/"
-                                        target="_blank">Terms and Conditions</a></p>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -290,7 +257,8 @@
 
                             <div class="signup-contents">
 
-                                <img src="././assets/templates/images/home/home-subj-expert.jpg" alt="Subject Expert Banner" />
+                                <img src="././assets/templates/images/home/home-subj-expert.jpg"
+                                    alt="Subject Expert Banner" />
                                 <h1>Subject Expert</h1>
                                 <div class="col_full tleft">
                                     <ul class="">
@@ -587,22 +555,28 @@
                                             src="././assets/templates/images/home/news/news_the_hindu_business_line.png"
                                             alt="The Hindu Business Line" /></a></li>
                                 <li><a href="http://yourstory.com/2014/12/flinnt-edtech-ahmedabad/" target="_blank"><img
-                                            src="././assets/templates/images/home/news/news_yourstory.png" alt="YourStory" /></a>
+                                            src="././assets/templates/images/home/news/news_yourstory.png"
+                                            alt="YourStory" /></a>
                                 </li>
                                 <li><a href="http://www.iamwire.com/2015/02/flinnt-app-web-based-platform-create-engagement-teachers-students/109157"
-                                        target="_blank"><img src="././assets/templates/images/home/news/news_iamwire.png"
+                                        target="_blank"><img
+                                            src="././assets/templates/images/home/news/news_iamwire.png"
                                             alt="iamwire" /></a></li>
                                 <li><a href="http://www.educationworld.in/teacher-resources/cloud-based-technology-platforms-for-teachers.html"
-                                        target="_blank"><img src="././assets/templates/images/home/news/news_education_world.png"
+                                        target="_blank"><img
+                                            src="././assets/templates/images/home/news/news_education_world.png"
                                             alt="Education Times" /></a></li>
                                 <li><a href="http://edtechreview.in/trends-insights/insights/1652-preschool-parents-great-intentions-poor-outcomes"
-                                        target="_blank"><img src="././assets/templates/images/home/news/news_edtech_review.png"
+                                        target="_blank"><img
+                                            src="././assets/templates/images/home/news/news_edtech_review.png"
                                             alt="EdTech Review" /></a></li>
                                 <li><a href="https://www.edsurge.com/flinnt-product" target="_blank"><img
-                                            src="././assets/templates/images/home/news/news_edsurge.png" alt="EdSurge" /></a>
+                                            src="././assets/templates/images/home/news/news_edsurge.png"
+                                            alt="EdSurge" /></a>
                                 </li>
                                 <li><a href="http://dnasyndication.com/dna/City-Ahmedabad/dna_english_news_and_features/%E2%80%98FLINT%E2%80%99--a-smart-step-to-smart-education/DNAHM79773"
-                                        target="_blank"><img src="././assets/templates/images/home/news/news_dna_syndication.png"
+                                        target="_blank"><img
+                                            src="././assets/templates/images/home/news/news_dna_syndication.png"
                                             alt="DNA Syndication" /></a></li>
                             </ul>
 

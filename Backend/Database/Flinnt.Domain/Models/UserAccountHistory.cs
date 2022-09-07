@@ -8,7 +8,7 @@ namespace Flinnt.Domain
     public partial class UserAccountHistory
     {
         public int UserAccountHistoryId { get; set; }
-        public int? UserId { get; set; }
+        public long? UserId { get; set; }
         public int? ActionUserId { get; set; }
         public string HistoryAction { get; set; }
         public DateTime? HistoryDateTime { get; set; }

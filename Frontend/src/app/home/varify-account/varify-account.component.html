@@ -1,7 +1,7 @@
 <body class="stretched">
     <div id="wrapper" class="clearfix">
         <div id="header" class="header2">
-            <app-header [roleId]="roleId"></app-header>
+            <app-header [roleId]="roleId" [userObj] = "institue"></app-header>
         </div>
         <div id="content">
             <div id="page-title">
@@ -18,13 +18,27 @@
                             <h4>
                                 You are just one step away from activating your account.
                                 <br> All you have to do now is follow the verification link we've sent to your
-                                registered e-mail id <strong>vaishnanik@gmail.com</strong>.
+                                registered e-mail id <strong>{{institue.emailId}}</strong>.
                             </h4>
                         </div>
+                        <h4>Please enter the 4-digit verification code we sent via Email:</h4>
+                        <span>(we want to make sure it's you before we contact our movers)</span>
+                        <div id="verification">
+                            <div id="form">
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-embossed" (click)="onVerify()">Verify</button>
+                            </div>
+                        </div>
+                        
                         <div class="col_full nobottommargin marginB10">
                             <p class="fs14">Did not receive e-mail? Please wait for a couple of minutes and refresh your
                                 inbox before clicking <a
-                                    href="https://devtest.flinnt.com/app/home/verify-account/?rsnd=NjIyNDEwODcz">here.</a>
+                                    href="javascript:void(0)">here.</a>
                             </p>
                         </div>
                         <div class="col_full nobottommargin marginB10">

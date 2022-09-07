@@ -11,11 +11,20 @@ namespace Flinnt.Business.Helpers
             CreateMap<InstituteModel, Institute>();
             CreateMap<Institute, InstituteModel>();
 
-            CreateMap<UserModel, User>();
-            CreateMap<User, UserModel>();
+            CreateMap<ApplicationUser, User>();
+            CreateMap<User, ApplicationUser>();
 
             CreateMap<UserProfileModel, UserProfile>();
             CreateMap<UserProfile, UserProfileModel>();
+
+            CreateMap<CountryViewModel, Country>();
+            CreateMap<Country, CountryViewModel>();
+
+            CreateMap<CityViewModel, City>();
+            CreateMap<City, CityViewModel>();
+
+            CreateMap<StateViewModel, State>();
+            CreateMap<State, StateViewModel>();
         }
     }
 }

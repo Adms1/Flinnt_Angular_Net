@@ -9,7 +9,7 @@ namespace Flinnt.Domain
     {
         public int UserRoleId { get; set; }
         public byte RoleId { get; set; }
-        public int UserId { get; set; }
+        public long UserId { get; set; }
         public DateTime? CreateDateTime { get; set; }
 
         public virtual Role Role { get; set; }

@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  APP_URL:"https://api.com"
+  API_Version:"1",
+  APP_URL:"http://api.skool360.com/api",
+  //APP_URL:"https://localhost:44365/api",
 };
 
 /*
@@ -14,4 +16,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

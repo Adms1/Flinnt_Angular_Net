@@ -5,10 +5,11 @@ import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
-import { AccountService } from '../services/account.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/SharedModule.module';
 import { VarifyAccountComponent } from './varify-account/varify-account.component';
+import { InstituteService } from '../_services/institute.service';
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,14 @@ import { VarifyAccountComponent } from './varify-account/varify-account.componen
     HomeRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelect2Module
   ],
   exports:[
     
   ],
   providers:[
-    AccountService
+    InstituteService
   ]
 })
 export class HomeModule { }
