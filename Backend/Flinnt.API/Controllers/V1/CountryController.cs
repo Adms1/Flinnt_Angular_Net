@@ -4,6 +4,7 @@ using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/{v:apiVersion}/country")]
     public class CountryController : BaseApiController

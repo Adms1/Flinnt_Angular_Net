@@ -66,6 +66,7 @@ namespace Flinnt.API
             RegisterHangfire(services);
             RegisterSwagger(services);
             RegisterCors(services);
+            RegisterIdentity(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -216,6 +217,18 @@ namespace Flinnt.API
                     .AllowAnyMethod()
                     .AllowCredentials()
                     );
+            });
+        }
+
+        private void RegisterIdentity(IServiceCollection services)
+        {
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 1;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             });
         }
 

@@ -41,17 +41,17 @@ namespace Flinnt.API.Controllers
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        public async Task<object> Login([FromBody] ApplicationUser userModel)
+        public async Task<object> Login([FromBody] LoginViewModel loginViewModel)
         {
             return await GetDataWithMessage(async () =>
             {
-                if (userModel != null)
+                if (loginViewModel != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(userModel.UserName, userModel.Password, false, false);                    
+                    var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, false, false);
                     if (result.Succeeded)
-                    {                        
+                    {
                         var user = new LoginResponseModel();
-                        user.ApplicationUser = await _userManager.FindByNameAsync(userModel.UserName);
+                        user.ApplicationUser = await _userManager.FindByNameAsync(loginViewModel.Email);
                         var token = ApiTokenHelper.GenerateJSONWebToken(user.ApplicationUser);
                         user.Token = token;
                         return Response(user, string.Empty);

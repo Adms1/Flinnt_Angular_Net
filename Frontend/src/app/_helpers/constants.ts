@@ -26,6 +26,10 @@ export const Constants = {
     
     INSTITUTE_PAGE:{
         INSTITUTE_OBJ:"CurrentInstitute"
+    },
+
+    LOGIN_PAGE:{
+        USER_OBJ:"current_user"
     }
 }
 

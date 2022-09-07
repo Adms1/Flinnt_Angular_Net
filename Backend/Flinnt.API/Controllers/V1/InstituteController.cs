@@ -4,6 +4,9 @@ using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.Services;
+using Hangfire;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Logging;
@@ -15,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/{v:apiVersion}/institute")]
     public class InstituteController : BaseApiController
@@ -25,18 +29,21 @@ namespace Flinnt.API.Controllers
         private readonly IUserProfileService _userProfileService;
         private readonly IHtmlLocalizer<InstituteController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public InstituteController(IInstituteService instituteService, 
             IUserService userService, 
             IUserProfileService userProfileService,
             ICityService cityService,
-            IHtmlLocalizer<InstituteController> htmlLocalizer)
+            IHtmlLocalizer<InstituteController> htmlLocalizer,
+            UserManager<ApplicationUser> userManager)
         {
             _instituteService = instituteService;
             _userService = userService;
             _userProfileService = userProfileService;
             _cityService = cityService;
             _localizer = htmlLocalizer;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -51,6 +58,7 @@ namespace Flinnt.API.Controllers
             });
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("create")]
         public async Task<object> Post([FromBody] InstituteModel model)
@@ -105,7 +113,7 @@ namespace Flinnt.API.Controllers
                 // save userObj
                 User user = new User
                 {
-                    LoginId = Guid.NewGuid().ToString(),
+                    LoginId = model.EmailId,
                     AuthenticationTypeId = 1,
                     IsActive = true,
                     IsDeleted = false,
@@ -130,6 +138,16 @@ namespace Flinnt.API.Controllers
                     };
 
                     await _userProfileService.AddAsync(userProfile);
+
+                    //save identity
+                    var identityObj = new ApplicationUser
+                    {
+                        UserName = model.EmailId,
+                        Email = model.EmailId,
+                        UserId = userRes.UserId,
+                        PhoneNumber = model.MobileNo
+                    };
+                    var result = await _userManager.CreateAsync(identityObj, model.Password);
                 }
 
                 //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());

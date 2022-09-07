@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Flinnt.Business.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 #nullable disable
 
@@ -1246,7 +1247,8 @@ namespace Flinnt.Domain
                     .HasComment("The user type.\r\nPossible Values: Institution Staff, Parent, Student");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

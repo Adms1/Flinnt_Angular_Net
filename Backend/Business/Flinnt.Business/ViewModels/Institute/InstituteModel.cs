@@ -38,8 +38,6 @@ namespace Flinnt.Business.ViewModels
         public bool? PageNameChanged { get; set; }
         public string DisplayPicture { get; set; }
         public string BannerPicture { get; set; }
-        public DateTime? CreateDateTime { get; set; }
-        public DateTime? UpdateDateTime { get; set; }
         [Required]
         public string Password { get; set; }
         public string OneTimePassword { get; set; }

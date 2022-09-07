@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Constants } from 'src/app/_helpers/constants';
+import { ApiResponse } from 'src/app/_models/response';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
 @Component({
@@ -12,7 +16,9 @@ export class LoginComponent implements OnInit {
   formSubmitted = false;
   constructor(
     private formBuilder: FormBuilder,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private authService : AuthenticationService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   createLoginForm(){
     this.loginForm = this.formBuilder.group({
-			userName: ['', Validators.required],
+			email: ['', Validators.required],
       passWord: ['', Validators.required]
 		});
   }
@@ -39,8 +45,17 @@ export class LoginComponent implements OnInit {
 		console.log('-----Login in JSON Format-----');
 		console.log(data);
     // APIs
-
-    this.resetTeamForm();
+    this.authService.doLogin(this.loginForm.value)
+      .then((res: ApiResponse) => {
+        if (res.messageType == 0) {
+          // navigate to verification link if verification not done OR configuration page OR dashboard
+          
+          localStorage.setItem(Constants.TOKEN, JSON.stringify(res.data.token));
+          localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.applicationUser));
+          this.route.navigate(['institute/verify-account']);
+          this.resetTeamForm();
+        }
+      });
 	}
 	resetTeamForm() {
 		this.loginForm.reset();
