@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     // APIs
     this.authService.doLogin(this.loginForm.value)
       .then((res: ApiResponse) => {
-        if (res.messageType == 0) {
+        if (res.statusCode == 200) {
           // navigate to verification link if verification not done OR configuration page OR dashboard
           
           localStorage.setItem(Constants.TOKEN, JSON.stringify(res.data.token));

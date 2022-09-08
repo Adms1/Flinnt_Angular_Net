@@ -2,6 +2,7 @@ using Flinnt.Business.ViewModels.General;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -57,7 +58,7 @@ namespace Flinnt.Business.Helpers
             {
                 //throw ex;
                 responseDetail.Message = "Oops Something went wrong. Please try again leter.";
-                responseDetail.MessageType = Enums.General.DropMessageType.Error;
+                responseDetail.StatusCode = HttpStatusCode.InternalServerError;
             }
             return responseDetail;
         }

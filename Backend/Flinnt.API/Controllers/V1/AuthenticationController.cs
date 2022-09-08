@@ -16,6 +16,7 @@ using Flinnt.Business.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using System.Net;
 
 namespace Flinnt.API.Controllers
 {
@@ -57,7 +58,7 @@ namespace Flinnt.API.Controllers
                         return Response(user, string.Empty);
                     }
                 }
-                return Response(new LoginResponseModel(), _localizer["UserNotFound"].Value.ToString(), DropMessageType.Error);
+                return Response(new LoginResponseModel(), _localizer["UserNotFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
     }

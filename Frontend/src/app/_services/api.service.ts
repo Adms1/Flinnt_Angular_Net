@@ -274,7 +274,7 @@ export class ApiService {
   showToastrMsg(res) {
     if (res) {
       const msg = res.message || res.msg || (res.result && res.result.msg);
-      if(res.messageType == 0){
+      if(res.statusCode == 200){
         if (msg) {
           this.utility.showSuccessToast(msg);
         }

@@ -14,6 +14,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
@@ -70,7 +71,7 @@ namespace Flinnt.API.Controllers
                     return await AddAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return Response(model, string.Join(",", errors), DropMessageType.Error);
+                return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
 
@@ -86,14 +87,14 @@ namespace Flinnt.API.Controllers
                     return await UpdateAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return Response(model, string.Join(",", errors), DropMessageType.Error);
+                return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
-        private async Task<Tuple<InstituteModel, string, DropMessageType>> AddAsync(InstituteModel model)
+        private async Task<Tuple<InstituteModel, string, HttpStatusCode>> AddAsync(InstituteModel model)
         {
             if(await _userProfileService.GetByEmailAsync(model.EmailId) != null)
             {
-                return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), DropMessageType.Error);
+                return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             }
             //save city
             CityViewModel cityViewModel = new CityViewModel
@@ -153,15 +154,15 @@ namespace Flinnt.API.Controllers
                 //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
-            return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), DropMessageType.Error);
+            return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
-        private async Task<Tuple<InstituteModel, string, DropMessageType>> UpdateAsync(InstituteModel model)
+        private async Task<Tuple<InstituteModel, string, HttpStatusCode>> UpdateAsync(InstituteModel model)
         {
             var flag = await _instituteService.UpdateAsync(model);
             if (flag)
                 return Response(model, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            return Response(model, _localizer["RecordNotUpdate"].Value.ToString(), DropMessageType.Error);
+            return Response(model, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
 
@@ -174,7 +175,7 @@ namespace Flinnt.API.Controllers
                 var flag = await _instituteService.DeleteAsync(id);
                 if (flag)
                     return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
-                return Response(new BooleanResponseModel { Value = flag }, _localizer["ReordNotDeleteSucess"].Value.ToString(), DropMessageType.Error);
+                return Response(new BooleanResponseModel { Value = flag }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
     }

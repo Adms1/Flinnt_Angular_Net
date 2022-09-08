@@ -1,4 +1,5 @@
 using Flinnt.Business.Enums.General;
+using System.Net;
 
 namespace Flinnt.Business.ViewModels.General
 {
@@ -10,7 +11,7 @@ namespace Flinnt.Business.ViewModels.General
 
         public Error Error { get; set; }
 
-        public DropMessageType MessageType { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
     }
 
     public class Error

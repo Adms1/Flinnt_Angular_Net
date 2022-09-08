@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels.General;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
@@ -15,7 +16,7 @@ namespace Flinnt.API.Controllers
         {
         }
 
-        protected async Task<ResponseDetail<T>> GetDataWithMessage<T>(Func<Task<Tuple<T, string, DropMessageType>>> getDataFunc)
+        protected async Task<ResponseDetail<T>> GetDataWithMessage<T>(Func<Task<Tuple<T, string, HttpStatusCode>>> getDataFunc)
         {
             var output = new ResponseDetail<T>();
             try
@@ -23,12 +24,12 @@ namespace Flinnt.API.Controllers
                 var result = await getDataFunc();
                 output.Data = result.Item1;
                 output.Message = result.Item2;
-                output.MessageType = result.Item3;               
+                output.StatusCode = result.Item3;               
                 return await Task.FromResult(output);
             }
             catch (Exception ex)
             {
-                output.MessageType = DropMessageType.Error;
+                output.StatusCode = HttpStatusCode.InternalServerError;
                 output.Error = new Error
                 {
                     Code = ErrorCode.SERVICE_EXECUTION_FAILED,
@@ -40,9 +41,9 @@ namespace Flinnt.API.Controllers
             }
         }
 
-        protected new Tuple<T, string, DropMessageType> Response<T>(T data, string message, DropMessageType messageType = DropMessageType.Success)
+        protected new Tuple<T, string, HttpStatusCode> Response<T>(T data, string message, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
-            return new Tuple<T, string, DropMessageType>(data, message, messageType);
+            return new Tuple<T, string, HttpStatusCode>(data, message, statusCode);
         }
     }
 }

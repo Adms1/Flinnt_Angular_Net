@@ -62,7 +62,7 @@ export class InstituteSignupComponent implements OnInit {
   getCountries() {
     this.countryService.getCountries()
       .then((res: ApiResponse) => {
-        if (res.messageType == 0) {
+        if (res.statusCode == 200) {
           if (!!res.data) {
             this.countryData = res.data.map(x => {
               return {
@@ -85,7 +85,7 @@ export class InstituteSignupComponent implements OnInit {
   getStates(countryId) {
     this.stateService.getStateByCountryId(Number(countryId))
       .then((res: ApiResponse) => {
-        if (res.messageType == 0) {
+        if (res.statusCode == 200) {
           if (!!res.data) {
             this.stateData = res.data.map(x => {
               return {
@@ -124,7 +124,7 @@ export class InstituteSignupComponent implements OnInit {
     // APIs
     this.instituteService.saveInstitute(this.instituteSignUpForm.value)
       .then((res: ApiResponse) => {
-        if (res.messageType == 0) {
+        if (res.statusCode == 200) {
           // navigate to verification link if signUp goes well
           localStorage.setItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ, JSON.stringify(res.data));
           this.route.navigate(['institute/verify-account']);
