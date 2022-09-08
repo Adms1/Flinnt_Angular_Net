@@ -28,6 +28,10 @@ namespace Flinnt.API.Controllers
         private readonly IUserService _userService;
         private readonly ICityService _cityService;
         private readonly IUserProfileService _userProfileService;
+        private readonly IUserRoleService _userRoleService;
+        private readonly IUserAccountHistoryService _userAccountHistoryService;
+        private readonly IUserAccountVerificationService _userAccountVerificationService;
+        private readonly IUserInstituteService _userInstituteService;
         private readonly IHtmlLocalizer<InstituteController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly UserManager<ApplicationUser> _userManager;
@@ -36,6 +40,10 @@ namespace Flinnt.API.Controllers
             IUserService userService, 
             IUserProfileService userProfileService,
             ICityService cityService,
+            IUserRoleService userRoleService, 
+            IUserAccountHistoryService userAccountHistoryService,
+            IUserAccountVerificationService userAccountVerificationService,
+            IUserInstituteService userInstituteService,
             IHtmlLocalizer<InstituteController> htmlLocalizer,
             UserManager<ApplicationUser> userManager)
         {
@@ -43,6 +51,10 @@ namespace Flinnt.API.Controllers
             _userService = userService;
             _userProfileService = userProfileService;
             _cityService = cityService;
+            _userRoleService = userRoleService;
+            _userAccountHistoryService = userAccountHistoryService;
+            _userInstituteService = userInstituteService;
+            _userAccountVerificationService = userAccountVerificationService;
             _localizer = htmlLocalizer;
             _userManager = userManager;
         }
@@ -96,6 +108,7 @@ namespace Flinnt.API.Controllers
             {
                 return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             }
+
             //save city
             CityViewModel cityViewModel = new CityViewModel
             {
@@ -140,6 +153,29 @@ namespace Flinnt.API.Controllers
 
                     await _userProfileService.AddAsync(userProfile);
 
+                    //save userInstitute
+
+                    UserInstitute userInstitute = new UserInstitute
+                    {
+                        InstituteId = extInstitute.InstituteId,
+                        RoleId = 1,
+                        UserId = userRes.UserId,
+                        UserTypeId = 1,
+                        IsActive = true,
+                        CreateDateTime = DateTime.Now
+                    };
+
+                    await _userInstituteService.AddAsync(userInstitute);
+                    //save userRole
+
+                    UserRole userRole = new UserRole
+                    {
+                        RoleId = 1,
+                        UserId = userRes.UserId,
+                        CreateDateTime = DateTime.Now
+                    };
+                    await _userRoleService.AddAsync(userRole);
+
                     //save identity
                     var identityObj = new ApplicationUser
                     {
@@ -148,13 +184,42 @@ namespace Flinnt.API.Controllers
                         UserId = userRes.UserId,
                         PhoneNumber = model.MobileNo
                     };
-                    var result = await _userManager.CreateAsync(identityObj, model.Password);
+                    await _userManager.CreateAsync(identityObj, model.Password);
+
+                    //save userAccountVerification
+
+                    UserAccountVerification userAccountVerification = new UserAccountVerification
+                    {
+                        UserId = userRes.UserId,
+                        VerificationCode = GenerateRandomNo(),
+                        ExpireDateTime = DateTime.Now.AddMinutes(30),
+                        CreateDateTime = DateTime.Now
+                    };
+                    await _userAccountVerificationService.AddAsync(userAccountVerification);
+
+                    //save userAccountHistory
+
+                    UserAccountHistory userAccountHistory = new UserAccountHistory
+                    {
+                        UserId = userRes.UserId,
+                        HistoryAction = "User created"
+                    };
+                    await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
 
                 //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
+
+        //Generate RandomNo
+        public string GenerateRandomNo()
+        {
+            int _min = 1000;
+            int _max = 9999;
+            Random _rdm = new Random();
+            return _rdm.Next(_min, _max).ToString();
         }
 
         private async Task<Tuple<InstituteModel, string, HttpStatusCode>> UpdateAsync(InstituteModel model)

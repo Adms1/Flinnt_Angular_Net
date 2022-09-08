@@ -18,6 +18,10 @@ namespace Flinnt.UoW
             CityRepository = new CityRepository(context);
             StateRepository = new StateRepository(context);
             CountryRepository = new CountryRepository(context);
+            UserRoleRepository = new UserRoleRepository(context);
+            UserAccountHistoryRepository = new UserAccountHistoryRepository(context);
+            UserAccountVerificationRepository = new UserAccountVerificationRepository(context);
+            UserInstituteRepository = new UserInstituteRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
@@ -26,6 +30,10 @@ namespace Flinnt.UoW
         public ICityRepository CityRepository { get; }
         public IStateRepository StateRepository { get; }
         public ICountryRepository CountryRepository { get; }
+        public IUserRoleRepository UserRoleRepository { get; }
+        public IUserAccountHistoryRepository UserAccountHistoryRepository { get; }
+        public IUserAccountVerificationRepository UserAccountVerificationRepository { get; }
+        public IUserInstituteRepository UserInstituteRepository { get; }
 
         private bool disposed;
 

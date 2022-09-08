@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class UserAccountVerification
+    public partial class UserAccountVerification : BaseEntity
     {
         public int UserAccountVerificationId { get; set; }
         public long UserId { get; set; }

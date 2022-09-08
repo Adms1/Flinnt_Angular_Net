@@ -11,5 +11,9 @@ namespace Flinnt.UoW
         ICityRepository CityRepository { get; }
         IStateRepository StateRepository { get; }
         ICountryRepository CountryRepository { get; }
+        IUserRoleRepository UserRoleRepository { get; }
+        IUserAccountHistoryRepository UserAccountHistoryRepository { get; }
+        IUserAccountVerificationRepository UserAccountVerificationRepository { get; }
+        IUserInstituteRepository UserInstituteRepository { get; }
     }
 }
