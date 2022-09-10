@@ -22,6 +22,7 @@ namespace Flinnt.UoW
             UserAccountHistoryRepository = new UserAccountHistoryRepository(context);
             UserAccountVerificationRepository = new UserAccountVerificationRepository(context);
             UserInstituteRepository = new UserInstituteRepository(context);
+            UserSettingRepository = new UserSettingRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
@@ -34,6 +35,7 @@ namespace Flinnt.UoW
         public IUserAccountHistoryRepository UserAccountHistoryRepository { get; }
         public IUserAccountVerificationRepository UserAccountVerificationRepository { get; }
         public IUserInstituteRepository UserInstituteRepository { get; }
+        public IUserSettingRepository UserSettingRepository { get; }
 
         private bool disposed;
 

@@ -77,6 +77,9 @@ namespace Flinnt.API
                 app.UseDeveloperExceptionPage();
             }
 
+            // Map Dashboard to the `http://<your-app>/hangfire` URL.
+            app.UseHangfireDashboard();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -111,6 +114,8 @@ namespace Flinnt.API
             AppSettings.Initialize(Configuration);
             MailSettings.Initialize(Configuration);
             Jwt.Initialize(Configuration);
+
+            app.UseDeveloperExceptionPage();
         }
 
         private static void RegisterDI(IServiceCollection services)
@@ -129,6 +134,11 @@ namespace Flinnt.API
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IStateService, StateService>();
+            services.AddScoped<IUserInstituteService, UserInstituteService>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IUserAccountHistoryService, UserAccountHistoryService>();
+            services.AddScoped<IUserAccountVerificationService, UserAccountVerificationService>();
+            services.AddScoped<IUserSettingService, UserSettingService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -138,7 +148,11 @@ namespace Flinnt.API
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
-            services.AddScoped<IStateRepository, StateRepository>();
+            services.AddScoped<IUserInstituteRepository, UserInstituteRepository>();
+            services.AddScoped<IUserSettingRepository, UserSettingRepository>();
+            services.AddScoped<IUserAccountHistoryRepository, UserAccountHistoryRepository>();
+            services.AddScoped<IUserAccountVerificationRepository, UserAccountVerificationRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

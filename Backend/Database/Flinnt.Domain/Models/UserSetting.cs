@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class UserSetting
+    public partial class UserSetting : BaseEntity
     {
         public short UserSettingId { get; set; }
         public long UserId { get; set; }

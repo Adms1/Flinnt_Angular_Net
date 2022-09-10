@@ -1,18 +1,15 @@
-﻿using Flinnt.Business.Enums.General;
-using Flinnt.Business.ViewModels;
+﻿using Flinnt.Business.ViewModels;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
+using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Services;
 using Flinnt.Services;
-using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
-using Microsoft.Extensions.Logging;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -32,6 +29,8 @@ namespace Flinnt.API.Controllers
         private readonly IUserAccountHistoryService _userAccountHistoryService;
         private readonly IUserAccountVerificationService _userAccountVerificationService;
         private readonly IUserInstituteService _userInstituteService;
+        private readonly IUserSettingService _userSettingService;
+        private readonly IBackgroundService _backgroundService;
         private readonly IHtmlLocalizer<InstituteController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly UserManager<ApplicationUser> _userManager;
@@ -40,10 +39,12 @@ namespace Flinnt.API.Controllers
             IUserService userService, 
             IUserProfileService userProfileService,
             ICityService cityService,
-            IUserRoleService userRoleService, 
+            IUserRoleService userRoleService,
             IUserAccountHistoryService userAccountHistoryService,
             IUserAccountVerificationService userAccountVerificationService,
             IUserInstituteService userInstituteService,
+            IUserSettingService userSettingService,
+            IBackgroundService backgroundService,
             IHtmlLocalizer<InstituteController> htmlLocalizer,
             UserManager<ApplicationUser> userManager)
         {
@@ -54,7 +55,9 @@ namespace Flinnt.API.Controllers
             _userRoleService = userRoleService;
             _userAccountHistoryService = userAccountHistoryService;
             _userInstituteService = userInstituteService;
+            _userSettingService = userSettingService;
             _userAccountVerificationService = userAccountVerificationService;
+            _backgroundService = backgroundService;
             _localizer = htmlLocalizer;
             _userManager = userManager;
         }
@@ -84,6 +87,20 @@ namespace Flinnt.API.Controllers
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
+            });
+
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("account-verify/{otp}")]
+        public async Task<object> Post(string otp)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                // TODO : KISHAN
+                var result = (await _instituteService.GetAllAsync());
+                return Response(result, string.Empty);
             });
         }
 
@@ -186,6 +203,15 @@ namespace Flinnt.API.Controllers
                     };
                     await _userManager.CreateAsync(identityObj, model.Password);
 
+                    // save userSetting
+
+                    var userSetting = new UserSetting
+                    {
+                        UserId = userRes.UserId
+                    };
+
+                    await _userSettingService.AddAsync(userSetting);
+
                     //save userAccountVerification
 
                     UserAccountVerification userAccountVerification = new UserAccountVerification
@@ -207,14 +233,14 @@ namespace Flinnt.API.Controllers
                     await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
 
-                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
+                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         //Generate RandomNo
-        public string GenerateRandomNo()
+        private string GenerateRandomNo()
         {
             int _min = 1000;
             int _max = 9999;
