@@ -6,7 +6,8 @@ export class API {
   };
 
   public static INSTITUTE_ROUTES = {
-    saveInstitute: `/${environment.API_Version}/institute/create`
+    saveInstitute: `/${environment.API_Version}/institute/create`,
+    accountVerify: `/${environment.API_Version}/institute/account-verify`
   };
 
   public static COUNTRY_ROUTES = {

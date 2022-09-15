@@ -7,12 +7,10 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IUserAccountVerificationService : IBaseService<UserAccountVerification>
     {
-        Task<UserAccountVerification> GetAsync(int id);
+        Task<UserAccountVerification> GetByUserIdAsync(long userId);
 
         Task<UserAccountVerification> AddAsync(UserAccountVerification model);
 
         Task<bool> UpdateAsync(UserAccountVerification model);
-
-        Task<bool> DeleteAsync(int id);
     }
 }

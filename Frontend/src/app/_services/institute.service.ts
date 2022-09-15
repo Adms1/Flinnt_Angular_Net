@@ -12,4 +12,8 @@ export class InstituteService {
   saveInstitute(params) {
     return this.apiService.post(`${API.INSTITUTE_ROUTES.saveInstitute}`, params, true);
   }
+
+  accountVerify(userId, otp){
+    return this.apiService.post(`${API.INSTITUTE_ROUTES.accountVerify}/${userId}/${otp}`,null, true);
+  }
 }

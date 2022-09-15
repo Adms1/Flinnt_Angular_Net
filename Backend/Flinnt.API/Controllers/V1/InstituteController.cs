@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Services;
+using Flinnt.Mail.Models;
 using Flinnt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -93,14 +94,39 @@ namespace Flinnt.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("account-verify/{otp}")]
-        public async Task<object> Post(string otp)
+        [Route("account-verify/{userId}/{otp}")]
+        public async Task<object> Post(long userId,string otp)
         {
             return await GetDataWithMessage(async () =>
             {
                 // TODO : KISHAN
-                var result = (await _instituteService.GetAllAsync());
-                return Response(result, string.Empty);
+                var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userId);
+                if(userOtpRes != null)
+                {
+                    DateTime dtNow = DateTime.Now;
+                    DateTime dtOtp = userOtpRes.ExpireDateTime.Value;
+
+                    if(userOtpRes.VerificationCode != otp)
+                    {
+                        return Response(new BooleanResponseModel { Value = false }, "Otp not correct!", HttpStatusCode.InternalServerError);
+                    }
+
+                    if ((dtOtp - dtNow).TotalMinutes > 0
+                    && (dtOtp - dtNow).TotalMinutes < 30)
+                    {
+                        // exp
+                        return Response(new BooleanResponseModel { Value = false }, "Otp expired!", HttpStatusCode.InternalServerError);
+                    }
+
+                    // update otp details
+                    userOtpRes.IsVerified = true;
+                    userOtpRes.VerifyDateTime = DateTime.Now;
+                    await _userAccountVerificationService.UpdateAsync(userOtpRes);
+
+                    return Response(new BooleanResponseModel { Value = true }, string.Empty);
+                }
+                
+                return Response(new BooleanResponseModel { Value = false }, _localizer["RecordNotFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
 
@@ -138,6 +164,8 @@ namespace Flinnt.API.Controllers
 
             model.InstituteTypeId = 1;
             model.CityId = city.CityId;
+            var otpNumber = GenerateRandomNo();
+
             var extInstitute = await _instituteService.AddAsync(model);
             if (extInstitute != null)
             {
@@ -214,14 +242,27 @@ namespace Flinnt.API.Controllers
 
                     //save userAccountVerification
 
-                    UserAccountVerification userAccountVerification = new UserAccountVerification
+                    var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userRes.UserId);
+                    if (userOtpRes != null)
                     {
-                        UserId = userRes.UserId,
-                        VerificationCode = GenerateRandomNo(),
-                        ExpireDateTime = DateTime.Now.AddMinutes(30),
-                        CreateDateTime = DateTime.Now
-                    };
-                    await _userAccountVerificationService.AddAsync(userAccountVerification);
+                        if (!userOtpRes.IsVerified.Value)
+                        {
+                            userOtpRes.ExpireDateTime = DateTime.Now;
+                            userOtpRes.VerificationCode = otpNumber;
+                        }
+                        await _userAccountVerificationService.UpdateAsync(userOtpRes);
+                    }
+                    else
+                    {
+                        UserAccountVerification userAccountVerification = new UserAccountVerification
+                        {
+                            UserId = userRes.UserId,
+                            VerificationCode = otpNumber,
+                            ExpireDateTime = DateTime.Now.AddMinutes(30),
+                            CreateDateTime = DateTime.Now
+                        };
+                        await _userAccountVerificationService.AddAsync(userAccountVerification);
+                    }
 
                     //save userAccountHistory
 
@@ -233,7 +274,12 @@ namespace Flinnt.API.Controllers
                     await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
 
-                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendWelcomeEmail());
+                var otpModel = new OtpEmail
+                {
+                    Otp = otpNumber,
+                    RecipientMail = "vaishnanik@gmail.com"//model.EmailId
+                };
+                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);

@@ -24,11 +24,11 @@
                         <h4>Please enter the 4-digit verification code we sent via Email:</h4>
                         <span>(we want to make sure it's you before we contact our movers)</span>
                         <div id="verification">
-                            <div id="form">
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                            <div id="form" [formGroup]="otpForm">
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" formControlName="otp1"/>
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" formControlName="otp2"/>
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" formControlName="otp3"/>
+                                <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" formControlName="otp4"/>
                             </div>
                             <div class="text-center">
                                 <button class="btn btn-primary btn-embossed" (click)="onVerify()">Verify</button>

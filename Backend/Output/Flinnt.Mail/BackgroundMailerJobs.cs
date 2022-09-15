@@ -23,17 +23,12 @@ namespace Flinnt.Mail
 
         #endregion Constructor
 
-        public void SendWelcomeEmail()
+        public void SendOtpEmail(OtpEmail otpEmail)
         {
-            var welcomeEmailModel = new WelcomeEmail
-            {
-                RecipientMail = "vaishnanik@gmail.com",
-                DisplayName = "Kishan" + " " + "Vaishnani",
-            };
-            var mail = new Mail<WelcomeEmail>("WelcomeEmail", welcomeEmailModel);
+            var mail = new Mail<OtpEmail>("OtpEmail", otpEmail);
             lock (MailServiceLock)
             {
-                var sentMailData = mail.Send(welcomeEmailModel.RecipientMail, "Welcome to Fullstack network");
+                var sentMailData = mail.Send(otpEmail.RecipientMail, "Welcome to Flinnt");
                 //_mailHistoryService.InsertMailHistory(sentMailData.To.ToString(), sentMailData.Subject, sentMailData.Body, MailTypeEnum.Registration.ToString());
             }
         }

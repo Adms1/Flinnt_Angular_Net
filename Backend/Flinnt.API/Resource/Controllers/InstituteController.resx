@@ -129,6 +129,9 @@
   <data name="RecordNotAdded" xml:space="preserve">
     <value>Record not added successfully.</value>
   </data>
+  <data name="RecordNotFound" xml:space="preserve">
+    <value>Record not fouind.</value>
+  </data>
   <data name="RecordNotUpdate" xml:space="preserve">
     <value>Record not updated successfully.</value>
   </data>

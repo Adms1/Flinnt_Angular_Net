@@ -15,15 +15,11 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<UserAccountVerification>> GetAllAsync()
+        public async Task<UserAccountVerification> GetByUserIdAsync(long userId)
         {
-            var result = mapper.Map<List<UserAccountVerification>>(await unitOfWork.UserAccountVerificationRepository.GetAllAsync());
-            return result.ToList();
-        }
-
-        public async Task<UserAccountVerification> GetAsync(int id)
-        {
-            return mapper.Map<UserAccountVerification>(await unitOfWork.UserAccountVerificationRepository.GetAsync(id));
+            var result = mapper.Map<List<UserAccountVerification>>(await unitOfWork.UserAccountVerificationRepository.FindByAsync(x=>x.UserId == userId
+            && !x.VerifyDateTime.HasValue));
+            return result.ToList().OrderByDescending(x=>x.UserAccountVerificationId).FirstOrDefault();
         }
 
         public async Task<UserAccountVerification> AddAsync(UserAccountVerification model)
@@ -39,17 +35,6 @@ namespace Flinnt.Services
                 userAccountVerification.UserId = model.UserId;
                 //MAP other fields
                 await unitOfWork.UserAccountVerificationRepository.UpdateAsync(userAccountVerification);
-                return await Task.FromResult(true);
-            }
-            return await Task.FromResult(false);
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var userAccountVerification = unitOfWork.UserAccountVerificationRepository.GetAsync(id).Result;
-            if (userAccountVerification != null)
-            {
-                await unitOfWork.UserAccountVerificationRepository.DeleteAsync(userAccountVerification);
                 return await Task.FromResult(true);
             }
             return await Task.FromResult(false);

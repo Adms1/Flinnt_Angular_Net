@@ -30,6 +30,7 @@ namespace Flinnt.API.Controllers
             _localizer = htmlLocalizer;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("list")]
         public async Task<object> GetAll()
@@ -55,6 +56,7 @@ namespace Flinnt.API.Controllers
             });
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("get-by-countryId/{CountryId}")]
         public async Task<object> GetByCountryId(int CountryId)
