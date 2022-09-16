@@ -1,6 +1,6 @@
 
 /* You can add global styles to this file, and also import other style files */
-/* @import "~bootstrap/dist/css/bootstrap.css";  */
+@import "~bootstrap/dist/css/bootstrap.css";
 @import './assets/templates/css/style.css';
 @import './assets/templates/css/font.css';
 @import "~font-awesome/css/font-awesome.css";
@@ -8,3 +8,9 @@
 @import './assets/templates/css/custom.css';
 @import './assets/templates/css/bootstrap.css';
 @import './assets/templates/css/retina.css';
+
+/* Mandatory */
+@import '~ng-wizard/themes/ng_wizard.min.css';
+/* Optional */
+/* If a theme other than default is used, the css file for that theme is required. */
+@import '~ng-wizard/themes/ng_wizard_theme_circles.min.css';

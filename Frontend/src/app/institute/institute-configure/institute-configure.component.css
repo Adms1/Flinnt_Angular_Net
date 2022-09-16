@@ -1,0 +1,45 @@
+.configures1option {
+    display: block;
+    position: relative;
+    float: left;
+}
+
+.cofigure_s1_option {
+    position: relative;
+    float: left;
+    margin: 15px;
+    width: 204px;
+    display: inline-block;
+    min-height: 100px;
+    border: 1px solid #353535;
+    cursor: pointer;
+}
+
+.cofigure_s1_option:hover {
+    border: 1px solid #0d6efd;
+}
+
+.cofigure_s1_option .cofigure_s1_option-itminf {
+    background: #fff;
+    border-radius: 5px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.cofigure_s1_option-title {
+    position: relative;
+    padding: 7px 10px 0;
+    overflow: hidden;
+}
+
+/* override css */
+#wrapper {
+    box-shadow: none !important;
+}
+
+::ng-deep .ng-wizard-theme-circles>ul.step-anchor {
+    margin-left: 0px !important;
+}

@@ -1,1 +1,139 @@
-<p>institute-configure works!</p>
+<div class="stretched">
+    <div id="wrapper" class="clearfix">
+        <div id="header" class="header2">
+            <app-header [roleId]="roleId" [userObj]="institue"></app-header>
+        </div>
+        <div id="content">
+            <div class="content-wrap">
+                <div class="container clearfix">
+                    <ng-wizard [config]="config" (stepChanged)="stepChanged($event)" [showNextButton]="false">
+
+                        <ng-wizard-step [title]="'Step 1'" [canEnter]="isValidTypeBoolean"
+                            [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+                            <div id="page-title">
+                                <div class="container clearfix">
+                                    <h2 class="v4">Select an option which describes you best</h2>
+                                </div>
+                            </div>
+
+                            <div class="configures1option nobottommargin center clearfix">
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            School (K-12)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Coaching Institue
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Collage
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Co-Curricular
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-wizard-step>
+
+                        <ng-wizard-step [title]="'Step 2'">
+                            <div id="page-title">
+                                <div class="container clearfix">
+                                    <h2 class="v4">How would you like to organize your courses and students?</h2>
+                                </div>
+                            </div>
+
+                            <div class="configures1option nobottommargin center clearfix">
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Standard only
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Standard > Division
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-wizard-step>
+
+                        <ng-wizard-step [title]="'Step 3'">
+                            <div id="page-title">
+                                <div class="container clearfix">
+                                    <h2 class="v4">Select your affiliated education board</h2>
+                                </div>
+                            </div>
+
+                            <div class="configures1option nobottommargin center clearfix">
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Gujarat Secondary and Higher Secondary Education Board (GSEB)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Central Board of Secondary Education (CBSE)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Council for the Indian School Certificate Examination (CISCE)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            International Baccalaureate (IB)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cofigure_s1_option">
+                                    <div class="cofigure_s1_option-itminf">
+                                        <div class="cofigure_s1_option-title">
+                                            Combridge International Examination
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-wizard-step>
+
+                        <ng-wizard-step [title]="'Step 4'">
+                            <span>Step 4 content</span>
+                        </ng-wizard-step>
+
+                        <ng-wizard-step [title]="'Step 5'" [state]="stepStates.hidden">
+                            <span>Step 5 content</span>
+                        </ng-wizard-step>
+                    </ng-wizard>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="footer404">
+            <app-footer404></app-footer404>
+        </div>
+        <div id="gotoTop" class="fa fa-angle-up"></div>
+    </div>
+</div>

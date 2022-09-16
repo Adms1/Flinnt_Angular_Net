@@ -7,6 +7,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { CoreModule } from './core/core.module';
 import { InstituteModule } from './institute/institute.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -15,13 +16,12 @@ import { InstituteModule } from './institute/institute.module';
     BrowserModule,
     CoreModule,
     AppRoutingModule,
-    InstituteModule
+    InstituteModule,
+    
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy}],
-  bootstrap: [AppComponent],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
+  bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

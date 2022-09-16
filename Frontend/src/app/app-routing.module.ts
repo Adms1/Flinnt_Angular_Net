@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m=>m.HomeModule)
   },
   {
-    path:"institute",
+    path:"institute/configure",
     loadChildren: () => import('./institute/institute.module').then(m=>m.InstituteModule)
   }
 ];
