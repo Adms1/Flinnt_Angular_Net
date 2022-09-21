@@ -28,6 +28,20 @@
                   <span class="bs-stepper-label"></span>
                 </button>
               </div>
+              <div class="bs-stepper-line"></div>
+              <div class="step">
+                <button type="button" class="step-trigger" disabled="disabled">
+                  <span class="bs-stepper-circle">4</span>
+                  <span class="bs-stepper-label"></span>
+                </button>
+              </div>
+              <div class="bs-stepper-line"></div>
+              <div class="step">
+                <button type="button" class="step-trigger" disabled="disabled">
+                  <span class="bs-stepper-circle">5</span>
+                  <span class="bs-stepper-label"></span>
+                </button>
+              </div>
             </div>
             <div class="bs-stepper-content">
               <form>
@@ -119,7 +133,8 @@
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)" type="button">Previous</button>
+                  <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
+                    type="button">Previous</button>
                   <button class="btn btn-primary" (click)="showNextStep($event)" type="button">Next</button>
                 </div>
                 <div id="test-vl-3" class="bs-stepper-pane d-none">
@@ -129,9 +144,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-
                     <div class="row">
-                      <div class="col-md-3 mt-2 mb-2">
+                      <div class="col-md-3 mt-2 mb-2" (click)="selectBoard()">
                         <div class="card bg-light w-20">
                           <div class="card-body cofigure_s1_option">
                             <div class="cofigure_s1_option-itminf">
@@ -142,7 +156,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 mt-2 mb-2">
+                      <div class="col-md-3 mt-2 mb-2" (click)="selectBoard()">
                         <div class="card bg-light w-20">
                           <div class="card-body cofigure_s1_option">
                             <div class="cofigure_s1_option-itminf">
@@ -153,7 +167,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 mt-2 mb-2">
+                      <div class="col-md-3 mt-2 mb-2" (click)="selectBoard()">
                         <div class="card bg-light w-20">
                           <div class="card-body cofigure_s1_option">
                             <div class="cofigure_s1_option-itminf">
@@ -164,7 +178,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 mt-2 mb-2">
+                      <div class="col-md-3 mt-2 mb-2" (click)="selectBoard()">
                         <div class="card bg-light w-20">
                           <div class="card-body cofigure_s1_option">
                             <div class="cofigure_s1_option-itminf">
@@ -175,7 +189,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-3 mt-2 mb-2">
+                      <div class="col-md-3 mt-2 mb-2" (click)="selectBoard()">
                         <div class="card bg-light w-20">
                           <div class="card-body cofigure_s1_option">
                             <div class="cofigure_s1_option-itminf">
@@ -187,10 +201,218 @@
                         </div>
                       </div>
                     </div>
-
+                    <hr />
+                    <ng-container *ngIf="isStudyMediumSelected">
+                      <div class="row center">
+                        <h4>select a medium of study</h4>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-3 mt-2 mb-2">
+                          <div class="card bg-light w-20">
+                            <div class="card-body cofigure_s1_option">
+                              <div class="cofigure_s1_option-itminf">
+                                <div class="cofigure_s1_option-title">
+                                  Gujarati
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 mt-2 mb-2">
+                          <div class="card bg-light w-20">
+                            <div class="card-body cofigure_s1_option">
+                              <div class="cofigure_s1_option-itminf">
+                                <div class="cofigure_s1_option-title">
+                                  English
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 mt-2 mb-2">
+                          <div class="card bg-light w-20">
+                            <div class="card-body cofigure_s1_option">
+                              <div class="cofigure_s1_option-itminf">
+                                <div class="cofigure_s1_option-title">
+                                  Marathi
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
                   </div>
-                  <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)" type="button">Previous</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
+                    type="button">Previous</button>
+                    <button class="btn btn-primary" (click)="showNextStep($event)" type="button">Next</button>
+                </div>
+                <div id="test-vl-4" class="bs-stepper-pane d-none">
+                  <div id="page-title">
+                    <div class="container clearfix">
+                      <h2 class="v4">Select one or more standards</h2>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row center">
+                        <h4>
+                          you are selecting standards for the <b>Gujarat Secondary and Higher Secondary Eduction Board</b> and <b>Gujarat</b> medium.
+                        </h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 mt-2 mb-2">
+                        <div class="card bg-light w-20">
+                          <div class="card-body">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                              <label class="form-check-label" for="inlineCheckbox2">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                              <label class="form-check-label" for="inlineCheckbox3">3</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                              <label class="form-check-label" for="inlineCheckbox3">4</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                              <label class="form-check-label" for="inlineCheckbox3">5</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                              <label class="form-check-label" for="inlineCheckbox3">6</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                              <label class="form-check-label" for="inlineCheckbox3">7</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8">
+                              <label class="form-check-label" for="inlineCheckbox3">8</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox9" value="option9">
+                              <label class="form-check-label" for="inlineCheckbox3">9</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox10" value="option10">
+                              <label class="form-check-label" for="inlineCheckbox3">10</label>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">11 - Science</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">11 - Commerce</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">11 - Humanities</label>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">12 - Science</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">12 - Commerce</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">12 - Humanities</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
+                    type="button">Previous</button>
+                  <button class="btn btn-primary" (click)="showNextStep($event)" type="button">Next</button>
+                </div>
+                <div id="test-vl-5" class="bs-stepper-pane d-none">
+                  <div id="page-title">
+                    <div class="container clearfix">
+                      <h2 class="v4">Add divisions and map with relevant standards</h2>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row center">
+                      <h4>
+                          You are adding divisions for the Gujarat Secondary and Higher Secondary Education Board and Gujarat medium.
+                      </h4>
+                    </div>
+                    <div class="row col-12">
+                      <div class="col-md-6 mt-2 mb-2">
+                        <label>Standard Name</label>
+                        <select class="form-select" aria-label="Default select example">
+                          <option value="1">11 - Science</option>
+                          <option value="2">11 - Commerce</option>
+                          <option value="3">11 - Humanities</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mt-2 mb-2">
+                        <label>Divisions</label>
+                        <select class="form-select" multiple aria-label="multiple select example">
+                          <option value="1">A</option>
+                          <option value="2">B</option>
+                          <option value="3">C</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row col-12">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Standard</th>
+                            <th scope="col">Division</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>11 - Science</td>
+                            <td>A</td>
+                            <td>
+                              <a href="javascript:void(0)" class="mr-2">edit</a>
+                              <a href="javascript:void(0)" class="red">delete</a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>11 - Science</td>
+                            <td>B</td>
+                            <td>
+                              <a href="javascript:void(0)" class="mr-2">edit</a>
+                              <a href="javascript:void(0)" class="red">delete</a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">3</th>
+                            <td>11 - Science</td>
+                            <td>C</td>
+                            <td>
+                              <a href="javascript:void(0)" class="mr-2">edit</a>
+                              <a href="javascript:void(0)" class="red">delete</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <button class="btn btn-primary mr-5" type="button">Add</button>
+                  </div>
                 </div>
               </form>
             </div>

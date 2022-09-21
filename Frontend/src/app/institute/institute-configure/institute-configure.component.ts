@@ -11,6 +11,7 @@ import { UtilityService } from 'src/app/_services/utility.service';
 export class InstituteConfigureComponent implements OnInit {
   roleId = 2;
   institue = {} as Institute;
+  isStudyMediumSelected = false;
   @ViewChild('stepper1', {static: false}) sRef: ElementRef;
   constructor(
     private utilityService: UtilityService) { }
@@ -49,5 +50,9 @@ export class InstituteConfigureComponent implements OnInit {
     let querySelector = this.sRef.nativeElement.querySelector(".step.active");
     querySelector.classList.remove("active");
     querySelector.nextElementSibling.nextElementSibling.classList.add("active");
+  }
+
+  selectBoard(){
+    this.isStudyMediumSelected = true;
   }
 }
