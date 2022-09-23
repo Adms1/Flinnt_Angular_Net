@@ -12,6 +12,7 @@ export class InstituteConfigureComponent implements OnInit {
   roleId = 2;
   institue = {} as Institute;
   isStudyMediumSelected = false;
+  activatedBtn = false;
   @ViewChild('stepper1', {static: false}) sRef: ElementRef;
   constructor(
     private utilityService: UtilityService) { }
@@ -29,6 +30,7 @@ export class InstituteConfigureComponent implements OnInit {
   }
 
   showPreviousStep(event?: Event) {
+    this.activatedBtn = true;
     event.currentTarget["parentElement"].classList.remove("active");
     event.currentTarget["parentElement"].classList.add("d-none");
     event.currentTarget["parentElement"].previousElementSibling.classList.add("active");
@@ -41,6 +43,8 @@ export class InstituteConfigureComponent implements OnInit {
   }
  
   showNextStep(event?: Event) {
+    this.activatedBtn = false;
+    
     event.currentTarget["parentElement"].classList.remove("active");
     event.currentTarget["parentElement"].classList.add("d-none");
     event.currentTarget["parentElement"].nextElementSibling.classList.add("active");
@@ -52,7 +56,20 @@ export class InstituteConfigureComponent implements OnInit {
     querySelector.nextElementSibling.nextElementSibling.classList.add("active");
   }
 
-  selectBoard(){
+  selectActionType(event?: Event){
+    const allDivs = event.currentTarget["parentElement"].children;
+
+    for (let index = 0; index < allDivs.length; index++) {
+      const element = allDivs[index]["childNodes"][0];
+      element["classList"].remove("selection-type_active");
+    }
+
+    event.currentTarget["childNodes"][0].classList.add("selection-type_active");
+    this.activatedBtn = true;
+  }
+
+  selectBoard(event?: Event){
     this.isStudyMediumSelected = true;
+    this.selectActionType(event);
   }
 }

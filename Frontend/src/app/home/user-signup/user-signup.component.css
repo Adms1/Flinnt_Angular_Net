@@ -23306,7 +23306,7 @@ img .lazy {
     border-top: 1px solid #e8e8e8;
     box-shadow: none;
     padding: 25px 0;
-    min-height: 350px !important;
+    min-height: 450px !important;
     background: rgba(0, 0, 0, 0) linear-gradient(to top, rgba(255, 255, 255, 1) 0, rgba(253, 253, 253, 1) 100%) repeat scroll 0 0 !important
 }
 
