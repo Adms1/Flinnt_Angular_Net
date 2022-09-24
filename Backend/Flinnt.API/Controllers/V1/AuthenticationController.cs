@@ -86,16 +86,21 @@ namespace Flinnt.API.Controllers
                             {
                                 userOtpRes.ExpireDateTime = DateTime.Now;
                                 userOtpRes.VerificationCode = otpNumber;
-                            }
-                            await _userAccountVerificationService.UpdateAsync(userOtpRes);
+                                await _userAccountVerificationService.UpdateAsync(userOtpRes);
 
-                            //object otpModel = new
-                            //{
-                            //    Otp = otpNumber,
-                            //    RecipientMail = "vaishnanik@gmail.com"
-                            //};
-                            
-                            //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(objOtp));
+                                //object otpModel = new
+                                //{
+                                //    Otp = otpNumber,
+                                //    RecipientMail = "vaishnanik@gmail.com"
+                                //};
+
+                                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(objOtp));
+                            }
+                            else
+                            {
+                                // user verified
+                                loginResponse.ApplicationUser.IsVerified = true;
+                            }
                         }
                         else
                         {

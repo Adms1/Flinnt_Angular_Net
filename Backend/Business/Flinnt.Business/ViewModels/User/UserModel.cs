@@ -11,5 +11,7 @@ namespace Flinnt.Business.ViewModels
      
         [NotMapped]
         public string Password { get; set; }
+        [NotMapped]
+        public bool IsVerified { get; set; }
     }
 }

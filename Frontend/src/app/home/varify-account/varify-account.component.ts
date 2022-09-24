@@ -61,7 +61,7 @@ export class VarifyAccountComponent implements OnInit {
     const otp = otp1 + '' + otp2 + '' + otp3 + '' + otp4;
     this.instituteService.accountVerify(userObj.userId, otp).then((res: ApiResponse) => {
       if (res.data.value) {
-        this.route.navigate(['institute/config']);
+        this.route.navigate(['institute/configure']);
         this.utilityService.showSuccessToast("Account is verified successfully.")
       }
     });

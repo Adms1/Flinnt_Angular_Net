@@ -18,8 +18,7 @@ namespace Flinnt.Services
 
         public async Task<UserAccountVerification> GetByUserIdAsync(long userId)
         {
-            var result = mapper.Map<List<UserAccountVerification>>(await unitOfWork.UserAccountVerificationRepository.FindByAsync(x=>x.UserId == userId
-            && !x.VerifyDateTime.HasValue));
+            var result = mapper.Map<List<UserAccountVerification>>(await unitOfWork.UserAccountVerificationRepository.FindByAsync(x=>x.UserId == userId));
             return result.ToList().OrderByDescending(x=>x.UserAccountVerificationId).FirstOrDefault();
         }
 

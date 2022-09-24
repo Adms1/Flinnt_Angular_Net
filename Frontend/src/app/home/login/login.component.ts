@@ -52,7 +52,13 @@ export class LoginComponent implements OnInit {
           
           localStorage.setItem(Constants.TOKEN, JSON.stringify(res.data.token));
           localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.applicationUser));
-          this.route.navigate(['institute/verify-account']);
+          if(res.data.applicationUser.isVerified){
+            this.route.navigate(['institute/configure']);
+          }
+          else{
+            this.route.navigate(['institute/verify-account']);
+          }
+          
           this.resetTeamForm();
         }
       });
