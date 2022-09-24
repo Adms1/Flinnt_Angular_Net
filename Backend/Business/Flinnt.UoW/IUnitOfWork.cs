@@ -16,5 +16,6 @@ namespace Flinnt.UoW
         IUserAccountVerificationRepository UserAccountVerificationRepository { get; }
         IUserInstituteRepository UserInstituteRepository { get; }
         IUserSettingRepository UserSettingRepository { get; }
+        ILoginHistoryRepository LoginHistoryRepository { get; }
     }
 }

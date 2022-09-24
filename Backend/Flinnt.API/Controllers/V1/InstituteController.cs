@@ -99,7 +99,7 @@ namespace Flinnt.API.Controllers
         {
             return await GetDataWithMessage(async () =>
             {
-                // TODO : KISHAN
+                var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
                 var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userId);
                 if(userOtpRes != null)
                 {
@@ -121,6 +121,8 @@ namespace Flinnt.API.Controllers
                     // update otp details
                     userOtpRes.IsVerified = true;
                     userOtpRes.VerifyDateTime = DateTime.Now;
+                    userOtpRes.VerifyClientIp = ipAddress.ToString();
+
                     await _userAccountVerificationService.UpdateAsync(userOtpRes);
 
                     return Response(new BooleanResponseModel { Value = true }, string.Empty);
@@ -274,12 +276,12 @@ namespace Flinnt.API.Controllers
                     await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
 
-                var otpModel = new OtpEmail
-                {
-                    Otp = otpNumber,
-                    RecipientMail = "vaishnanik@gmail.com"//model.EmailId
-                };
-                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
+                //var otpModel = new OtpEmail
+                //{
+                //    Otp = otpNumber,
+                //    RecipientMail = model.EmailId
+                //};
+                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);

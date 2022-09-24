@@ -10,6 +10,7 @@ namespace Flinnt.Domain
         public User()
         {
             UserAccountHistories = new HashSet<UserAccountHistory>();
+            LoginHistories = new HashSet<LoginHistory>();
             UserAccountVerifications = new HashSet<UserAccountVerification>();
             UserDevices = new HashSet<UserDevice>();
             UserInstitutes = new HashSet<UserInstitute>();
@@ -40,6 +41,7 @@ namespace Flinnt.Domain
 
         public virtual AutheticationType AuthenticationType { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual ICollection<LoginHistory> LoginHistories { get; set; }
         public virtual ICollection<UserAccountHistory> UserAccountHistories { get; set; }
         public virtual ICollection<UserAccountVerification> UserAccountVerifications { get; set; }
         public virtual ICollection<UserDevice> UserDevices { get; set; }

@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.UoW;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Flinnt.Services
 
         public async Task<bool> UpdateAsync(UserAccountVerification model)
         {
-            var userAccountVerification = await unitOfWork.UserAccountVerificationRepository.GetAsync(model.UserId);
+            var userAccountVerification = await unitOfWork.UserAccountVerificationRepository.GetAsync(model.UserAccountVerificationId);
             if (userAccountVerification != null)
             {
                 userAccountVerification.UserId = model.UserId;

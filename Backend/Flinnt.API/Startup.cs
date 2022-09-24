@@ -13,6 +13,7 @@ using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -111,6 +112,12 @@ namespace Flinnt.API
                 endpoints.MapHangfireDashboard();
             });
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                ForwardedHeaders.XForwardedProto
+            });
+
             AppSettings.Initialize(Configuration);
             MailSettings.Initialize(Configuration);
             Jwt.Initialize(Configuration);
@@ -139,6 +146,7 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountHistoryService, UserAccountHistoryService>();
             services.AddScoped<IUserAccountVerificationService, UserAccountVerificationService>();
             services.AddScoped<IUserSettingService, UserSettingService>();
+            services.AddScoped<ILoginHistoryService, LoginHistoryService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -153,6 +161,7 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountHistoryRepository, UserAccountHistoryRepository>();
             services.AddScoped<IUserAccountVerificationRepository, UserAccountVerificationRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<ILoginHistoryRepository, LoginHistoryRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

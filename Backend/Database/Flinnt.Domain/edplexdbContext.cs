@@ -34,6 +34,7 @@ namespace Flinnt.Domain
         public virtual DbSet<InstituteSemester> InstituteSemesters { get; set; }
         public virtual DbSet<InstituteSession> InstituteSessions { get; set; }
         public virtual DbSet<InstituteType> InstituteTypes { get; set; }
+        public virtual DbSet<LoginHistory> LoginHistories { get; set; }
         public virtual DbSet<Medium> Media { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -547,6 +548,44 @@ namespace Flinnt.Domain
                     .HasComment("The type name.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<LoginHistory>(entity =>
+            {
+                entity.ToTable("LoginHistory");
+
+                entity.HasComment("This entity stores a list of login history.\r\nMigartion:\r\nUserId < login_history.user_id\r\nLoginDateTime < login_history.access_dt\r\nIsLogout < login_history.is_logout\r\nClientIP < login_history.ip_addr\r\nClientDevice < login_history.device_type + login_history.device_detail\r\nAccessUrl	< login_history.access_url");
+
+                entity.Property(e => e.LoginHistoryId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.AccessUrl)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The URL on which request has been sent.\r\nMigration: login_history.access_url");
+
+                entity.Property(e => e.ClientDevice)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The type of client device from where request has been made.\r\nMigration: login_history.device_type + \r\nlogin_history.device_detail");
+
+                entity.Property(e => e.ClientIp)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ClientIP")
+                    .HasComment("The client device IP address from where request has been sent.\r\nMigration: login_history.ip_addr");
+
+                entity.Property(e => e.IsLogout).HasComment("If 1, this entry records the log out date and time.\r\nMigration: login_history.is_logout");
+
+                entity.Property(e => e.LoginDateTime)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasComment("The date and time when user logged in.\r\nMigration: login_history.access_dt");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this history belongs to. Ref. User.UserId\r\nMigration: login_history.user_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.LoginHistories)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("fk_login_history_user_id");
             });
 
             modelBuilder.Entity<Medium>(entity =>

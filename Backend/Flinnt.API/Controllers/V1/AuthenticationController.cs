@@ -1,12 +1,9 @@
-using Flinnt.Business.Enums.General;
-using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using NLog;
 using Flinnt.Business.ViewModels;
@@ -14,10 +11,7 @@ using AAT.API.Helpers;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Flinnt.Business.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 using System.Net;
-using Flinnt.Services;
 
 namespace Flinnt.API.Controllers
 {
@@ -31,6 +25,7 @@ namespace Flinnt.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserAccountVerificationService _userAccountVerificationService;
         private readonly IUserService _userService;
+        private readonly ILoginHistoryService _loginHistoryService;
 
         private readonly IBackgroundService _backgroundService;
 
@@ -39,13 +34,15 @@ namespace Flinnt.API.Controllers
             SignInManager<ApplicationUser> signInManager, 
             UserManager<ApplicationUser> userManager, 
             IUserAccountVerificationService userAccountVerificationService,
-            IUserService userService)
+            IUserService userService,
+            ILoginHistoryService loginHistoryService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _backgroundService = backgroundService;
             _userAccountVerificationService = userAccountVerificationService;
             _userService = userService;
+            _loginHistoryService = loginHistoryService;
             _localizer = localizer;
         }
 
@@ -58,19 +55,31 @@ namespace Flinnt.API.Controllers
             {
                 if (loginViewModel != null)
                 {
+                    var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
                     var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        var user = new LoginResponseModel();
-                        user.ApplicationUser = await _userManager.FindByNameAsync(loginViewModel.Email);
-                        var token = ApiTokenHelper.GenerateJSONWebToken(user.ApplicationUser);
-                        user.Token = token;
+                        var loginResponse = new LoginResponseModel();
+                        loginResponse.ApplicationUser = await _userManager.FindByNameAsync(loginViewModel.Email);
+                        var token = ApiTokenHelper.GenerateJSONWebToken(loginResponse.ApplicationUser);
+                        loginResponse.Token = token;
 
                         // otp
                         var otpNumber = GenerateRandomNo();
-                        var userId = user.ApplicationUser.UserId;
+                        var userId = loginResponse.ApplicationUser.UserId;
                         var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userId);
-                        //var user = await _userService.GetAsync(userId);
+                        var user = await _userService.GetAsync(Convert.ToInt64(userId));
+
+                        // login history
+                        LoginHistory loginHistory = new LoginHistory
+                        {
+                            UserId = userId,
+                            User = user,
+                            ClientIp = ipAddress.ToString(),
+                            LoginDateTime = DateTime.Now,
+                        }; 
+                        await _loginHistoryService.AddAsync(loginHistory);
+
                         if (userOtpRes != null)
                         {
                             if(!userOtpRes.IsVerified.Value)
@@ -78,20 +87,35 @@ namespace Flinnt.API.Controllers
                                 userOtpRes.ExpireDateTime = DateTime.Now;
                                 userOtpRes.VerificationCode = otpNumber;
                             }
-                            //await _userAccountVerificationService.UpdateAsync(userOtpRes);
+                            await _userAccountVerificationService.UpdateAsync(userOtpRes);
+
+                            //object otpModel = new
+                            //{
+                            //    Otp = otpNumber,
+                            //    RecipientMail = "vaishnanik@gmail.com"
+                            //};
+                            
+                            //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(objOtp));
                         }
                         else
                         {
                             UserAccountVerification userAccountVerification = new UserAccountVerification
                             {
                                 UserId = userId,
+                                User = user,
                                 VerificationCode = otpNumber,
                                 ExpireDateTime = DateTime.Now.AddMinutes(30),
                                 CreateDateTime = DateTime.Now
                             };
-                            //await _userAccountVerificationService.AddAsync(userAccountVerification);
+                            await _userAccountVerificationService.AddAsync(userAccountVerification);
+                            //object otpModel = new
+                            //{
+                            //    Otp = otpNumber,
+                            //    RecipientMail = "vaishnanik@gmail.com",//user.EmailId
+                            //};
+                            //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
                         }
-                        return Response(user, string.Empty);
+                        return Response(loginResponse, string.Empty);
                     }
                 }
                 return Response(new LoginResponseModel(), _localizer["UserNotFound"].Value.ToString(), HttpStatusCode.InternalServerError);
