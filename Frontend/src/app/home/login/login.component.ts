@@ -56,7 +56,10 @@ export class LoginComponent implements OnInit {
             this.route.navigate(['institute/configure']);
           }
           else{
-            this.route.navigate(['institute/verify-account']);
+            this.utilityService.showSuccessToast("Otp sent successfully!");
+            setTimeout(() => {
+              this.route.navigate(['institute/verify-account']);
+            }, 100);
           }
           
           this.resetTeamForm();

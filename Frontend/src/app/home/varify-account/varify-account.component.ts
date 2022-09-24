@@ -43,12 +43,10 @@ export class VarifyAccountComponent implements OnInit {
 
     if (!!instituteObj) {
       this.institue = JSON.parse(instituteObj) as Institute;
-      this.utilityService.showSuccessToast("Otp sent successfully!");
     }
   }
 
   onVerify() {
-    debugger
     if (this.otpForm.invalid) {
       this.utilityService.showErrorToast("Please enter otp details.");
       return;
