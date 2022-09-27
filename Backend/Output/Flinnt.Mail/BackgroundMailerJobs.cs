@@ -23,12 +23,17 @@ namespace Flinnt.Mail
 
         #endregion Constructor
 
-        public void SendOtpEmail(OtpEmail otpEmail)
+        public void SendOtpEmail(string otp, string emailTo)
         {
+            var otpEmail = new OtpEmail
+            {
+                Otp = otp,
+                RecipientMail=emailTo
+            };
             var mail = new Mail<OtpEmail>("OtpEmail", otpEmail);
             lock (MailServiceLock)
             {
-                var sentMailData = mail.Send(otpEmail.RecipientMail, "Welcome to Flinnt");
+                var sentMailData = mail.SendAsync(otpEmail.RecipientMail, "Welcome to Flinnt");
                 //_mailHistoryService.InsertMailHistory(sentMailData.To.ToString(), sentMailData.Subject, sentMailData.Body, MailTypeEnum.Registration.ToString());
             }
         }

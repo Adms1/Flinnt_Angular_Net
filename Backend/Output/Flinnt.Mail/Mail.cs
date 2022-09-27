@@ -1,10 +1,17 @@
 using Flinnt.Business.Helpers;
+using Microsoft.IdentityModel.Protocols;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using SendGrid.Helpers.Mail.Model;
+using SendGrid.Helpers.Mail;
+using SendGrid;
 using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks; // use TPL for asynchronous operations
+using SendGrid; // SendGrid 
+using SendGrid.Helpers.Mail; // used for MailHelper
 
 namespace Flinnt.Mail
 {
@@ -37,81 +44,45 @@ namespace Flinnt.Mail
 
         public string GenerateBody()
         {
-            var layout = RazorEngine.RunCompile("_Layout");
+            var layout = RazorEngine.RunCompile("_Layout", Model.GetType(), Model);
             var body = RazorEngine.RunCompile(TemplateName, Model.GetType(), Model);
             return layout.Replace("{{BODY}}", body);
         }
 
-        public MailMessage Send(string to, string subject, string cc = null)
+        public async Task<Response> SendAsync(string to, string subject, string cc = null)
         {
-            MailSettings appSettings = new MailSettings();
-            var email = new MailMessage
-            {
-                From = new MailAddress(appSettings.MailFrom),
-                Body = GenerateBody(),
-                IsBodyHtml = true,
-                Subject = subject,
-                BodyEncoding = Encoding.UTF8
-            };
-
-            if (!appSettings.EnableMail)
-            {
-                return email;
-            }
-
-            email.Headers.Add("X-MC-Metadata", "{ \"key\": \"" + Guid.NewGuid().ToString("N") + "\" }");
-
             try
             {
-                foreach (var sendTo in to.Split(' ', ',', ';'))
-                {
-                    email.To.Add(sendTo);
-                }
+                // Your SendGrid API Key you created above.
+                string apiKey = "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";
 
-                if (cc != null)
-                {
-                    foreach (var sendCc in cc.Split(' ', ',', ';'))
-                    {
-                        email.CC.Add(sendCc);
-                    }
-                }
+                // Create an instance of the SendGrid Mail Client using the valid API Key
+                var client = new SendGridClient(apiKey);
 
-                foreach (var sendTo in to.Split(' ', ',', ';'))
-                {
-                    if (sendTo != "" && CommonHelper.IsValidEmail(sendTo))
-                    {
-                        email.To.Add(sendTo);
-                    }
-                }
+                // Use the From Email as the Email you verified above
+                var senderEmail = new EmailAddress("navin.goradara@admsystems.net", "admsbuild");
 
-                if (cc != null)
-                {
-                    foreach (var sendCc in cc.Split(' ', ',', ';'))
-                    {
-                        if (sendCc != "" && CommonHelper.IsValidEmail(sendCc))
-                        {
-                            email.CC.Add(sendCc);
-                        }
-                    }
-                }
+                // The recipient of the email
+                var recieverEmail = new EmailAddress(to);
 
-                var smtp = new SmtpClient(appSettings.MailHost)
-                {
-                    Port = Convert.ToInt16(appSettings.MailPort),
-                    Credentials = new NetworkCredential
-                    {
-                        UserName = appSettings.MailFrom,
-                        Password = appSettings.MailPassword
-                    }
-                };
-                smtp.EnableSsl = true;
-                smtp.Send(email);
+                // Define the Email Subject
+                string emailSubject = subject;
+
+                // HTML content -> for clients supporting HTML, this is default
+                string htmlContent = GenerateBody();
+
+                // construct the email to send via the SendGrid email api
+                var msg = MailHelper.CreateSingleEmail(senderEmail, recieverEmail, emailSubject, "", htmlContent);
+
+                // send the email asyncronously
+                var resp = await client.SendEmailAsync(msg).ConfigureAwait(false);
+
+                return resp;
             }
             catch (Exception e)
             {
                 return null;
             }
-            return email;
         }
     }
 

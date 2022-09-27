@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Flinnt.Business.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
+using Flinnt.Mail.Models;
 
 namespace Flinnt.API.Controllers
 {
@@ -44,6 +45,18 @@ namespace Flinnt.API.Controllers
             _userService = userService;
             _loginHistoryService = loginHistoryService;
             _localizer = localizer;
+        }
+
+        [HttpPost]
+        [Route("test-email")]
+        [AllowAnonymous]
+        public async Task<object> Login(string emailId)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail("1234", emailId));
+                return Response(new LoginResponseModel(), "Ok", HttpStatusCode.Accepted);
+            });
         }
 
         [HttpPost]
@@ -88,13 +101,7 @@ namespace Flinnt.API.Controllers
                                 userOtpRes.VerificationCode = otpNumber;
                                 await _userAccountVerificationService.UpdateAsync(userOtpRes);
 
-                                //object otpModel = new
-                                //{
-                                //    Otp = otpNumber,
-                                //    RecipientMail = "vaishnanik@gmail.com"
-                                //};
-
-                                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(objOtp));
+                                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpNumber, user.LoginId));
                             }
                             else
                             {
@@ -113,12 +120,8 @@ namespace Flinnt.API.Controllers
                                 CreateDateTime = DateTime.Now
                             };
                             await _userAccountVerificationService.AddAsync(userAccountVerification);
-                            //object otpModel = new
-                            //{
-                            //    Otp = otpNumber,
-                            //    RecipientMail = "vaishnanik@gmail.com",//user.EmailId
-                            //};
-                            //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
+
+                            _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpNumber, user.LoginId));
                         }
                         return Response(loginResponse, string.Empty);
                     }

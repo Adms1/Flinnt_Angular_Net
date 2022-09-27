@@ -276,12 +276,7 @@ namespace Flinnt.API.Controllers
                     await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
 
-                //var otpModel = new OtpEmail
-                //{
-                //    Otp = otpNumber,
-                //    RecipientMail = model.EmailId
-                //};
-                //_backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpModel));
+                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpNumber, model.EmailId));
                 return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
