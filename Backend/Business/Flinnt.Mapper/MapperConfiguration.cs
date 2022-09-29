@@ -1,5 +1,6 @@
 using AutoMapper;
 using Flinnt.Business.ViewModels;
+using Flinnt.Business.ViewModels.Institute;
 using Flinnt.Domain;
 
 namespace Flinnt.Business.Helpers
@@ -25,6 +26,12 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<StateViewModel, State>();
             CreateMap<State, StateViewModel>();
+
+            CreateMap<GroupStructureViewModel, GroupStructure>();
+            CreateMap<GroupStructure, GroupStructureViewModel>();
+
+            CreateMap<BoardViewModel, Board>();
+            CreateMap<Board, BoardViewModel>();
         }
     }
 }

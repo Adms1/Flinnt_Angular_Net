@@ -147,6 +147,10 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountVerificationService, UserAccountVerificationService>();
             services.AddScoped<IUserSettingService, UserSettingService>();
             services.AddScoped<ILoginHistoryService, LoginHistoryService>();
+            services.AddScoped<IMediumService, MediumService>();
+            services.AddScoped<IGroupStructureService, GroupStructureService>();
+            services.AddScoped<IStandardService, StandardService>();
+            services.AddScoped<IBoardService, BoardService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -162,6 +166,10 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountVerificationRepository, UserAccountVerificationRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<ILoginHistoryRepository, LoginHistoryRepository>();
+            services.AddScoped<IBoardRepository, BoardRepository>();
+            services.AddScoped<IStandardRepository, StandardRepository>();
+            services.AddScoped<IMediumRepository, MediumRepository>();
+            services.AddScoped<IGroupStructureRepository, GroupStructureRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

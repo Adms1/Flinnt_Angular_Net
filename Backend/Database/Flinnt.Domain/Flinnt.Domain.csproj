@@ -23,4 +23,12 @@
     <ProjectReference Include="..\..\Business\Flinnt.Business\Flinnt.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbTemp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>

@@ -206,6 +206,57 @@ namespace Flinnt.Domain
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
             });
 
+            modelBuilder.Entity<GroupStructure>(entity =>
+            {
+                entity.ToTable("GroupStructure");
+
+                entity.HasComment("This entity stores a list of group structures, like: Board->Medium->Standard, Board->Medium->Standard->Division etc.");
+
+                entity.Property(e => e.GroupStructureId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The group structure description.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the group structure.");
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the group structure is ready to use.");
+
+                entity.Property(e => e.StructureTitle)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasComment("The group structure title.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<GroupStructureType>(entity =>
+            {
+                entity.ToTable("GroupStructureType");
+
+                entity.HasComment("This entity stores mapping between a group structure and institute types.");
+
+                entity.Property(e => e.GroupStructureTypeId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.GroupStructureId).HasComment("The group structure identifier this type belongs to.");
+
+                entity.Property(e => e.InstituteTypeId).HasComment("The institute type identifier this group belongs to.");
+
+                entity.HasOne(d => d.GroupStructure)
+                    .WithMany(p => p.GroupStructureTypes)
+                    .HasForeignKey(d => d.GroupStructureId)
+                    .HasConstraintName("fk_group_structure_type_group_structure_id");
+            });
+
             modelBuilder.Entity<Gender>(entity =>
             {
                 entity.ToTable("Gender");
