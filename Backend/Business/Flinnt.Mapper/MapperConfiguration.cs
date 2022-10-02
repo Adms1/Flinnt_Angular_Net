@@ -32,6 +32,18 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<BoardViewModel, Board>();
             CreateMap<Board, BoardViewModel>();
+
+            CreateMap<MediumViewModel, Medium>();
+            CreateMap<Medium, MediumViewModel>();
+
+            CreateMap<StandardViewModel, Standard>();
+            CreateMap<Standard, StandardViewModel>();
+
+            CreateMap<InstituteGroupViewModel, InstituteGroup>();
+            CreateMap<InstituteGroup, InstituteGroupViewModel>();
+
+            CreateMap<InstituteDivisionViewModel, InstituteDivision>();
+            CreateMap<InstituteDivision, InstituteDivisionViewModel>();
         }
     }
 }

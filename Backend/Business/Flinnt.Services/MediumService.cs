@@ -15,20 +15,10 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<CityViewModel>> GetAllAsync()
+        public async Task<List<MediumViewModel>> GetAllAsync()
         {
-            var result = mapper.Map<List<CityViewModel>>(await unitOfWork.CityRepository.GetAllAsync());
+            var result = mapper.Map<List<MediumViewModel>>(await unitOfWork.MediumRepository.GetAllAsync());
             return result.ToList();
-        }
-
-        public async Task<StateViewModel> GetAsync(int id)
-        {
-            return mapper.Map<StateViewModel>(await unitOfWork.StateRepository.GetAsync(id));
-        }
-
-        public async Task<List<StateViewModel>> GetByCountryIdAsync(int CountryId)
-        {
-            return mapper.Map<List<StateViewModel>>(await unitOfWork.StateRepository.FindByAsync(x=>x.CountryId == CountryId));
         }
     }
 }

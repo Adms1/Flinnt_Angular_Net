@@ -15,9 +15,9 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<CityViewModel>> GetAllAsync()
+        public async Task<List<StandardViewModel>> GetAllAsync()
         {
-            var result = mapper.Map<List<CityViewModel>>(await unitOfWork.CityRepository.GetAllAsync());
+            var result = mapper.Map<List<StandardViewModel>>(await unitOfWork.StandardRepository.GetAllAsync());
             return result.ToList();
         }
     }

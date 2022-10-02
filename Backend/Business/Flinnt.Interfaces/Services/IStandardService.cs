@@ -7,6 +7,6 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IStandardService : IBaseService<Standard>
     {
-        Task<List<CityViewModel>> GetAllAsync();
+        Task<List<StandardViewModel>> GetAllAsync();
     }
 }

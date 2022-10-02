@@ -1,4 +1,4 @@
-using Flinnt.Business.ViewModels.Institute;
+using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;

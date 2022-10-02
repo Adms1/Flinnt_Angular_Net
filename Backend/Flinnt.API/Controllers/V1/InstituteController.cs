@@ -3,8 +3,6 @@ using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
 using Flinnt.Interfaces.Services;
-using Flinnt.Mail.Models;
-using Flinnt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

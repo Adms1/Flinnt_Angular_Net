@@ -150,7 +150,8 @@ namespace Flinnt.API
             services.AddScoped<IMediumService, MediumService>();
             services.AddScoped<IGroupStructureService, GroupStructureService>();
             services.AddScoped<IStandardService, StandardService>();
-            services.AddScoped<IBoardService, BoardService>();
+            services.AddScoped<IInstituteGroupService, InstituteGroupService>();
+            services.AddScoped<IInstituteDivisionService, InstituteDivisionService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -170,6 +171,8 @@ namespace Flinnt.API
             services.AddScoped<IStandardRepository, StandardRepository>();
             services.AddScoped<IMediumRepository, MediumRepository>();
             services.AddScoped<IGroupStructureRepository, GroupStructureRepository>();
+            services.AddScoped<IInstituteGroupRepository, InstituteGroupRepository>();
+            services.AddScoped<IInstituteDivisionRepository, InstituteDivisionRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

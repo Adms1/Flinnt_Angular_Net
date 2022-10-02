@@ -26,6 +26,10 @@ namespace Flinnt.UoW
             LoginHistoryRepository = new LoginHistoryRepository(context);
             GroupStructureRepository = new GroupStructureRepository(context);
             BoardRepository = new BoardRepository(context);
+            MediumRepository = new MediumRepository(context);
+            StandardRepository = new StandardRepository(context);
+            InstituteGroupRepository = new InstituteGroupRepository(context);
+            InstituteDivisionRepository = new InstituteDivisionRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
@@ -42,6 +46,10 @@ namespace Flinnt.UoW
         public ILoginHistoryRepository LoginHistoryRepository { get; }
         public IGroupStructureRepository GroupStructureRepository { get; }
         public IBoardRepository BoardRepository { get; }
+        public IMediumRepository MediumRepository { get; }
+        public IStandardRepository StandardRepository { get; }
+        public IInstituteGroupRepository InstituteGroupRepository { get; }
+        public IInstituteDivisionRepository InstituteDivisionRepository { get; }
 
         private bool disposed;
 
