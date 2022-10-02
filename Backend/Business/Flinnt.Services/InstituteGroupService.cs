@@ -17,7 +17,7 @@ namespace Flinnt.Services
 
         public async Task<List<InstituteGroupViewModel>> GetAllAsync()
         {
-            var result = mapper.Map<List<InstituteGroupViewModel>>(await unitOfWork.MediumRepository.GetAllAsync());
+            var result = mapper.Map<List<InstituteGroupViewModel>>(await unitOfWork.InstituteGroupRepository.GetAllAsync());
             return result.ToList();
         }
 

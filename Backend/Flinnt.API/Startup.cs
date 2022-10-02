@@ -147,6 +147,7 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountVerificationService, UserAccountVerificationService>();
             services.AddScoped<IUserSettingService, UserSettingService>();
             services.AddScoped<ILoginHistoryService, LoginHistoryService>();
+            services.AddScoped<IBoardService, BoardService>();
             services.AddScoped<IMediumService, MediumService>();
             services.AddScoped<IGroupStructureService, GroupStructureService>();
             services.AddScoped<IStandardService, StandardService>();
