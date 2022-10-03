@@ -27,6 +27,9 @@ namespace Flinnt.Business.Helpers
             CreateMap<StateViewModel, State>();
             CreateMap<State, StateViewModel>();
 
+            CreateMap<InstituteTypeViewModel, InstituteType>();
+            CreateMap<InstituteType, InstituteTypeViewModel>();
+
             CreateMap<GroupStructureViewModel, GroupStructure>();
             CreateMap<GroupStructure, GroupStructureViewModel>();
 
