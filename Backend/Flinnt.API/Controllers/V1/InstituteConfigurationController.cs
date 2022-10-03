@@ -1,6 +1,7 @@
 ﻿using Flinnt.Business.ViewModels;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Interfaces.Services;
+using Flinnt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -17,6 +18,7 @@ namespace Flinnt.API.Controllers
     [Route("api/{v:apiVersion}/institute/configure")]
     public class InstituteConfigurationController : BaseApiController
     {
+        private readonly IInstituteTypeService _instituteTypeService;
         private readonly IGroupStructureService _groupStructureService;
         private readonly IBoardService _boardService;
         private readonly IMediumService _mediumService;
@@ -32,6 +34,7 @@ namespace Flinnt.API.Controllers
             IStandardService standardService,
             IInstituteGroupService instituteGroupService,
             IInstituteDivisionService instituteDivisionService,
+            IInstituteTypeService instituteTypeService,
             IHtmlLocalizer<CityController> htmlLocalizer)
         {
             _groupStructureService = groupStructureService;
@@ -40,7 +43,20 @@ namespace Flinnt.API.Controllers
             _standardService = standardService;
             _instituteGroupService = instituteGroupService;
             _instituteDivisionService = instituteDivisionService;
+            _instituteTypeService = instituteTypeService;
             _localizer = htmlLocalizer;
+        }
+
+        [HttpGet]
+        [Route("type/list")]
+        public async Task<object> GetAllType()
+        {
+            Logger.Info("GetAllType list");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _instituteTypeService.GetAllAsync());
+                return Response(result, string.Empty);
+            });
         }
 
         [HttpGet]

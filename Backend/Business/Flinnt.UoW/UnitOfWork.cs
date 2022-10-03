@@ -30,6 +30,7 @@ namespace Flinnt.UoW
             StandardRepository = new StandardRepository(context);
             InstituteGroupRepository = new InstituteGroupRepository(context);
             InstituteDivisionRepository = new InstituteDivisionRepository(context);
+            InstituteTypeRepository = new InstituteTypeRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
@@ -44,6 +45,7 @@ namespace Flinnt.UoW
         public IUserInstituteRepository UserInstituteRepository { get; }
         public IUserSettingRepository UserSettingRepository { get; }
         public ILoginHistoryRepository LoginHistoryRepository { get; }
+        public IInstituteTypeRepository InstituteTypeRepository { get; }
         public IGroupStructureRepository GroupStructureRepository { get; }
         public IBoardRepository BoardRepository { get; }
         public IMediumRepository MediumRepository { get; }

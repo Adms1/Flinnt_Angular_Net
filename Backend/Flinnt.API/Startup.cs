@@ -147,6 +147,7 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountVerificationService, UserAccountVerificationService>();
             services.AddScoped<IUserSettingService, UserSettingService>();
             services.AddScoped<ILoginHistoryService, LoginHistoryService>();
+            services.AddScoped<IInstituteTypeService, InstituteTypeService>();
             services.AddScoped<IBoardService, BoardService>();
             services.AddScoped<IMediumService, MediumService>();
             services.AddScoped<IGroupStructureService, GroupStructureService>();
@@ -168,6 +169,7 @@ namespace Flinnt.API
             services.AddScoped<IUserAccountVerificationRepository, UserAccountVerificationRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<ILoginHistoryRepository, LoginHistoryRepository>();
+            services.AddScoped<IInstituteTypeRepository, InstituteTypeRepository>();
             services.AddScoped<IBoardRepository, BoardRepository>();
             services.AddScoped<IStandardRepository, StandardRepository>();
             services.AddScoped<IMediumRepository, MediumRepository>();

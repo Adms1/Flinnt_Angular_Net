@@ -7,6 +7,6 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IInstituteTypeService : IBaseService<InstituteType>
     {
-        Task<List<CityViewModel>> GetAllAsync();
+        Task<List<InstituteTypeViewModel>> GetAllAsync();
     }
 }

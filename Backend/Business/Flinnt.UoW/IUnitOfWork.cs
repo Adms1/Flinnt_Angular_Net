@@ -17,6 +17,7 @@ namespace Flinnt.UoW
         IUserInstituteRepository UserInstituteRepository { get; }
         IUserSettingRepository UserSettingRepository { get; }
         ILoginHistoryRepository LoginHistoryRepository { get; }
+        IInstituteTypeRepository InstituteTypeRepository { get; }
         IGroupStructureRepository GroupStructureRepository { get; }
         IBoardRepository BoardRepository { get; }
         IMediumRepository MediumRepository { get; }

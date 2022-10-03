@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class InstituteType
+    public partial class InstituteType : BaseEntity
     {
         public InstituteType()
         {
