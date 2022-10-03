@@ -576,14 +576,14 @@ namespace Flinnt.Domain
 
             modelBuilder.Entity<InstituteType>(entity =>
             {
-                entity.HasKey(e => e.InstTypeId)
+                entity.HasKey(e => e.InstituteTypeId)
                     .HasName("PK__Institut__840D4EE2086237CA");
 
                 entity.ToTable("InstituteType");
 
                 entity.HasComment("This entity stores a list of institute types.");
 
-                entity.Property(e => e.InstTypeId)
+                entity.Property(e => e.InstituteTypeId)
                     .ValueGeneratedOnAdd()
                     .HasComment("The unique identifier.");
 

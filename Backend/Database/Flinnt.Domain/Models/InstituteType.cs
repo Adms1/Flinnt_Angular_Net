@@ -12,7 +12,7 @@ namespace Flinnt.Domain
             Institutes = new HashSet<Institute>();
         }
 
-        public byte InstTypeId { get; set; }
+        public byte InstituteTypeId { get; set; }
         public string TypeName { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? CreateDateTime { get; set; }
