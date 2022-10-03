@@ -94,7 +94,7 @@ namespace Flinnt.API.Controllers
         #region InstituteGrop
 
         [HttpGet]
-        [Route("institute-group/list")]
+        [Route("group/list")]
         public async Task<object> GetAllInstituteGroup()
         {
             Logger.Info("GetAllInstituteGroup list");
@@ -106,7 +106,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("institute-group/{instituteId}")]
+        [Route("group/{instituteId}")]
         public async Task<object> GetInstituteGroupByInstituteId(int instituteId)
         {
             Logger.Info("GetInstituteGroupByInstituteId");
@@ -118,7 +118,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpPost]
-        [Route("institute-group/create")]
+        [Route("group/create")]
         public async Task<object> CreateInstituteGroup(InstituteGroupViewModel model)
         {
             Logger.Info("Institute Group");
@@ -155,7 +155,7 @@ namespace Flinnt.API.Controllers
         #region InstituteDivision
 
         [HttpGet]
-        [Route("institute-division/list")]
+        [Route("division/list")]
         public async Task<object> GetAllInstituteDivision()
         {
             Logger.Info("GetAllInstituteDivision list");
@@ -167,7 +167,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("institute-division/{instituteGroupId}")]
+        [Route("division/{instituteGroupId}")]
         public async Task<object> GetInstituteDivisionByInstituteGroupId(int instituteGroupId)
         {
             Logger.Info("GetInstituteDivisionByInstituteGroupId");
@@ -179,7 +179,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpPost]
-        [Route("institute-division/create")]
+        [Route("division/create")]
         public async Task<object> CreateInstituteDivision(InstituteDivisionViewModel model)
         {
             Logger.Info("Institute Group");
@@ -213,7 +213,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpDelete]
-        [Route("institute-division/delete/{instituteDivisionId}")]
+        [Route("division/delete/{instituteDivisionId}")]
         public async Task<object> Delete(int instituteDivisionId)
         {
             return await GetDataWithMessage(async () =>
