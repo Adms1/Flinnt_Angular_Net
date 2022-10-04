@@ -1,12 +1,12 @@
 /*  */
 
-.configures1option {
+:host ::ng-deep .configures1option {
     display: block;
     position: relative;
     float: left;
 }
 
-.cofigure_s1_option {
+:host ::ng-deep .cofigure_s1_option {
     position: relative;
     float: left;
     margin: 15px;
@@ -14,11 +14,11 @@
     cursor: pointer;
 }
 
-.card:hover {
+:host ::ng-deep .card:hover {
     border: 1px solid #0d6efd;
 }
 
-.cofigure_s1_option .cofigure_s1_option-itminf {
+:host ::ng-deep .cofigure_s1_option .cofigure_s1_option-itminf {
     border-radius: 5px;
     margin: 0;
     position: absolute;
@@ -26,7 +26,7 @@
     transform: translateY(-50%);
 }
 
-.cofigure_s1_option-title {
+:host ::ng-deep .cofigure_s1_option-title {
     position: relative;
     padding: 7px 10px 0;
     overflow: hidden;
@@ -37,10 +37,10 @@
     box-shadow: none !important;
 }
 
-.mr-5{
+:host ::ng-deep .mr-5{
     margin-right: 5px;
 }
 
-.selection-type_active{
+:host ::ng-deep .selection-type_active{
     border: 1px solid #0d6efd;
 }

@@ -10,10 +10,15 @@ import { UtilityService } from 'src/app/_services/utility.service';
 })
 export class InstituteConfigureComponent implements OnInit {
   roleId = 2;
+  activeStep = 1;
+  step1Activated = true;
+  step2Activated = false;
+  step3Activated = false;
+  step4Activated = false;
+  step5Activated = false;
   institue = {} as Institute;
-  isStudyMediumSelected = false;
-  activatedBtn = false;
-  @ViewChild('stepper1', {static: false}) sRef: ElementRef;
+  @ViewChild('stepper1', { static: false }) sRef: ElementRef;
+
   constructor(
     private utilityService: UtilityService) { }
 
@@ -30,33 +35,39 @@ export class InstituteConfigureComponent implements OnInit {
   }
 
   showPreviousStep(event?: Event) {
-    this.activatedBtn = true;
-    event.currentTarget["parentElement"].classList.remove("active");
-    event.currentTarget["parentElement"].classList.add("d-none");
-    event.currentTarget["parentElement"].previousElementSibling.classList.add("active");
-    event.currentTarget["parentElement"].previousElementSibling.classList.add("visible");
-    event.currentTarget["parentElement"].previousElementSibling.classList.remove("d-none");
+    const parentActiveNode = event.currentTarget["parentElement"].closest('.active');
+    const nextNode = parentActiveNode.previousElementSibling;
 
-    let querySelector = this.sRef.nativeElement.querySelector(".step.active");
+    parentActiveNode.classList.remove("active");
+    parentActiveNode.classList.add("d-none");
+    nextNode.classList.add("active");
+    nextNode.classList.add("visible");
+    nextNode.classList.remove("d-none");
+
+    const querySelector = this.sRef.nativeElement.querySelector(".step.active");
     querySelector.classList.remove("active");
     querySelector.previousElementSibling.previousElementSibling.classList.add("active");
+    this.activeStep--;
   }
- 
-  showNextStep(event?: Event) {
-    this.activatedBtn = false;
-    
-    event.currentTarget["parentElement"].classList.remove("active");
-    event.currentTarget["parentElement"].classList.add("d-none");
-    event.currentTarget["parentElement"].nextElementSibling.classList.add("active");
-    event.currentTarget["parentElement"].nextElementSibling.classList.add("visible");
-    event.currentTarget["parentElement"].nextElementSibling.classList.remove("d-none");
 
-    let querySelector = this.sRef.nativeElement.querySelector(".step.active");
+  showNextStep(event?: Event) {
+    const parentActiveNode = event.currentTarget["parentElement"].closest('.active');
+    const nextNode = parentActiveNode.nextElementSibling;
+
+    parentActiveNode.classList.remove("active");
+    parentActiveNode.classList.add("d-none");
+    nextNode.classList.add("active");
+    nextNode.classList.add("visible");
+    nextNode.classList.remove("d-none");
+
+    const querySelector = this.sRef.nativeElement.querySelector(".step.active");
     querySelector.classList.remove("active");
     querySelector.nextElementSibling.nextElementSibling.classList.add("active");
+    this.activeStep++;
+    this.stepperActivated(this.activeStep);
   }
 
-  selectActionType(event?: Event){
+  selectActionType(event?: Event) {
     const allDivs = event.currentTarget["parentElement"].children;
 
     for (let index = 0; index < allDivs.length; index++) {
@@ -65,11 +76,25 @@ export class InstituteConfigureComponent implements OnInit {
     }
 
     event.currentTarget["childNodes"][0].classList.add("selection-type_active");
-    this.activatedBtn = true;
   }
 
-  selectBoard(event?: Event){
-    this.isStudyMediumSelected = true;
-    this.selectActionType(event);
+  stepperActivated(activeStep) {
+    switch (activeStep) {
+      case 1:
+        this.step1Activated = true;
+        break;
+      case 2:
+        this.step2Activated = true;
+        break
+      case 3:
+        this.step3Activated = true;
+        break
+      case 4:
+        this.step4Activated = true;
+        break
+      case 5:
+        this.step5Activated = true;
+        break
+    }
   }
 }

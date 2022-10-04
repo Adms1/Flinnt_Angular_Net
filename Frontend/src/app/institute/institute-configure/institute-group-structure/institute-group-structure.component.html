@@ -1,0 +1,22 @@
+<div id="page-title">
+  <h2 class="v4">How would you like to organize your courses and students?</h2>
+</div>
+<div class="form-group" *ngIf="groupStructure.length>0">
+  <div class="row">
+    <div class="col-md-3 mt-2 mb-2" *ngFor="let g of groupStructure" (click)="onSelectActionType($event)">
+      <div class="card bg-light w-20">
+        <div class="card-body cofigure_s1_option">
+          <div class="cofigure_s1_option-itminf">
+            <div class="cofigure_s1_option-title">
+              {{g.structureTitle}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-2">
+  <button class="btn btn-primary mr-5" (click)="onShowPreviousStep($event)" type="button">Previous</button>
+  <button class="btn btn-primary" (click)="onShowNextStep($event)" [disabled]="!activatedBtn" type="button">Next</button>
+</div>

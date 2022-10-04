@@ -1,0 +1,27 @@
+<div id="page-title">
+  <h2 class="v4">Select one or more standards</h2>
+</div>
+<div class="form-group">
+  <div class="row center">
+    <h4 class="mt-3">
+      you are selecting standards for the <b>Gujarat Secondary and Higher Secondary Eduction Board</b> and
+      <b>Gujarat</b> medium.
+    </h4>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-2 mb-2">
+      <div class="card bg-light w-20">
+        <div class="card-body">
+          <div class="form-check form-check-inline" *ngFor="let s of standards">
+            <input class="form-check-input" type="checkbox" id='inlineCheckbox_{{s.standardId}}' value="s.standardId"
+              (change)="onStandardChange($event)">
+            <label class="form-check-label" for='inlineCheckbox_{{s.standardId}}'>{{s.standardName}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2">
+    <button class="btn btn-primary mr-5" (click)="onShowPreviousStep($event)" type="button">Previous</button>
+    <button class="btn btn-primary" (click)="onShowNextStep($event)" [disabled]="!activatedBtn" type="button">Next</button>
+  </div>
