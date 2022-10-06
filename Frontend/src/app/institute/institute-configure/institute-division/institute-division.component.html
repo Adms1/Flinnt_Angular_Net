@@ -27,7 +27,7 @@
 </div>
 <div class="form-group">
   <div class="row col-12">
-    <table class="table">
+    <table class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -37,28 +37,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>11 - Science</td>
-          <td>A</td>
-          <td>
-            <a href="javascript:void(0)" class="m-2">edit</a>
-            <a href="javascript:void(0)" class="red">delete</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>11 - Science</td>
-          <td>B</td>
-          <td>
-            <a href="javascript:void(0)" class="m-2">edit</a>
-            <a href="javascript:void(0)" class="red">delete</a>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>11 - Science</td>
-          <td>C</td>
+        <tr *ngFor="let d of divisions">
+          <th scope="row">{{ d.displayOrder }}</th>
+          <td>{{ d.instituteDivisionId }}</td>
+          <td>{{ d.divisionName }}</td>
           <td>
             <a href="javascript:void(0)" class="m-2">edit</a>
             <a href="javascript:void(0)" class="red">delete</a>

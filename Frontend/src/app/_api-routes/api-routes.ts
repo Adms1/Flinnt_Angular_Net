@@ -15,7 +15,8 @@ export class API {
     getInstituteGroupStructure: `/${environment.API_Version}/institute/configure/group-structure/list`,
     getInstituteBoard: `/${environment.API_Version}/institute/configure/board/list`,
     getInstituteMedium: `/${environment.API_Version}/institute/configure/medium/list`,
-    getInstituteStandard: `/${environment.API_Version}/institute/configure/standard/list`
+    getInstituteStandard: `/${environment.API_Version}/institute/configure/standard/list`,
+    getInstituteDivision: `/${environment.API_Version}/institute/configure/division/list`
   }
 
   public static COUNTRY_ROUTES = {

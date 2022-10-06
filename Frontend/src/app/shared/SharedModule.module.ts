@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { Footer404Component } from './footer404/footer404.component';
-
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
@@ -12,12 +12,14 @@ import { Footer404Component } from './footer404/footer404.component';
     Footer404Component
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    DataTablesModule
   ],
   exports:[
     HeaderComponent,
     FooterComponent,
-    Footer404Component
+    Footer404Component,
+    DataTablesModule
   ]
 })
 export class SharedModule { }

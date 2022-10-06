@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import $ from 'jquery';
 import { Constants } from 'src/app/_helpers/constants';
 import { Institute } from 'src/app/_models/institute';
 import { ApiResponse } from 'src/app/_models/response';

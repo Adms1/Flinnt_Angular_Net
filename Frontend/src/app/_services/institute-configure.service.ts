@@ -28,4 +28,8 @@ export class InstituteConfigureService {
   getStandard() {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteStandard}`, true, true);
   }
+
+  getDivision() {
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteDivision}`, true, true);
+  }
 }
