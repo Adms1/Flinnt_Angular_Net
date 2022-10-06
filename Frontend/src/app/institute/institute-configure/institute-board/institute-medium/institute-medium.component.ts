@@ -29,8 +29,9 @@ export class InstituteMediumComponent implements OnInit {
       });
   }
 
-  onSelectActionType(event?: Event){
+  onSelectActionType(event?: Event, medium?:Medium){
     this.activatedBtn = true;
+    this.instituteConfigService.mediumId = medium.mediumId;
     this.actionTypeChange.emit(event);
   }
 

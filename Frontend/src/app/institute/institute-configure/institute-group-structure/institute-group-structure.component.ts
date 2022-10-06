@@ -30,7 +30,7 @@ export class InstituteGroupStructureComponent implements OnInit {
       });
   }
 
-  onSelectActionType(event?: Event){
+  onSelectActionType(event?: Event, groupStructure?:GroupStructure){
     this.activatedBtn = true;
     this.actionTypeChange.emit(event);
   }

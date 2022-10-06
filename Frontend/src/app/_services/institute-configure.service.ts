@@ -6,7 +6,8 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class InstituteConfigureService {
-
+  boardId=0;
+  mediumId=0;
   constructor(private apiService: ApiService) { }
 
   getInstituteType() {
@@ -31,5 +32,9 @@ export class InstituteConfigureService {
 
   getDivision() {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteDivision}`, true, true);
+  }
+
+  saveInstituteGroup(params){
+    return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteGroup}`, params, true);
   }
 }

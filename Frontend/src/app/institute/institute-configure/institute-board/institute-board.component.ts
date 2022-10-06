@@ -31,8 +31,10 @@ export class InstituteBoardComponent implements OnInit {
       });
   }
 
-  onSelectActionType(event?: Event){
+  onSelectActionType(event?: Event, board?: Board){
     this.isStudyMediumSelected = true;
+    if(!!board)
+      this.instituteConfigService.boardId = board.boardId;
     this.actionTypeChange.emit(event);
   }
 

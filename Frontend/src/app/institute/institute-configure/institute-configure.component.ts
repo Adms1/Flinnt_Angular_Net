@@ -68,14 +68,15 @@ export class InstituteConfigureComponent implements OnInit {
   }
 
   selectActionType(event?: Event) {
-    const allDivs = event.currentTarget["parentElement"].children;
+    const _event = event;
+    const allDivs = _event.currentTarget["parentElement"].children;
 
     for (let index = 0; index < allDivs.length; index++) {
       const element = allDivs[index]["childNodes"][0];
       element["classList"].remove("selection-type_active");
     }
 
-    event.currentTarget["childNodes"][0].classList.add("selection-type_active");
+    _event.currentTarget["childNodes"][0].classList.add("selection-type_active");
   }
 
   stepperActivated(activeStep) {

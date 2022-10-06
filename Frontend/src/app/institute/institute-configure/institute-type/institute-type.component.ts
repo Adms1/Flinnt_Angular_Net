@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Type } from '@angular/core';
 import { InstituteType } from 'src/app/_models/institute-type';
 import { ApiResponse } from 'src/app/_models/response';
 import { InstituteConfigureService } from 'src/app/_services/institute-configure.service';
@@ -29,7 +29,7 @@ export class InstituteTypeComponent implements OnInit {
       });
   }
 
-  onSelectActionType(event?: Event){
+  onSelectActionType(event?: Event, type?:InstituteType){
     this.activatedBtn = true;
     this.actionTypeChange.emit(event);
   }
