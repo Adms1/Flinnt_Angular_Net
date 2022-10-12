@@ -14,6 +14,17 @@ namespace Flinnt.Business.ViewModels.General
         public HttpStatusCode StatusCode { get; set; }
     }
 
+    public class ResponseDetail
+    {
+        public string Message { get; set; }
+
+        public bool Data { get; set; }
+
+        public Error Error { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
+    }
+
     public class Error
     {
         public string Code { get; set; }

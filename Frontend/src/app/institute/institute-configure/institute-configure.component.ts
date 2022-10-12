@@ -35,7 +35,7 @@ export class InstituteConfigureComponent implements OnInit {
   }
 
   showPreviousStep(event?: Event) {
-    const parentActiveNode = event.currentTarget["parentElement"].closest('.active');
+    const parentActiveNode = event.target["parentElement"].closest('.active');
     const nextNode = parentActiveNode.previousElementSibling;
 
     parentActiveNode.classList.remove("active");
@@ -51,7 +51,7 @@ export class InstituteConfigureComponent implements OnInit {
   }
 
   showNextStep(event?: Event) {
-    const parentActiveNode = event.currentTarget["parentElement"].closest('.active');
+    const parentActiveNode = event.target["parentElement"].closest('.active');
     const nextNode = parentActiveNode.nextElementSibling;
 
     parentActiveNode.classList.remove("active");

@@ -31,9 +31,27 @@ namespace Flinnt.Services
             return mapper.Map<InstituteDivisionViewModel>(await unitOfWork.InstituteDivisionRepository.FindByFirstOrDefaultAsync(x => x.InstituteGroupId == instituteGroupId));
         }
 
-        public async Task<InstituteDivisionViewModel> AddAsync(InstituteDivisionViewModel model)
+        public async Task<bool> AddAsync(InstituteDivisionViewModel model)
         {
-            return mapper.Map<InstituteDivisionViewModel>(await Task.FromResult(await unitOfWork.InstituteDivisionRepository.AddAsync(mapper.Map<InstituteDivisionViewModel, InstituteDivision>(model))));
+            if (!string.IsNullOrEmpty(model.DivisionName))
+            {
+                int DisplayOrder = 0;
+                string[] divisions = model.DivisionName.Split('\n');
+                foreach (var item in divisions)
+                {
+                    await unitOfWork.InstituteDivisionRepository.AddAsync(
+                        mapper.Map<InstituteDivisionViewModel, InstituteDivision>(new InstituteDivisionViewModel
+                        {
+                            DivisionName = item,
+                            InstituteGroupId = model.InstituteGroupId,
+                            DisplayOrder = DisplayOrder
+                        }));
+                    DisplayOrder++;
+                }
+            }
+            else
+                return false;
+            return true;
         }
 
         public async Task<bool> UpdateAsync(InstituteDivisionViewModel model)

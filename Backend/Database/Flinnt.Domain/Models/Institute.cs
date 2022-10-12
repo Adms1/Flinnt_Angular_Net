@@ -9,7 +9,6 @@ namespace Flinnt.Domain
     {
         public Institute()
         {
-            InstituteBatches = new HashSet<InstituteBatch>();
             InstituteGroups = new HashSet<InstituteGroup>();
             InstituteSemesters = new HashSet<InstituteSemester>();
             UserInstitutes = new HashSet<UserInstitute>();
@@ -39,7 +38,6 @@ namespace Flinnt.Domain
         public virtual Country Country { get; set; }
         public virtual InstituteType InstituteType { get; set; }
         public virtual State State { get; set; }
-        public virtual ICollection<InstituteBatch> InstituteBatches { get; set; }
         public virtual ICollection<InstituteGroup> InstituteGroups { get; set; }
         public virtual ICollection<InstituteSemester> InstituteSemesters { get; set; }
         public virtual ICollection<UserInstitute> UserInstitutes { get; set; }

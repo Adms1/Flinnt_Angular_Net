@@ -30,11 +30,19 @@ export class InstituteConfigureService {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteStandard}`, true, true);
   }
 
+  getGroup(instituteId) {
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteGroup}/${instituteId}`, true, true);
+  }
+
   getDivision() {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteDivision}`, true, true);
   }
 
   saveInstituteGroup(params){
     return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteGroup}`, params, true);
+  }
+
+  saveDivision(params){
+    return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteDivision}`, params, true);
   }
 }

@@ -1,30 +1,33 @@
 <div id="page-title">
-    <h2 class="v4">Add divisions and map with relevant standards</h2>
+  <h2 class="v4">Add divisions and map with relevant standards</h2>
 </div>
-<div class="form-group">
-  <div class="row center">
-    <h4 class="mt-3">
+<form name="divisionForm" id="divisionForm" class="nobottommargin" autocomplete="off" [formGroup]="divisionForm"
+  (ngSubmit)="onAddDivisonSubmit()">
+  <div class="form-group">
+    <div class="row center">
+      <h4 class="mt-3">
         You are adding divisions for the Gujarat Secondary and Higher Secondary Education Board and Gujarat medium.
-    </h4>
-  </div>
-  <div class="row col-12">
-    <div class="col-md-6 mt-2 mb-2">
-      <label>Standard Name</label>
-      <select class="form-select" aria-label="Default select example">
-        <option value="1">11 - Science</option>
-        <option value="2">11 - Commerce</option>
-        <option value="3">11 - Humanities</option>
-      </select>
+      </h4>
     </div>
-    <div class="col-md-6 mt-2 mb-2">
-      <label>Divisions</label>
-      <textarea class="form-control" id="FormControlTextarea1" rows="3" style="max-height: 85px;"></textarea>
+    <div class="row col-12">
+      <div class="col-md-6 mt-2 mb-2">
+        <label>Standard Name</label>
+        <select class="form-select" aria-label="Standard Name" formControlName="instituteGroupId">
+          <option *ngFor="let s of instituteGroups" value="{{s.instituteGroupId}}">
+            {{s.standardViewModel.standardName}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mt-2 mb-2">
+        <label>Divisions</label>
+        <textarea class="form-control" id="FormControlTextarea1" rows="3" style="max-height: 85px;"
+          formControlName="divisionName"></textarea>
+      </div>
     </div>
   </div>
-</div>
-<div class="form-group">
-  <button class="btn btn-primary mb-2 mt-2" type="button">Add</button>
-</div>
+  <div class="form-group">
+    <button class="btn btn-primary mb-2 mt-2" type="submit">Add</button>
+  </div>
+</form>
 <div class="form-group">
   <div class="row col-12">
     <table class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">

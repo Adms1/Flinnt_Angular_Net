@@ -28,12 +28,33 @@ namespace Flinnt.Services
 
         public async Task<List<InstituteGroupViewModel>> GetByInstituteIdAsync(int instituteId)
         {
-            return mapper.Map<List<InstituteGroupViewModel>>(await unitOfWork.InstituteGroupRepository.FindByAsync(x=>x.InstituteId == instituteId));
+            return await Task.FromResult(await unitOfWork.InstituteGroupRepository.GetInstituteGroupRecord(instituteId));
         }
 
-        public async Task<InstituteGroupViewModel> AddAsync(InstituteGroupViewModel model)
+        public async Task<bool> AddAsync(InstituteGroupViewModel model)
         {
-            return mapper.Map<InstituteGroupViewModel>(await Task.FromResult(await unitOfWork.InstituteGroupRepository.AddAsync(mapper.Map<InstituteGroupViewModel, InstituteGroup>(model))));
+            var entities = await unitOfWork.InstituteGroupRepository.FindByAsync(x => x.InstituteId == model.InstituteId);
+            if (entities.Any())
+            {
+                await unitOfWork.InstituteGroupRepository.DeleteAllAsync(entities);
+            }
+
+            int DisplayOrder = 0;
+            foreach (var item in model.Standards)
+            {
+                await unitOfWork.InstituteGroupRepository.AddAsync(
+                    mapper.Map<InstituteGroupViewModel, InstituteGroup>(new InstituteGroupViewModel
+                    {
+                        StandardId = item.StandardId,
+                        BoardId = model.BoardId,
+                        MediumId = model.MediumId,
+                        InstituteId = model.InstituteId,
+                        DisplayOrder = DisplayOrder
+                    }));
+                DisplayOrder++;
+            }
+
+            return true;
         }
 
         public async Task<bool> UpdateAsync(InstituteGroupViewModel model)

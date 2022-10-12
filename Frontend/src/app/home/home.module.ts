@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { LoginComponent } from './login/login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { SharedModule } from '../shared/SharedModule.module';
 import { VarifyAccountComponent } from './varify-account/varify-account.component';
 import { InstituteService } from '../_services/institute.service';
@@ -22,12 +22,7 @@ import { NgSelect2Module } from 'ng-select2';
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
     NgSelect2Module
-  ],
-  exports:[
-    
   ],
   providers:[
     InstituteService

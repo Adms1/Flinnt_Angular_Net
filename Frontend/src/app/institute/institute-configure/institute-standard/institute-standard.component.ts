@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 import { Group } from 'src/app/_models/group';
 import { ApiResponse } from 'src/app/_models/response';
 import { Standard } from 'src/app/_models/standard';
@@ -13,10 +13,12 @@ export class InstituteStandardComponent implements OnInit {
   @Input() activatedBtn = false;
   standards: Standard[] = [];
   selectedStandardIds = [];
+  _event: Event;
   @Output() actionTypeChange = new EventEmitter();
   @Output() showNextStepChange = new EventEmitter();
   @Output() showPreviousStepChange = new EventEmitter();
-  constructor(private instituteConfigService: InstituteConfigureService) { }
+  constructor(private instituteConfigService: InstituteConfigureService,
+    private ngZone: NgZone) { }
 
   ngOnInit(): void {
     this.getInstituteStandard();
@@ -58,17 +60,24 @@ export class InstituteStandardComponent implements OnInit {
   }
 
   saveInstituteGroup(event?: Event) {
+    this._event = event;
+    const that = this;
+    let saveObj: Group = {} as Group;
+    saveObj.instituteId = 14;
+    saveObj.mediumId = this.instituteConfigService.mediumId
+    saveObj.boardId = this.instituteConfigService.boardId;
+    saveObj.standards = [];
     this.selectedStandardIds.forEach(element => {
-      let saveObj: Group = {
-        instituteId: 14,
-        boardId: this.instituteConfigService.boardId,
-        mediumId: this.instituteConfigService.mediumId,
+      saveObj.standards.push({
         standardId: element
-      };
-      this.instituteConfigService.saveInstituteGroup(JSON.stringify(saveObj))
-        .then((res: ApiResponse) => {
-          this.showNextStepChange.emit(event);
-        });
+      });
     });
+
+    this.instituteConfigService.saveInstituteGroup(JSON.stringify(saveObj))
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
+          this.showNextStepChange.emit(that._event);
+        }
+      });
   }
 }

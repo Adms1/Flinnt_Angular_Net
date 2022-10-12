@@ -41,6 +41,32 @@ namespace Flinnt.API.Controllers
             }
         }
 
+        protected async Task<ResponseDetail> GetMessage(Func<Task<Tuple<bool,string, HttpStatusCode>>> getMessageFunc)
+        {
+            var output = new ResponseDetail();
+            try
+            {
+                var result = await getMessageFunc();
+                output.Data = result.Item1;
+                output.Message = result.Item2;
+                output.StatusCode = result.Item3;
+                return await Task.FromResult(output);
+            }
+            catch (Exception ex)
+            {
+                output.Data = false;
+                output.StatusCode = HttpStatusCode.InternalServerError;
+                output.Error = new Error
+                {
+                    Code = ErrorCode.SERVICE_EXECUTION_FAILED,
+                    Message = ex.Message
+                };
+                output.Message = "Something went wrong!! Please Try again later";
+                Logger.Error($"An error has occuerd on {Convert.ToString(ControllerContext.RouteData.Values["controller"]) + " controller &" + Convert.ToString(ControllerContext.RouteData.Values["action"]) + " Method"}Message:{ex.Message}");
+                return await Task.FromResult(output);
+            }
+        }
+
         protected new Tuple<T, string, HttpStatusCode> Response<T>(T data, string message, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             return new Tuple<T, string, HttpStatusCode>(data, message, statusCode);

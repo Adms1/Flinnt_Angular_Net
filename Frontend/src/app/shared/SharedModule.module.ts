@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { Footer404Component } from './footer404/footer404.component';
 import { DataTablesModule } from "angular-datatables";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,13 +14,17 @@ import { DataTablesModule } from "angular-datatables";
   ],
   imports: [
     CommonModule,
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports:[
     HeaderComponent,
     FooterComponent,
     Footer404Component,
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class SharedModule { }

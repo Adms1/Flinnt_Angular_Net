@@ -35,7 +35,7 @@ namespace Flinnt.Domain
         public virtual DbSet<InstituteSession> InstituteSessions { get; set; }
         public virtual DbSet<InstituteType> InstituteTypes { get; set; }
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
-        public virtual DbSet<Medium> Media { get; set; }
+        public virtual DbSet<Medium> Medium { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
@@ -390,8 +390,6 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.InstituteBatchId).HasComment("The unique identifier.");
 
-                entity.Property(e => e.AcademicYearId).HasComment("The academic year this batch belongs to. Ref.: AcademicYear.YearId");
-
                 entity.Property(e => e.BatchName)
                     .IsRequired()
                     .HasMaxLength(75)
@@ -401,8 +399,6 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.EndTime).HasComment("The time when the batch ends.");
 
-                entity.Property(e => e.InstituteId).HasComment("The institute unique identifier this batch belongs to. Ref.: Insitute.InstituteId");
-
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))")
                     .HasComment("If 1, the batch is ready to use.");
@@ -410,17 +406,6 @@ namespace Flinnt.Domain
                 entity.Property(e => e.StartTime).HasComment("The time when the batch starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
-
-                entity.HasOne(d => d.AcademicYear)
-                    .WithMany(p => p.InstituteBatches)
-                    .HasForeignKey(d => d.AcademicYearId)
-                    .HasConstraintName("fk_institute_academic_year_id");
-
-                entity.HasOne(d => d.Institute)
-                    .WithMany(p => p.InstituteBatches)
-                    .HasForeignKey(d => d.InstituteId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_institute_batch_institute_id");
             });
 
             modelBuilder.Entity<InstituteDivision>(entity =>
@@ -566,12 +551,6 @@ namespace Flinnt.Domain
                 entity.Property(e => e.StartTime).HasComment("The time when the session starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
-
-                entity.HasOne(d => d.InstituteBatch)
-                    .WithMany(p => p.InstituteSessions)
-                    .HasForeignKey(d => d.InstituteBatchId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_institute_session_batch_id");
             });
 
             modelBuilder.Entity<InstituteType>(entity =>

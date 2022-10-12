@@ -135,36 +135,36 @@ namespace Flinnt.API.Controllers
 
         [HttpPost]
         [Route("group/create")]
-        public async Task<object> CreateInstituteGroup(InstituteGroupViewModel model)
+        public async Task<object> CreateInstituteGroup([FromBody]InstituteGroupViewModel model)
         {
             Logger.Info("Institute Group");
-            return await GetDataWithMessage(async () =>
+            return await GetMessage(async () =>
             {
                 if (ModelState.IsValid && model != null)
                 {
                     return model.InstituteGroupId <= 0 ? await AddInstituteGroupAsync(model) : await UpdateInstituteGroupAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
+                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
 
-        private async Task<Tuple<InstituteGroupViewModel, string, HttpStatusCode>> AddInstituteGroupAsync(InstituteGroupViewModel model)
+        private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteGroupAsync(InstituteGroupViewModel model)
         {
             var instituteGroup = await _instituteGroupService.AddAsync(model);
-            if (instituteGroup != null)
+            if (instituteGroup)
             {
                 return Response(instituteGroup, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(instituteGroup, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
-        private async Task<Tuple<InstituteGroupViewModel, string, HttpStatusCode>> UpdateInstituteGroupAsync(InstituteGroupViewModel model)
+        private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteGroupAsync(InstituteGroupViewModel model)
         {
             var flag = await _instituteGroupService.UpdateAsync(model);
             if (flag)
-                return Response(model, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            return Response(model, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+                return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            return Response(flag, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
         #endregion
 
@@ -196,36 +196,36 @@ namespace Flinnt.API.Controllers
 
         [HttpPost]
         [Route("division/create")]
-        public async Task<object> CreateInstituteDivision(InstituteDivisionViewModel model)
+        public async Task<object> CreateInstituteDivision([FromBody]InstituteDivisionViewModel model)
         {
             Logger.Info("Institute Group");
-            return await GetDataWithMessage(async () =>
+            return await GetMessage(async () =>
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    return model.InstituteGroupId <= 0 ? await AddInstituteDivisionAsync(model) : await UpdateInstituteDivisionAsync(model);
+                    return model.InstituteDivisionId <= 0 ? await AddInstituteDivisionAsync(model) : await UpdateInstituteDivisionAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
+                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
 
-        private async Task<Tuple<InstituteDivisionViewModel, string, HttpStatusCode>> AddInstituteDivisionAsync(InstituteDivisionViewModel model)
+        private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteDivisionAsync(InstituteDivisionViewModel model)
         {
-            var instituteGroup = await _instituteDivisionService.AddAsync(model);
-            if (instituteGroup != null)
+            var instituteDivision = await _instituteDivisionService.AddAsync(model);
+            if (instituteDivision)
             {
-                return Response(instituteGroup, _localizer["RecordAddSuccess"].Value.ToString());
+                return Response(instituteDivision, _localizer["RecordAddSuccess"].Value.ToString());
             }
-            return Response(instituteGroup, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+            return Response(instituteDivision, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
-        private async Task<Tuple<InstituteDivisionViewModel, string, HttpStatusCode>> UpdateInstituteDivisionAsync(InstituteDivisionViewModel model)
+        private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteDivisionAsync(InstituteDivisionViewModel model)
         {
             var flag = await _instituteDivisionService.UpdateAsync(model);
             if (flag)
-                return Response(model, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            return Response(model, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+                return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            return Response(flag, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         [HttpDelete]

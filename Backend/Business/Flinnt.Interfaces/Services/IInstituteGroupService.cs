@@ -10,7 +10,7 @@ namespace Flinnt.Interfaces.Services
         Task<List<InstituteGroupViewModel>> GetAllAsync();
         Task<InstituteGroupViewModel> GetAsync(int id);
         Task<List<InstituteGroupViewModel>> GetByInstituteIdAsync(int instituteId);
-        Task<InstituteGroupViewModel> AddAsync(InstituteGroupViewModel model);
+        Task<bool> AddAsync(InstituteGroupViewModel model);
         Task<bool> UpdateAsync(InstituteGroupViewModel model);
     }
 }
