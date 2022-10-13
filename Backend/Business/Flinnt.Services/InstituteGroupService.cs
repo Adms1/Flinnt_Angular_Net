@@ -33,10 +33,15 @@ namespace Flinnt.Services
 
         public async Task<bool> AddAsync(InstituteGroupViewModel model)
         {
-            var entities = await unitOfWork.InstituteGroupRepository.FindByAsync(x => x.InstituteId == model.InstituteId);
-            if (entities.Any())
+            var instituteGroups = await unitOfWork.InstituteGroupRepository.FindByAsync(x => x.InstituteId == model.InstituteId);
+            if (instituteGroups.Any())
             {
-                await unitOfWork.InstituteGroupRepository.DeleteAllAsync(entities);
+                var instituteDivision = await unitOfWork.InstituteDivisionRepository.FindByAsync(x => instituteGroups.Select(x => x.InstituteGroupId).Contains(x.InstituteGroupId));
+                if (instituteDivision.Any())
+                {
+                    await unitOfWork.InstituteDivisionRepository.DeleteAllAsync(instituteDivision);
+                }
+                await unitOfWork.InstituteGroupRepository.DeleteAllAsync(instituteGroups);
             }
 
             int DisplayOrder = 0;

@@ -9,7 +9,7 @@ namespace Flinnt.Interfaces.Services
     {
         Task<List<InstituteDivisionViewModel>> GetAllAsync();
         Task<InstituteDivisionViewModel> GetAsync(int id);
-        Task<InstituteDivisionViewModel> GetByInstituteGroupIdAsync(int instituteGroupId);
+        Task<List<InstituteDivisionViewModel>> GetDivisionByInstituteIdAsync(int instituteId);
         Task<bool> AddAsync(InstituteDivisionViewModel model);
         Task<bool> UpdateAsync(InstituteDivisionViewModel model);
         Task<bool> DeleteAsync(int id);

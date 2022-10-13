@@ -68,7 +68,8 @@ export class InstituteDivisionComponent implements OnInit {
   }
 
   getDivision() {
-    this.instituteConfigService.getDivision()
+    // TODO: instituteId dynamic
+    this.instituteConfigService.getDivision(14)
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.divisions = res.data;

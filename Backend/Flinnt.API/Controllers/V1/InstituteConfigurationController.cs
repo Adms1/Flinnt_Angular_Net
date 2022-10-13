@@ -183,13 +183,13 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("division/{instituteGroupId}")]
-        public async Task<object> GetInstituteDivisionByInstituteGroupId(int instituteGroupId)
+        [Route("division/{instituteId}")]
+        public async Task<object> GetInstituteDivisionByInstituteId(int instituteId)
         {
-            Logger.Info("GetInstituteDivisionByInstituteGroupId");
+            Logger.Info("GetInstituteDivisionByInstituteId");
             return await GetDataWithMessage(async () =>
             {
-                var result = (await _instituteDivisionService.GetByInstituteGroupIdAsync(instituteGroupId));
+                var result = (await _instituteDivisionService.GetDivisionByInstituteIdAsync(instituteId));
                 return Response(result, string.Empty);
             });
         }

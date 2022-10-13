@@ -34,8 +34,8 @@ export class InstituteConfigureService {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteGroup}/${instituteId}`, true, true);
   }
 
-  getDivision() {
-    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteDivision}`, true, true);
+  getDivision(instituteId) {
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteDivision}/${instituteId}`, true, true);
   }
 
   saveInstituteGroup(params){

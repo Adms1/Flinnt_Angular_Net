@@ -42,10 +42,9 @@
       <tbody>
         <tr *ngFor="let d of divisions">
           <th scope="row">{{ d.displayOrder }}</th>
-          <td>{{ d.instituteDivisionId }}</td>
+          <td>{{ d.standardViewModel.standardName }}</td>
           <td>{{ d.divisionName }}</td>
           <td>
-            <a href="javascript:void(0)" class="m-2">edit</a>
             <a href="javascript:void(0)" class="red">delete</a>
           </td>
         </tr>

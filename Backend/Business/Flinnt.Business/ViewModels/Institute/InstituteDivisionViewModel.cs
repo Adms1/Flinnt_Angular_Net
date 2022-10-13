@@ -13,5 +13,7 @@ namespace Flinnt.Business.ViewModels
         public int InstituteGroupId { get; set; }
         public int? DisplayOrder { get; set; }
         public bool? IsActive { get; set; }
+        public StandardViewModel StandardViewModel { get; set; }
+        public List<StandardViewModel> Standards { get; set; }
     }
 }

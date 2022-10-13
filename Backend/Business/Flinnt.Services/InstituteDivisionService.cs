@@ -26,9 +26,9 @@ namespace Flinnt.Services
             return mapper.Map<InstituteDivisionViewModel>(await unitOfWork.InstituteDivisionRepository.GetAsync(id));
         }
 
-        public async Task<InstituteDivisionViewModel> GetByInstituteGroupIdAsync(int instituteGroupId)
+        public async Task<List<InstituteDivisionViewModel>> GetDivisionByInstituteIdAsync(int instituteId)
         {
-            return mapper.Map<InstituteDivisionViewModel>(await unitOfWork.InstituteDivisionRepository.FindByFirstOrDefaultAsync(x => x.InstituteGroupId == instituteGroupId));
+            return await Task.FromResult(await unitOfWork.InstituteDivisionRepository.GetInstituteDivisionRecord(instituteId));
         }
 
         public async Task<bool> AddAsync(InstituteDivisionViewModel model)

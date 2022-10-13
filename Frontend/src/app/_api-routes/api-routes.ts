@@ -16,7 +16,7 @@ export class API {
     getInstituteBoard: `/${environment.API_Version}/institute/configure/board/list`,
     getInstituteMedium: `/${environment.API_Version}/institute/configure/medium/list`,
     getInstituteStandard: `/${environment.API_Version}/institute/configure/standard/list`,
-    getInstituteDivision: `/${environment.API_Version}/institute/configure/division/list`,
+    getInstituteDivision: `/${environment.API_Version}/institute/configure/division`,
     getInstituteGroup: `/${environment.API_Version}/institute/configure/group`,
     saveInstituteGroup:`/${environment.API_Version}/institute/configure/group/create`,
     saveInstituteDivision:`/${environment.API_Version}/institute/configure/division/create`
