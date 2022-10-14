@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flinnt.Domain.DbTemp;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -10,6 +11,7 @@ namespace Flinnt.Domain
         public InstituteType()
         {
             Institutes = new HashSet<Institute>();
+            InstituteConfigureSessions = new HashSet<InstituteConfigureSession>();
         }
 
         public byte InstituteTypeId { get; set; }
@@ -19,5 +21,6 @@ namespace Flinnt.Domain
         public DateTime? UpdateDateTime { get; set; }
 
         public virtual ICollection<Institute> Institutes { get; set; }
+        public virtual ICollection<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
     }
 }

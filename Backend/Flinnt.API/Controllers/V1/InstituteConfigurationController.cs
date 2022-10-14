@@ -25,6 +25,7 @@ namespace Flinnt.API.Controllers
         private readonly IStandardService _standardService;
         private readonly IInstituteGroupService _instituteGroupService;
         private readonly IInstituteDivisionService _instituteDivisionService;
+        private readonly IInstituteConfigureSessionService _instituteConfigureSessionService;
         private readonly IHtmlLocalizer<CityController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -35,6 +36,7 @@ namespace Flinnt.API.Controllers
             IInstituteGroupService instituteGroupService,
             IInstituteDivisionService instituteDivisionService,
             IInstituteTypeService instituteTypeService,
+            IInstituteConfigureSessionService instituteConfigureSessionService,
             IHtmlLocalizer<CityController> htmlLocalizer)
         {
             _groupStructureService = groupStructureService;
@@ -44,6 +46,7 @@ namespace Flinnt.API.Controllers
             _instituteGroupService = instituteGroupService;
             _instituteDivisionService = instituteDivisionService;
             _instituteTypeService = instituteTypeService;
+            _instituteConfigureSessionService = instituteConfigureSessionService;
             _localizer = htmlLocalizer;
         }
 
@@ -203,7 +206,7 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    return model.InstituteDivisionId <= 0 ? await AddInstituteDivisionAsync(model) : await UpdateInstituteDivisionAsync(model);
+                    return await AddInstituteDivisionAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
@@ -242,5 +245,44 @@ namespace Flinnt.API.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        [Route("session/{instituteId}")]
+        public async Task<object> GetInstituteConfigureSessionByInstituteId(int instituteId)
+        {
+            Logger.Info("GetInstituteConfigureSessionByInstituteId");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _instituteConfigureSessionService.GetAsync(instituteId));
+                return Response(result, string.Empty);
+            });
+        }
+
+
+        [HttpPost]
+        [Route("session/create")]
+        public async Task<object> CreateInstituteConfigureSession([FromBody] InstituteConfigureSessionViewModel model)
+        {
+            Logger.Info("Institute Configure Session");
+            return await GetMessage(async () =>
+            {
+                if (ModelState.IsValid && model != null)
+                {
+                    return await AddInstituteConfigureSessionAsync(model);
+                }
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
+                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
+            });
+        }
+
+        private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteConfigureSessionAsync(InstituteConfigureSessionViewModel model)
+        {
+            var instituteConfigureSession = await _instituteConfigureSessionService.AddAsync(model);
+            if (instituteConfigureSession)
+            {
+                return Response(instituteConfigureSession, _localizer["RecordAddSuccess"].Value.ToString());
+            }
+            return Response(instituteConfigureSession, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
     }
 }

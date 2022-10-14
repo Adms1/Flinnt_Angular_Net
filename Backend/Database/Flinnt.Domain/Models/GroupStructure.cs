@@ -11,6 +11,7 @@ namespace Flinnt.Domain
         public GroupStructure()
         {
             GroupStructureTypes = new HashSet<GroupStructureType>();
+            InstituteConfigureSessions = new HashSet<InstituteConfigureSession>();
         }
 
         /// <summary>
@@ -43,5 +44,6 @@ namespace Flinnt.Domain
         public DateTime? UpdateDateTime { get; set; }
 
         public virtual ICollection<GroupStructureType> GroupStructureTypes { get; set; }
+        public virtual ICollection<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
     }
 }

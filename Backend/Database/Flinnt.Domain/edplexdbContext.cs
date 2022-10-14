@@ -29,6 +29,8 @@ namespace Flinnt.Domain
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Institute> Institutes { get; set; }
         public virtual DbSet<InstituteBatch> InstituteBatches { get; set; }
+        public virtual DbSet<InstituteConfiguration> InstituteConfigurations { get; set; }
+        public virtual DbSet<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
         public virtual DbSet<InstituteDivision> InstituteDivisions { get; set; }
         public virtual DbSet<InstituteGroup> InstituteGroups { get; set; }
         public virtual DbSet<InstituteSemester> InstituteSemesters { get; set; }
@@ -406,6 +408,71 @@ namespace Flinnt.Domain
                 entity.Property(e => e.StartTime).HasComment("The time when the batch starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<InstituteConfiguration>(entity =>
+            {
+                entity.ToTable("InstituteConfiguration");
+
+                entity.Property(e => e.InstituteConfigurationId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.ConfigurationKey)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasComment("The configuration key.");
+
+                entity.Property(e => e.ConfigurationValue).HasComment("The configuration value.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this configuration belongs to.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.Institute)
+                    .WithMany(p => p.InstituteConfigurations)
+                    .HasForeignKey(d => d.InstituteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("institute_configuration_institute_id");
+            });
+
+            modelBuilder.Entity<InstituteConfigureSession>(entity =>
+            {
+                entity.ToTable("InstituteConfigureSession");
+
+                entity.Property(e => e.CurrentStep)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Board)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.BoardId)
+                    .HasConstraintName("fk_institute_configure_session_board_id");
+
+                entity.HasOne(d => d.GroupStructure)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.GroupStructureId)
+                    .HasConstraintName("fk_institute_configure_session_group_structure_id");
+
+                entity.HasOne(d => d.Institute)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.InstituteId)
+                    .HasConstraintName("fk_institute_configure_session_institute_id");
+
+                entity.HasOne(d => d.IntituteType)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.IntituteTypeId)
+                    .HasConstraintName("fk_institute_configure_session_institute_type_id");
+
+                entity.HasOne(d => d.Medium)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.MediumId)
+                    .HasConstraintName("fk_institute_configure_session_medium_id");
+
+                entity.HasOne(d => d.Standard)
+                    .WithMany(p => p.InstituteConfigureSessions)
+                    .HasForeignKey(d => d.StandardId)
+                    .HasConstraintName("fk_institute_configure_session_standard_id");
             });
 
             modelBuilder.Entity<InstituteDivision>(entity =>

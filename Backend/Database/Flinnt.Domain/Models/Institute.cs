@@ -41,5 +41,7 @@ namespace Flinnt.Domain
         public virtual ICollection<InstituteGroup> InstituteGroups { get; set; }
         public virtual ICollection<InstituteSemester> InstituteSemesters { get; set; }
         public virtual ICollection<UserInstitute> UserInstitutes { get; set; }
+        public virtual ICollection<InstituteConfiguration> InstituteConfigurations { get; set; }
+        public virtual ICollection<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
     }
 }

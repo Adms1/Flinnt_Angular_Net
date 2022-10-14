@@ -47,6 +47,9 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<InstituteDivisionViewModel, InstituteDivision>();
             CreateMap<InstituteDivision, InstituteDivisionViewModel>();
+
+            CreateMap<InstituteConfigureSessionViewModel, InstituteConfigureSession>();
+            CreateMap<InstituteConfigureSession, InstituteConfigureSessionViewModel>();
         }
     }
 }

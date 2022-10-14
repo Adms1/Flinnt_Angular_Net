@@ -10,6 +10,7 @@ namespace Flinnt.Domain
         public Board()
         {
             InstituteGroups = new HashSet<InstituteGroup>();
+            InstituteConfigureSessions = new HashSet<InstituteConfigureSession>();
         }
 
         public byte BoardId { get; set; }
@@ -21,5 +22,6 @@ namespace Flinnt.Domain
         public DateTime? UpdateDateTime { get; set; }
 
         public virtual ICollection<InstituteGroup> InstituteGroups { get; set; }
+        public virtual ICollection<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
     }
 }
