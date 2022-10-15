@@ -11,6 +11,8 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 export class InstituteMediumComponent implements OnInit {
   medium: Medium[] = [];
   @Input() activatedBtn = false;
+  @Input() mediumId : number | null;
+  
   @Output() actionTypeChange = new EventEmitter();
   @Output() showNextStepChange = new EventEmitter();
   @Output() showPreviousStepChange = new EventEmitter();
@@ -25,6 +27,10 @@ export class InstituteMediumComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.medium = res.data;
+
+          if(this.mediumId > 0){
+            this.activatedBtn = true;
+          }
         }
       });
   }

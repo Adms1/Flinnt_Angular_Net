@@ -14,7 +14,7 @@
         <div class="card-body">
           <div class="form-check form-check-inline" *ngFor="let s of standards">
             <input class="form-check-input" type="checkbox" id='inlineCheckbox_{{s.standardId}}' value="s.standardId"
-              (change)="onStandardChange($event, s)">
+              (change)="onStandardChange($event, s)" [checked]="getInputcheck(s.standardId)">
             <label class="form-check-label" for='inlineCheckbox_{{s.standardId}}'>{{s.standardName}}</label>
           </div>
         </div>

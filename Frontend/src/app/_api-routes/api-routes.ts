@@ -11,6 +11,7 @@ export class API {
   };
 
   public static INSTITUTE_CONFIG_ROUTE = {
+    getInstituteConfigureSession: `/${environment.API_Version}/institute/configure/session`,
     getInstituteType: `/${environment.API_Version}/institute/configure/type/list`,
     getInstituteGroupStructure: `/${environment.API_Version}/institute/configure/group-structure/list`,
     getInstituteBoard: `/${environment.API_Version}/institute/configure/board/list`,
@@ -19,7 +20,8 @@ export class API {
     getInstituteDivision: `/${environment.API_Version}/institute/configure/division`,
     getInstituteGroup: `/${environment.API_Version}/institute/configure/group`,
     saveInstituteGroup:`/${environment.API_Version}/institute/configure/group/create`,
-    saveInstituteDivision:`/${environment.API_Version}/institute/configure/division/create`
+    saveInstituteDivision:`/${environment.API_Version}/institute/configure/division/create`,
+    saveInstituteConfigureSession:`/${environment.API_Version}/institute/configure/session/create`
   }
 
   public static COUNTRY_ROUTES = {

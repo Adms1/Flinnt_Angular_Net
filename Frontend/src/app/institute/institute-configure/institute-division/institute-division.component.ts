@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { FormService } from 'src/app/core/form.service';
 import { Division } from 'src/app/_models/division';
@@ -14,6 +15,9 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
   styleUrls: ['./institute-division.component.css']
 })
 export class InstituteDivisionComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+
   divisionForm = {} as FormGroup;
   formSubmitted = false;
   divisions : Division[] = [];
@@ -36,6 +40,10 @@ export class InstituteDivisionComponent implements OnInit {
     this.createDivisionForm();
     this.getInstituteGroup();
     this.getDivision();
+  }
+
+  ngAfterViewInit(){
+    this.dtTrigger.next();
   }
 
   createDivisionForm() {
@@ -73,13 +81,14 @@ export class InstituteDivisionComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.divisions = res.data;
-          this.dtTrigger.next();
+          this.rerender();
         }
       });
   }
 
   onAddDivisonSubmit(){
     this.formSubmitted = true;
+    
     this.formService.markFormGroupTouched(this.divisionForm);
     if (this.divisionForm.invalid) return;
     
@@ -98,5 +107,12 @@ export class InstituteDivisionComponent implements OnInit {
 
   resetTeamForm() {
     this.divisionForm.reset();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+       dtInstance.destroy();
+       this.dtTrigger.next();     
+    });
   }
 }

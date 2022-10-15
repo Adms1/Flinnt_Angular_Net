@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../_services/auth.guard';
 import { InstituteSignupComponent } from './institute-signup/institute-signup.component';
 import { LoginComponent } from './login/login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
   },
   { 
     path: 'institute/verify-account', 
-    component: VarifyAccountComponent
+    component: VarifyAccountComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -6,9 +6,15 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class InstituteConfigureService {
-  boardId=0;
-  mediumId=0;
+  intituteTypeId=null;
+  groupStructureId=null;
+  boardId=null;
+  mediumId=null;
   constructor(private apiService: ApiService) { }
+
+  getInstituteConfigureSession(instituteId) {
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteConfigureSession}/${instituteId}`, true, true);
+  }
 
   getInstituteType() {
     return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getInstituteType}`, true, true);
@@ -44,5 +50,9 @@ export class InstituteConfigureService {
 
   saveDivision(params){
     return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteDivision}`, params, true);
+  }
+
+  saveInstituteConfigureSession(params){
+    return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteConfigureSession}`, params, true);
   }
 }

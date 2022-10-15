@@ -31,7 +31,6 @@ namespace Flinnt.Services
             await unitOfWork.InstituteConfigureSessionRepository.AddAsync(
                     mapper.Map<InstituteConfigureSessionViewModel, InstituteConfigureSession>(new InstituteConfigureSessionViewModel
                     {
-                        StandardId = model.StandardId,
                         BoardId = model.BoardId,
                         MediumId = model.MediumId,
                         InstituteId = model.InstituteId,

@@ -12,15 +12,19 @@
     <div class="row col-12">
       <div class="col-md-6 mt-2 mb-2">
         <label>Standard Name</label>
-        <select class="form-select" aria-label="Standard Name" formControlName="instituteGroupId">
+        <select class="form-select" aria-label="Standard Name" formControlName="instituteGroupId"
+        [ngClass]="divisionForm.get('instituteGroupId')?.invalid && formSubmitted ? 'error' : ''">
           <option *ngFor="let s of instituteGroups" value="{{s.instituteGroupId}}">
             {{s.standardViewModel.standardName}}</option>
         </select>
+        <label *ngIf="divisionForm.get('instituteGroupId')?.invalid && formSubmitted" class="error"> This field is required.</label>
       </div>
       <div class="col-md-6 mt-2 mb-2">
         <label>Divisions</label>
         <textarea class="form-control" id="FormControlTextarea1" rows="3" style="max-height: 85px;"
-          formControlName="divisionName"></textarea>
+          formControlName="divisionName"
+          [ngClass]="divisionForm.get('divisionName')?.invalid && formSubmitted ? 'error' : ''"></textarea>
+          <label *ngIf="divisionForm.get('divisionName')?.invalid && formSubmitted" class="error"> This field is required.</label>
       </div>
     </div>
   </div>

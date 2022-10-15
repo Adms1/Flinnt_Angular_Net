@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Constants } from 'src/app/_helpers/constants';
 import { Institute } from 'src/app/_models/institute';
+import { InstituteConfigureSession } from 'src/app/_models/institute-configure-session';
+import { ApiResponse } from 'src/app/_models/response';
+import { InstituteConfigureService } from 'src/app/_services/institute-configure.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
 @Component({
@@ -10,20 +13,30 @@ import { UtilityService } from 'src/app/_services/utility.service';
 })
 export class InstituteConfigureComponent implements OnInit {
   roleId = 2;
+  currentStep = 1;
   activeStep = 1;
-  step1Activated = true;
+
+  instituteTypeId=null;
+  groupStructureId=null;
+  boardId=null;
+  mediumId=null;
+
+  step1Activated = false;
   step2Activated = false;
   step3Activated = false;
   step4Activated = false;
   step5Activated = false;
   institue = {} as Institute;
+  instituteConfigureSession = {} as InstituteConfigureSession;
   @ViewChild('stepper1', { static: false }) sRef: ElementRef;
 
   constructor(
-    private utilityService: UtilityService) { }
+    private utilityService: UtilityService,
+    private instituteConfigService: InstituteConfigureService) { }
 
   ngOnInit(): void {
     this.getInstitute();
+    this.getInstituteConfigureSession();
   }
 
   getInstitute() {
@@ -34,35 +47,61 @@ export class InstituteConfigureComponent implements OnInit {
     }
   }
 
+  getInstituteConfigureSession(){
+    // TODO: dynamic instituteID
+    this.instituteConfigService.getInstituteConfigureSession(14)
+    .then((res: ApiResponse) => {
+      if (res.statusCode == 200) {
+        if(!!res.data){
+          this.instituteConfigureSession = res.data;
+
+          const typeId = this.instituteConfigureSession.intituteTypeId;
+          const groupStructureId = this.instituteConfigureSession.groupStructureId;
+          const boardId = this.instituteConfigureSession.boardId;
+          const mediumId = this.instituteConfigureSession.mediumId;
+          const currentStep = this.instituteConfigureSession.currentStep;
+
+          this.instituteTypeId = this.instituteConfigService.intituteTypeId = !!typeId ? typeId : null;
+          this.groupStructureId = this.instituteConfigService.groupStructureId = !!groupStructureId ? groupStructureId : null;
+          this.boardId = this.instituteConfigService.boardId = !!boardId ? boardId : null;
+          this.mediumId = this.instituteConfigService.mediumId = !!mediumId ? mediumId : null;
+          this.currentStep = this.activeStep = !!currentStep ? currentStep : 1;
+        }
+      }
+      this.stepperActivated(this.currentStep);
+    });
+  }
+
   showPreviousStep(event?: Event) {
-    const parentActiveNode = event.target["parentElement"].closest('.active');
-    const nextNode = parentActiveNode.previousElementSibling;
+    // const parentActiveNode = event.target["parentElement"].closest('.active');
+    // const nextNode = parentActiveNode.previousElementSibling;
 
-    parentActiveNode.classList.remove("active");
-    parentActiveNode.classList.add("d-none");
-    nextNode.classList.add("active");
-    nextNode.classList.add("visible");
-    nextNode.classList.remove("d-none");
+    // parentActiveNode.classList.remove("active");
+    // parentActiveNode.classList.add("d-none");
+    // nextNode.classList.add("active");
+    // nextNode.classList.add("visible");
+    // nextNode.classList.remove("d-none");
 
-    const querySelector = this.sRef.nativeElement.querySelector(".step.active");
-    querySelector.classList.remove("active");
-    querySelector.previousElementSibling.previousElementSibling.classList.add("active");
+    // const querySelector = this.sRef.nativeElement.querySelector(".step.active");
+    // querySelector.classList.remove("active");
+    // querySelector.previousElementSibling.previousElementSibling.classList.add("active");
     this.activeStep--;
+    this.stepperActivated(this.activeStep);
   }
 
   showNextStep(event?: Event) {
-    const parentActiveNode = event.target["parentElement"].closest('.active');
-    const nextNode = parentActiveNode.nextElementSibling;
+    // const parentActiveNode = event.target["parentElement"].closest('.active');
+    // const nextNode = parentActiveNode.nextElementSibling;
 
-    parentActiveNode.classList.remove("active");
-    parentActiveNode.classList.add("d-none");
-    nextNode.classList.add("active");
-    nextNode.classList.add("visible");
-    nextNode.classList.remove("d-none");
+    // parentActiveNode.classList.remove("active");
+    // parentActiveNode.classList.add("d-none");
+    // nextNode.classList.add("active");
+    // nextNode.classList.add("visible");
+    // nextNode.classList.remove("d-none");
 
-    const querySelector = this.sRef.nativeElement.querySelector(".step.active");
-    querySelector.classList.remove("active");
-    querySelector.nextElementSibling.nextElementSibling.classList.add("active");
+    // const querySelector = this.sRef.nativeElement.querySelector(".step.active");
+    // querySelector.classList.remove("active");
+    // querySelector.nextElementSibling.nextElementSibling.classList.add("active");
     this.activeStep++;
     this.stepperActivated(this.activeStep);
   }
@@ -77,23 +116,74 @@ export class InstituteConfigureComponent implements OnInit {
     }
 
     _event.currentTarget["childNodes"][0].classList.add("selection-type_active");
+    this.saveInstituteConfigureSession();
+  }
+
+  getCurrentStep() {
+    if (this.activeStep == 3) {
+      if (!!this.instituteConfigService.mediumId && this.instituteConfigService.mediumId > 0) {
+        return 4;
+      }
+      else
+        return 3;
+    }
+    return this.activeStep + 1;
+  }
+  
+  saveInstituteConfigureSession(){
+    console.log('-----Institute Session JSON Format-----');
+    // APIs
+    const sessionObj: InstituteConfigureSession = {
+      instituteId: 14,
+      boardId: this.instituteConfigService.boardId,
+      mediumId: this.instituteConfigService.mediumId,
+      currentStep: this.getCurrentStep(),
+      groupStructureId: this.instituteConfigService.groupStructureId,
+      intituteTypeId: this.instituteConfigService.intituteTypeId
+    };
+
+    this.instituteConfigService.saveInstituteConfigureSession(JSON.stringify(sessionObj))
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
+        }
+      });
   }
 
   stepperActivated(activeStep) {
     switch (activeStep) {
       case 1:
         this.step1Activated = true;
+        this.step2Activated = false;
+        this.step3Activated = false;
+        this.step4Activated = false;
+        this.step5Activated = false;
         break;
       case 2:
+        this.step1Activated = false;
         this.step2Activated = true;
+        this.step3Activated = false;
+        this.step4Activated = false;
+        this.step5Activated = false;
         break
       case 3:
+        this.step1Activated = false;
+        this.step2Activated = false;
         this.step3Activated = true;
+        this.step4Activated = false;
+        this.step5Activated = false;
         break
       case 4:
+        this.step1Activated = false;
+        this.step2Activated = false;
+        this.step3Activated = false;
         this.step4Activated = true;
+        this.step5Activated = false;
         break
       case 5:
+        this.step1Activated = false;
+        this.step2Activated = false;
+        this.step3Activated = false;
+        this.step4Activated = false;
         this.step5Activated = true;
         break
     }

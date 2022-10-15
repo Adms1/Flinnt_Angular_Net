@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 import { Group } from 'src/app/_models/group';
+import { InstituteConfigureSession } from 'src/app/_models/institute-configure-session';
 import { ApiResponse } from 'src/app/_models/response';
 import { Standard } from 'src/app/_models/standard';
 import { InstituteConfigureService } from 'src/app/_services/institute-configure.service';
@@ -12,6 +13,7 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 export class InstituteStandardComponent implements OnInit {
   @Input() activatedBtn = false;
   standards: Standard[] = [];
+  instituteGroups: Group[] = [];
   selectedStandardIds = [];
   _event: Event;
   @Output() actionTypeChange = new EventEmitter();
@@ -29,6 +31,8 @@ export class InstituteStandardComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.standards = res.data;
+
+          this.getInstituteGroup();
         }
       });
   }
@@ -53,10 +57,39 @@ export class InstituteStandardComponent implements OnInit {
 
   onShowNextStep(event?: Event) {
     this.saveInstituteGroup(event);
+    this.saveInstituteConfigureSession();
   }
 
   onShowPreviousStep(event?: Event) {
     this.showPreviousStepChange.emit(event);
+  }
+
+  getInputcheck(standardId) {
+
+    const selectedStandards = this.instituteGroups
+      .map((element) => {
+        return element.standardViewModel
+      });
+
+    if (selectedStandards.filter(x => x.standardId == standardId).length > 0) {
+      if (this.selectedStandardIds.filter(x => x == standardId).length == 0)
+        this.selectedStandardIds.push(standardId);
+      return true;
+    }
+    return false;
+  }
+
+  getInstituteGroup(){
+    // TODO: dynamic instituteId
+    this.instituteConfigService.getGroup(14)
+    .then((res: ApiResponse) => {
+      if (res.statusCode == 200) {
+        if(!!res.data){
+          this.activatedBtn = true;
+          this.instituteGroups = res.data;
+        }
+      }
+    });
   }
 
   saveInstituteGroup(event?: Event) {
@@ -77,6 +110,25 @@ export class InstituteStandardComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.showNextStepChange.emit(that._event);
+        }
+      });
+  }
+
+  saveInstituteConfigureSession(){
+    console.log('-----Institute Session JSON Format-----');
+    // APIs
+    const sessionObj: InstituteConfigureSession = {
+      instituteId: 14,
+      boardId: this.instituteConfigService.boardId,
+      mediumId: this.instituteConfigService.mediumId,
+      currentStep: 5,
+      groupStructureId: this.instituteConfigService.groupStructureId,
+      intituteTypeId: this.instituteConfigService.intituteTypeId
+    };
+
+    this.instituteConfigService.saveInstituteConfigureSession(JSON.stringify(sessionObj))
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
         }
       });
   }

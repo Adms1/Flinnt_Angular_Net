@@ -10,6 +10,7 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 })
 export class InstituteGroupStructureComponent implements OnInit {
   @Input() activatedBtn = false;
+  @Input() groupStructureId : number | null;
   groupStructure: GroupStructure[] = [];
   @Output() actionTypeChange = new EventEmitter();
   @Output() showNextStepChange = new EventEmitter();
@@ -26,12 +27,17 @@ export class InstituteGroupStructureComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.groupStructure = res.data;
+
+          if(this.groupStructureId > 0){
+            this.activatedBtn = true;
+          }
         }
       });
   }
 
   onSelectActionType(event?: Event, groupStructure?:GroupStructure){
     this.activatedBtn = true;
+    this.instituteConfigService.groupStructureId = groupStructure.groupStructureId;
     this.actionTypeChange.emit(event);
   }
 

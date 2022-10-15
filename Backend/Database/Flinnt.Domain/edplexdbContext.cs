@@ -440,9 +440,7 @@ namespace Flinnt.Domain
             {
                 entity.ToTable("InstituteConfigureSession");
 
-                entity.Property(e => e.CurrentStep)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.CurrentStep).HasComment("");
 
                 entity.HasOne(d => d.Board)
                     .WithMany(p => p.InstituteConfigureSessions)
@@ -468,11 +466,6 @@ namespace Flinnt.Domain
                     .WithMany(p => p.InstituteConfigureSessions)
                     .HasForeignKey(d => d.MediumId)
                     .HasConstraintName("fk_institute_configure_session_medium_id");
-
-                entity.HasOne(d => d.Standard)
-                    .WithMany(p => p.InstituteConfigureSessions)
-                    .HasForeignKey(d => d.StandardId)
-                    .HasConstraintName("fk_institute_configure_session_standard_id");
             });
 
             modelBuilder.Entity<InstituteDivision>(entity =>

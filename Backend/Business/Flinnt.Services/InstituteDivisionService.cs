@@ -36,7 +36,14 @@ namespace Flinnt.Services
             if (!string.IsNullOrEmpty(model.DivisionName))
             {
                 int DisplayOrder = 0;
+                var existingDivisions = await unitOfWork.InstituteDivisionRepository.FindByAsync(x => x.InstituteGroupId == model.InstituteGroupId);
+                if (existingDivisions != null)
+                {
+                    DisplayOrder = existingDivisions.ToList().OrderByDescending(x => x.InstituteGroupId).FirstOrDefault().DisplayOrder.Value;
+                }
+                DisplayOrder++;
                 string[] divisions = model.DivisionName.Split('\n');
+
                 foreach (var item in divisions)
                 {
                     await unitOfWork.InstituteDivisionRepository.AddAsync(
@@ -46,7 +53,6 @@ namespace Flinnt.Services
                             InstituteGroupId = model.InstituteGroupId,
                             DisplayOrder = DisplayOrder
                         }));
-                    DisplayOrder++;
                 }
             }
             else

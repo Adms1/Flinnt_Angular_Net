@@ -4,7 +4,7 @@
 <div class="form-group" *ngIf="groupStructure.length>0">
   <div class="row">
     <div class="col-md-3 mt-2 mb-2" *ngFor="let g of groupStructure" (click)="onSelectActionType($event,g)">
-      <div class="card bg-light w-20">
+      <div class="card bg-light w-20" [ngClass]="groupStructureId == g.groupStructureId ? 'selection-type_active' : ''">
         <div class="card-body cofigure_s1_option">
           <div class="cofigure_s1_option-itminf">
             <div class="cofigure_s1_option-title">

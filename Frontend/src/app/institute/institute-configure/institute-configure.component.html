@@ -8,36 +8,36 @@
         <div class="container clearfix">
           <div #stepper1 class="bs-stepper vertical linear">
             <div class="bs-stepper-header">
-              <div class="step active">
-                <button type="button" class="step-trigger">
+              <div class="step" [ngClass]="step1Activated ? 'active' : ''">
+                <button type="button" class="step-trigger" disabled="step1Activated">
                   <span class="bs-stepper-circle">1</span>
                   <span class="bs-stepper-label"></span>
                 </button>
               </div>
               <div class="bs-stepper-line"></div>
-              <div class="step">
-                <button type="button" class="step-trigger" disabled="disabled">
+              <div class="step" [ngClass]="step2Activated ? 'active' : ''">
+                <button type="button" class="step-trigger" disabled="step2Activated">
                   <span class="bs-stepper-circle">2</span>
                   <span class="bs-stepper-label"></span>
                 </button>
               </div>
               <div class="bs-stepper-line"></div>
-              <div class="step">
-                <button type="button" class="step-trigger" disabled="disabled">
+              <div class="step" [ngClass]="step3Activated ? 'active' : ''">
+                <button type="button" class="step-trigger" disabled="step3Activated">
                   <span class="bs-stepper-circle">3</span>
                   <span class="bs-stepper-label"></span>
                 </button>
               </div>
               <div class="bs-stepper-line"></div>
-              <div class="step">
-                <button type="button" class="step-trigger" disabled="disabled">
+              <div class="step" [ngClass]="step4Activated ? 'active' : ''">
+                <button type="button" class="step-trigger" disabled="step4Activated">
                   <span class="bs-stepper-circle">4</span>
                   <span class="bs-stepper-label"></span>
                 </button>
               </div>
               <div class="bs-stepper-line"></div>
-              <div class="step">
-                <button type="button" class="step-trigger" disabled="disabled">
+              <div class="step" [ngClass]="step5Activated ? 'active' : ''">
+                <button type="button" class="step-trigger" disabled="step5Activated">
                   <span class="bs-stepper-circle">5</span>
                   <span class="bs-stepper-label"></span>
                 </button>
@@ -45,28 +45,29 @@
             </div>
             <div class="bs-stepper-content container clearfix">
               <form>
-                <div id="test-vl-1" class="bs-stepper-pane fade active">
+                <div id="test-vl-1" class="bs-stepper-pane fade" [ngClass]="step1Activated ? 'active' : 'd-none'">
                   <app-institute-type (actionTypeChange)="selectActionType($event)"
-                    (showNextStepChange)="showNextStep($event)" *ngIf="step1Activated"></app-institute-type>
+                    (showNextStepChange)="showNextStep($event)" *ngIf="step1Activated"
+                    [instituteTypeId]="instituteTypeId"></app-institute-type>
                 </div>
-                <div id="test-vl-2" class="bs-stepper-pane d-none">
+                <div id="test-vl-2" class="bs-stepper-pane fade" [ngClass]="step2Activated ? 'active' : 'd-none'">
                   <app-institute-group-structure (actionTypeChange)="selectActionType($event)"
                     (showNextStepChange)="showNextStep($event)" (showPreviousStepChange)="showPreviousStep($event)"
-                    *ngIf="step2Activated">
+                    *ngIf="step2Activated" [groupStructureId]="groupStructureId">
                   </app-institute-group-structure>
                 </div>
-                <div id="test-vl-3" class="bs-stepper-pane d-none">
+                <div id="test-vl-3" class="bs-stepper-pane fade" [ngClass]="step3Activated ? 'active' : 'd-none'">
                   <app-institute-board (actionTypeChange)="selectActionType($event)"
                     (showNextStepChange)="showNextStep($event)" (showPreviousStepChange)="showPreviousStep($event)"
-                    *ngIf="step3Activated">
+                    *ngIf="step3Activated" [boardId]="boardId" [mediumId]="mediumId">
                   </app-institute-board>
                 </div>
-                <div id="test-vl-4" class="bs-stepper-pane d-none">
+                <div id="test-vl-4" class="bs-stepper-pane fade" [ngClass]="step4Activated ? 'active' : 'd-none'">
                   <app-institute-standard (showNextStepChange)="showNextStep($event)"
                     (showPreviousStepChange)="showPreviousStep($event)" *ngIf="step4Activated">
                   </app-institute-standard>
                 </div>
-                <div id="test-vl-5" class="bs-stepper-pane d-none">
+                <div id="test-vl-5" class="bs-stepper-pane fade" [ngClass]="step5Activated ? 'active' : 'd-none'">
                   <app-institute-division *ngIf="step5Activated"></app-institute-division>
                   <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
                     type="button">Previous</button>

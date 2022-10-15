@@ -10,6 +10,8 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 })
 export class InstituteBoardComponent implements OnInit {
   @Input() isStudyMediumSelected = false;
+  @Input() boardId :  number | null;
+  @Input() mediumId :  number | null;
   boards: Board[] = [];
   @Output() actionTypeChange = new EventEmitter();
   @Output() showNextStepChange = new EventEmitter();
@@ -27,6 +29,10 @@ export class InstituteBoardComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.boards = res.data;
+
+          if (this.mediumId > 0 || (!!this.boardId && this.boardId > 0)) {
+            this.isStudyMediumSelected = true;
+          }
         }
       });
   }

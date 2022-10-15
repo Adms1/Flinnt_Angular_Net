@@ -10,11 +10,12 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 })
 export class InstituteTypeComponent implements OnInit {
   @Input() activatedBtn = false;
-  instituteTypes : InstituteType[] = [];
+  @Input() instituteTypeId: number | null;
+  instituteTypes: InstituteType[] = [];
   @Output() actionTypeChange = new EventEmitter();
   @Output() showNextStepChange = new EventEmitter();
-  
-  constructor(private instituteConfigService : InstituteConfigureService) { }
+
+  constructor(private instituteConfigService: InstituteConfigureService) { }
 
   ngOnInit(): void {
     this.getInstituteType();
@@ -23,18 +24,23 @@ export class InstituteTypeComponent implements OnInit {
   getInstituteType() {
     this.instituteConfigService.getInstituteType()
       .then((res: ApiResponse) => {
-        if(res.statusCode == 200){
+        if (res.statusCode == 200) {
           this.instituteTypes = res.data;
+
+          if (this.instituteTypeId > 0) {
+            this.activatedBtn = true;
+          }
         }
       });
   }
 
-  onSelectActionType(event?: Event, type?:InstituteType){
+  onSelectActionType(event?: Event, type?: InstituteType) {
     this.activatedBtn = true;
+    this.instituteConfigService.intituteTypeId = type.instituteTypeId;
     this.actionTypeChange.emit(event);
   }
 
-  onShowNextStep(event?: Event){
+  onShowNextStep(event?: Event) {
     this.showNextStepChange.emit(event);
   }
 }

@@ -4,7 +4,7 @@
 <div class="form-group" *ngIf="instituteTypes.length > 0">
   <div class="row">
     <div class="col-md-3 mt-2 mb-2" *ngFor="let t of instituteTypes" (click)="onSelectActionType($event,t)">
-      <div class="card bg-light w-20">
+      <div class="card bg-light w-20" [ngClass]="instituteTypeId == t.instituteTypeId ? 'selection-type_active' : ''">
         <div class="card-body cofigure_s1_option">
           <div class="cofigure_s1_option-itminf">
             <div class="cofigure_s1_option-title">
