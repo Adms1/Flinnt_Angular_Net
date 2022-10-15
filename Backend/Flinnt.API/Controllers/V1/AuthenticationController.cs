@@ -25,7 +25,9 @@ namespace Flinnt.API.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserAccountVerificationService _userAccountVerificationService;
+        private readonly IUserInstituteService _userInstituteService;
         private readonly IUserService _userService;
+        private readonly IUserProfileService _userProfileService;
         private readonly ILoginHistoryService _loginHistoryService;
 
         private readonly IBackgroundService _backgroundService;
@@ -36,6 +38,8 @@ namespace Flinnt.API.Controllers
             UserManager<ApplicationUser> userManager, 
             IUserAccountVerificationService userAccountVerificationService,
             IUserService userService,
+            IUserInstituteService userInstituteService,
+            IUserProfileService userProfileService,
             ILoginHistoryService loginHistoryService)
         {
             _userManager = userManager;
@@ -43,7 +47,9 @@ namespace Flinnt.API.Controllers
             _backgroundService = backgroundService;
             _userAccountVerificationService = userAccountVerificationService;
             _userService = userService;
+            _userInstituteService = userInstituteService;
             _loginHistoryService = loginHistoryService;
+            _userProfileService = userProfileService;
             _localizer = localizer;
         }
 
@@ -81,18 +87,27 @@ namespace Flinnt.API.Controllers
                         var otpNumber = GenerateRandomNo();
                         var userId = loginResponse.ApplicationUser.UserId;
                         var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userId);
-                        var user = await _userService.GetAsync(Convert.ToInt64(userId));
-
+                        var user = await _userService.GetAsync(userId);
+                        var userProfile = await _userProfileService.GetByUserIdAsync(userId);
+                        var userInstitute = await _userInstituteService.GetByUserIdAsync(userId);
                         // login history
                         LoginHistory loginHistory = new LoginHistory
                         {
                             UserId = userId,
                             User = user,
                             ClientIp = ipAddress.ToString(),
-                            LoginDateTime = DateTime.Now,
+                            LoginDateTime = DateTime.Now
                         }; 
                         await _loginHistoryService.AddAsync(loginHistory);
 
+                        if(userInstitute != null)
+                        {
+                            loginResponse.InstituteId = userInstitute.InstituteId;
+                        }
+                        if(userProfile != null)
+                        {
+                            loginResponse.UserProfile = userProfile;
+                        }
                         if (userOtpRes != null)
                         {
                             if(!userOtpRes.IsVerified.Value)

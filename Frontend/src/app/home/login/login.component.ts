@@ -49,9 +49,9 @@ export class LoginComponent implements OnInit {
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           // navigate to verification link if verification not done OR configuration page OR dashboard
-          
-          localStorage.setItem(Constants.TOKEN, JSON.stringify(res.data.token));
-          localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.applicationUser));
+          localStorage.setItem(Constants.TOKEN, res.data.token);
+          localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.userProfile));
+          localStorage.setItem(Constants.LOGIN_PAGE.INSTITUTE_ID, res.data.instituteId);
           if(res.data.applicationUser.isVerified){
             this.route.navigate(['institute/configure']);
           }

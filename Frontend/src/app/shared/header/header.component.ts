@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserProfile } from 'src/app/_models/user-profile';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   @Input() roleId:number = 0;
-  @Input() userObj:any = {};
+  @Input() userObj:UserProfile;
   menuClicked = false;
   constructor(private route: Router) { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -15,9 +15,9 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
   styleUrls: ['./institute-division.component.css']
 })
 export class InstituteDivisionComponent implements OnInit {
+  @Input() instituteId = 0;
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-
   divisionForm = {} as FormGroup;
   formSubmitted = false;
   divisions : Division[] = [];
@@ -59,8 +59,7 @@ export class InstituteDivisionComponent implements OnInit {
   }
 
   getInstituteGroup(){
-    // TODO: dynamic instituteId
-    this.instituteConfigService.getGroup(14)
+    this.instituteConfigService.getGroup(this.instituteId)
     .then((res: ApiResponse) => {
       if (res.statusCode == 200) {
 
@@ -76,8 +75,7 @@ export class InstituteDivisionComponent implements OnInit {
   }
 
   getDivision() {
-    // TODO: instituteId dynamic
-    this.instituteConfigService.getDivision(14)
+    this.instituteConfigService.getDivision(this.instituteId)
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.divisions = res.data;
@@ -97,6 +95,17 @@ export class InstituteDivisionComponent implements OnInit {
     console.log(data);
     // APIs
     this.instituteConfigService.saveDivision(data)
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
+          this.getDivision();
+          this.resetTeamForm();
+        }
+      });
+  }
+
+  onDivisionDelete(divisionID) {
+    // APIs
+    this.instituteConfigService.deleteDivision(divisionID)
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
           this.getDivision();

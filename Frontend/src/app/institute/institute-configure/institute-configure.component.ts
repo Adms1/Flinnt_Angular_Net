@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Constants } from 'src/app/_helpers/constants';
-import { Institute } from 'src/app/_models/institute';
 import { InstituteConfigureSession } from 'src/app/_models/institute-configure-session';
 import { ApiResponse } from 'src/app/_models/response';
+import { UserProfile } from 'src/app/_models/user-profile';
 import { InstituteConfigureService } from 'src/app/_services/institute-configure.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
@@ -12,9 +13,11 @@ import { UtilityService } from 'src/app/_services/utility.service';
   styleUrls: ['./institute-configure.component.css']
 })
 export class InstituteConfigureComponent implements OnInit {
+  userProfile = {} as UserProfile;
   roleId = 2;
   currentStep = 1;
   activeStep = 1;
+  instituteId = 0;
 
   instituteTypeId=null;
   groupStructureId=null;
@@ -26,30 +29,41 @@ export class InstituteConfigureComponent implements OnInit {
   step3Activated = false;
   step4Activated = false;
   step5Activated = false;
-  institue = {} as Institute;
   instituteConfigureSession = {} as InstituteConfigureSession;
   @ViewChild('stepper1', { static: false }) sRef: ElementRef;
 
   constructor(
+    private router: Router,
     private utilityService: UtilityService,
     private instituteConfigService: InstituteConfigureService) { }
 
   ngOnInit(): void {
-    this.getInstitute();
+    this.getUser();
+    
     this.getInstituteConfigureSession();
   }
 
-  getInstitute() {
-    const instituteObj = localStorage.getItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ);
+  getUser() {
+    const userObj = localStorage.getItem(Constants.LOGIN_PAGE.USER_OBJ);
 
-    if (!!instituteObj) {
-      this.institue = JSON.parse(instituteObj) as Institute;
+    if (!!userObj) {
+      this.userProfile = JSON.parse(userObj) as UserProfile;
     }
+
+    const instituteId = localStorage.getItem(Constants.LOGIN_PAGE.INSTITUTE_ID);
+
+    if(instituteId == undefined || instituteId == null)
+    {
+      this.utilityService.showErrorToast("something went wrong. Please login again!");
+      localStorage.clear();
+      this.router.navigate(['']);
+      return;
+    }
+    this.instituteId = Number(instituteId);
   }
 
   getInstituteConfigureSession(){
-    // TODO: dynamic instituteID
-    this.instituteConfigService.getInstituteConfigureSession(14)
+    this.instituteConfigService.getInstituteConfigureSession(this.instituteId)
     .then((res: ApiResponse) => {
       if (res.statusCode == 200) {
         if(!!res.data){
@@ -134,7 +148,7 @@ export class InstituteConfigureComponent implements OnInit {
     console.log('-----Institute Session JSON Format-----');
     // APIs
     const sessionObj: InstituteConfigureSession = {
-      instituteId: 14,
+      instituteId: this.instituteId,
       boardId: this.instituteConfigService.boardId,
       mediumId: this.instituteConfigService.mediumId,
       currentStep: this.getCurrentStep(),

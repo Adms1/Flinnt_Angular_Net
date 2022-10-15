@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.UoW;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,21 +38,22 @@ namespace Flinnt.Services
             {
                 int DisplayOrder = 0;
                 var existingDivisions = await unitOfWork.InstituteDivisionRepository.FindByAsync(x => x.InstituteGroupId == model.InstituteGroupId);
-                if (existingDivisions != null)
+                if (existingDivisions.Any())
                 {
                     DisplayOrder = existingDivisions.ToList().OrderByDescending(x => x.InstituteGroupId).FirstOrDefault().DisplayOrder.Value;
                 }
-                DisplayOrder++;
+                
                 string[] divisions = model.DivisionName.Split('\n');
-
                 foreach (var item in divisions)
                 {
+                    DisplayOrder++;
                     await unitOfWork.InstituteDivisionRepository.AddAsync(
                         mapper.Map<InstituteDivisionViewModel, InstituteDivision>(new InstituteDivisionViewModel
                         {
                             DivisionName = item,
                             InstituteGroupId = model.InstituteGroupId,
-                            DisplayOrder = DisplayOrder
+                            DisplayOrder = DisplayOrder,
+                            CreateDateTime = DateTime.Now 
                         }));
                 }
             }

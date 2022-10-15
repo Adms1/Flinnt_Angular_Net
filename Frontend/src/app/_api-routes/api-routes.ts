@@ -6,6 +6,7 @@ export class API {
   };
 
   public static INSTITUTE_ROUTES = {
+    getInstitute: `/${environment.API_Version}/institute`,
     saveInstitute: `/${environment.API_Version}/institute/create`,
     accountVerify: `/${environment.API_Version}/institute/account-verify`
   };
@@ -21,6 +22,7 @@ export class API {
     getInstituteGroup: `/${environment.API_Version}/institute/configure/group`,
     saveInstituteGroup:`/${environment.API_Version}/institute/configure/group/create`,
     saveInstituteDivision:`/${environment.API_Version}/institute/configure/division/create`,
+    deleteInstituteDivision:`/${environment.API_Version}/institute/configure/division`,
     saveInstituteConfigureSession:`/${environment.API_Version}/institute/configure/session/create`
   }
 

@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Constants } from 'src/app/_helpers/constants';
-import { Institute } from 'src/app/_models/institute';
 import { ApiResponse } from 'src/app/_models/response';
+import { UserProfile } from 'src/app/_models/user-profile';
 import { InstituteService } from 'src/app/_services/institute.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
@@ -15,7 +15,7 @@ import { UtilityService } from 'src/app/_services/utility.service';
 })
 export class VarifyAccountComponent implements OnInit {
   roleId = 2;
-  institue = {} as Institute;
+  userProfile = {} as UserProfile;
   otpForm = {} as FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +26,7 @@ export class VarifyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.createLoginForm();
-    this.getInstitute();
+    this.getUser();
   }
   createLoginForm() {
     this.otpForm = this.formBuilder.group({
@@ -37,11 +37,11 @@ export class VarifyAccountComponent implements OnInit {
     });
   }
 
-  getInstitute() {
-    const instituteObj = localStorage.getItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ);
+  getUser() {
+    const userObj = localStorage.getItem(Constants.LOGIN_PAGE.USER_OBJ);
 
-    if (!!instituteObj) {
-      this.institue = JSON.parse(instituteObj) as Institute;
+    if (!!userObj) {
+      this.userProfile = JSON.parse(userObj) as UserProfile;
     }
   }
 

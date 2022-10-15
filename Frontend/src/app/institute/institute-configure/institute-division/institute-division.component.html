@@ -49,7 +49,7 @@
           <td>{{ d.standardViewModel.standardName }}</td>
           <td>{{ d.divisionName }}</td>
           <td>
-            <a href="javascript:void(0)" class="red">delete</a>
+            <a href="javascript:void(0)" class="red" (click)="onDivisionDelete(d.instituteDivisionId)">delete</a>
           </td>
         </tr>
       </tbody>

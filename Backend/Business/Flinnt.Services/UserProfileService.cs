@@ -21,9 +21,9 @@ namespace Flinnt.Services
             return result.ToList();
         }
 
-        public async Task<UserProfileModel> GetAsync(int id)
+        public async Task<UserProfileModel> GetByUserIdAsync(long id)
         {
-            return mapper.Map<UserProfileModel>(await unitOfWork.UserProfileRepository.GetAsync(id));
+            return mapper.Map<UserProfileModel>(await unitOfWork.UserProfileRepository.FindByFirstOrDefaultAsync(x=>x.UserId == id));
         }
 
         public async Task<UserProfile> GetByEmailAsync(string emailId)

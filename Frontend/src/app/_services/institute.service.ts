@@ -9,6 +9,10 @@ export class InstituteService {
 
   constructor(private apiService: ApiService) { }
 
+  getInstitute(instituteId) {
+    return this.apiService.get(`${API.INSTITUTE_ROUTES.getInstitute}/${instituteId}`, true);
+  }
+
   saveInstitute(params) {
     return this.apiService.post(`${API.INSTITUTE_ROUTES.saveInstitute}`, params, true);
   }

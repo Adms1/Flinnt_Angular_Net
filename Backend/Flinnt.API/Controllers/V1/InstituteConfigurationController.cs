@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Flinnt.API.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/{v:apiVersion}/institute/configure")]
     public class InstituteConfigurationController : BaseApiController

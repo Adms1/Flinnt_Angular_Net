@@ -9,6 +9,7 @@ namespace Flinnt.Interfaces.Services
     {
         Task<UserInstitute> GetAsync(int id);
 
+        Task<UserInstitute> GetByUserIdAsync(long userId);
         Task<UserInstitute> AddAsync(UserInstitute model);
 
         Task<bool> UpdateAsync(UserInstitute model);

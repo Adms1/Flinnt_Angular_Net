@@ -1,7 +1,7 @@
 <div class="stretched">
   <div id="wrapper" class="clearfix">
     <div id="header" class="header2">
-      <app-header [roleId]="roleId" [userObj]="institue"></app-header>
+      <app-header [roleId]="roleId" [userObj]="userProfile"></app-header>
     </div>
     <div id="content">
       <div class="content-wrap">
@@ -63,12 +63,12 @@
                   </app-institute-board>
                 </div>
                 <div id="test-vl-4" class="bs-stepper-pane fade" [ngClass]="step4Activated ? 'active' : 'd-none'">
-                  <app-institute-standard (showNextStepChange)="showNextStep($event)"
+                  <app-institute-standard (showNextStepChange)="showNextStep($event)" [instituteId]="instituteId"
                     (showPreviousStepChange)="showPreviousStep($event)" *ngIf="step4Activated">
                   </app-institute-standard>
                 </div>
                 <div id="test-vl-5" class="bs-stepper-pane fade" [ngClass]="step5Activated ? 'active' : 'd-none'">
-                  <app-institute-division *ngIf="step5Activated"></app-institute-division>
+                  <app-institute-division *ngIf="step5Activated" [instituteId]="instituteId"></app-institute-division>
                   <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
                     type="button">Previous</button>
                   <button class="btn btn-primary" type="button">Finish</button>

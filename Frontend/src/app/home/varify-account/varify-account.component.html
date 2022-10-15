@@ -1,7 +1,7 @@
 <body class="stretched">
     <div id="wrapper" class="clearfix">
         <div id="header" class="header2">
-            <app-header [roleId]="roleId" [userObj] = "institue"></app-header>
+            <app-header [roleId]="roleId" [userObj] = "userProfile"></app-header>
         </div>
         <div id="content">
             <div id="page-title">
@@ -18,7 +18,7 @@
                             <h4>
                                 You are just one step away from activating your account.
                                 <br> All you have to do now is follow the verification link we've sent to your
-                                registered e-mail id <strong>{{institue.emailId}}</strong>.
+                                registered e-mail id <strong>{{userProfile.emailId}}</strong>.
                             </h4>
                         </div>
                         <h4>Please enter the 4-digit verification code we sent via Email:</h4>

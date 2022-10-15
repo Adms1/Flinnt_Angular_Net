@@ -26,6 +26,11 @@ namespace Flinnt.Services
             return mapper.Map<UserInstitute>(await unitOfWork.UserInstituteRepository.GetAsync(id));
         }
 
+        public async Task<UserInstitute> GetByUserIdAsync(long userId)
+        {
+            return mapper.Map<UserInstitute>(await unitOfWork.UserInstituteRepository.FindByFirstOrDefaultAsync(x=>x.UserId == userId));
+        }
+
         public async Task<UserInstitute> AddAsync(UserInstitute model)
         {
             return await Task.FromResult(await unitOfWork.UserInstituteRepository.AddAsync(model));

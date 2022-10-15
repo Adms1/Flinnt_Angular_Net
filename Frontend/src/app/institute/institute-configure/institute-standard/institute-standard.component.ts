@@ -12,6 +12,7 @@ import { InstituteConfigureService } from 'src/app/_services/institute-configure
 })
 export class InstituteStandardComponent implements OnInit {
   @Input() activatedBtn = false;
+  @Input() instituteId = 0;
   standards: Standard[] = [];
   instituteGroups: Group[] = [];
   selectedStandardIds = [];
@@ -80,8 +81,7 @@ export class InstituteStandardComponent implements OnInit {
   }
 
   getInstituteGroup(){
-    // TODO: dynamic instituteId
-    this.instituteConfigService.getGroup(14)
+    this.instituteConfigService.getGroup(this.instituteId)
     .then((res: ApiResponse) => {
       if (res.statusCode == 200) {
         if(!!res.data){
@@ -96,7 +96,7 @@ export class InstituteStandardComponent implements OnInit {
     this._event = event;
     const that = this;
     let saveObj: Group = {} as Group;
-    saveObj.instituteId = 14;
+    saveObj.instituteId = this.instituteId;
     saveObj.mediumId = this.instituteConfigService.mediumId
     saveObj.boardId = this.instituteConfigService.boardId;
     saveObj.standards = [];
@@ -118,7 +118,7 @@ export class InstituteStandardComponent implements OnInit {
     console.log('-----Institute Session JSON Format-----');
     // APIs
     const sessionObj: InstituteConfigureSession = {
-      instituteId: 14,
+      instituteId: this.instituteId,
       boardId: this.instituteConfigService.boardId,
       mediumId: this.instituteConfigService.mediumId,
       currentStep: 5,

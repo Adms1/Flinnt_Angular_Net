@@ -73,6 +73,18 @@ namespace Flinnt.API.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("{instituteId})")]
+        public async Task<object> GetByInstituteId(int instituteId)
+        {
+            Logger.Info("GetAll");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _instituteService.GetAsync(instituteId));
+                return Response(result, string.Empty);
+            });
+        }
+
         [AllowAnonymous]
         [HttpPost]
         [Route("create")]

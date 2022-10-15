@@ -15,6 +15,7 @@ namespace Flinnt.Business.ViewModels
         public byte? StandardId { get; set; }
         public int? DisplayOrder { get; set; }
         public bool? IsActive { get; set; }
+        public DateTime? CreateDateTime { get; set; }
         public StandardViewModel StandardViewModel { get; set; }
         public List<StandardViewModel> Standards { get; set; }
     }

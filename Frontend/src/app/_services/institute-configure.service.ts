@@ -52,6 +52,10 @@ export class InstituteConfigureService {
     return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteDivision}`, params, true);
   }
 
+  deleteDivision(id){
+    return this.apiService.delete(`${API.INSTITUTE_CONFIG_ROUTE.deleteInstituteDivision}/${id}`, true);
+  }
+
   saveInstituteConfigureSession(params){
     return this.apiService.post(`${API.INSTITUTE_CONFIG_ROUTE.saveInstituteConfigureSession}`, params, true);
   }

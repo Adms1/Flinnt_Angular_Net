@@ -29,7 +29,8 @@ export const Constants = {
     },
 
     LOGIN_PAGE:{
-        USER_OBJ:"current_user"
+        USER_OBJ:"current_user",
+        INSTITUTE_ID:"instituteId"
     }
 }
 
