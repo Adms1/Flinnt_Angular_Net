@@ -6,5 +6,5 @@ export class Institute {
     emailId?: string;
     mobileNo?: string;
     groupStructureId?: number;
-    intituteTypeId?: number;
+    instituteTypeId?: number;
 }

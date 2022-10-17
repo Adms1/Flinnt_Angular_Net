@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class InstituteConfigureService {
-  intituteTypeId=null;
+  instituteTypeId=null;
   groupStructureId=null;
   boardId=null;
   mediumId=null;

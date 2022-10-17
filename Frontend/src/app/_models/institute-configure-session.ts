@@ -1,7 +1,7 @@
 export class InstituteConfigureSession {
     instituteId: number;
     currentStep: number;
-    intituteTypeId?: number;
+    instituteTypeId?: number;
     groupStructureId?: number;
     boardId?: number;
     mediumId?: number;

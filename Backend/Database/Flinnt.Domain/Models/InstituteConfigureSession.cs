@@ -7,7 +7,7 @@ namespace Flinnt.Domain
     {
         public int InstituteConfigureSessionId { get; set; }
         public byte? CurrentStep { get; set; }
-        public byte? IntituteTypeId { get; set; }
+        public byte? InstituteTypeId { get; set; }
         public byte? GroupStructureId { get; set; }
         public int? InstituteId { get; set; }
         public byte? BoardId { get; set; }

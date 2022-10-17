@@ -124,7 +124,7 @@ export class InstituteStandardComponent implements OnInit {
       mediumId: this.instituteConfigService.mediumId,
       currentStep: 5,
       groupStructureId: this.instituteConfigService.groupStructureId,
-      intituteTypeId: this.instituteConfigService.intituteTypeId
+      instituteTypeId: this.instituteConfigService.instituteTypeId
     };
 
     this.instituteConfigService.saveInstituteConfigureSession(JSON.stringify(sessionObj))

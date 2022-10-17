@@ -36,7 +36,7 @@ export class InstituteTypeComponent implements OnInit {
 
   onSelectActionType(event?: Event, type?: InstituteType) {
     this.activatedBtn = true;
-    this.instituteConfigService.intituteTypeId = type.instituteTypeId;
+    this.instituteConfigService.instituteTypeId = type.instituteTypeId;
     this.actionTypeChange.emit(event);
   }
 

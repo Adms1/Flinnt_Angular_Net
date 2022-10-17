@@ -72,13 +72,13 @@ export class InstituteConfigureComponent implements OnInit {
         if(!!res.data){
           this.instituteConfigureSession = res.data;
 
-          const typeId = this.instituteConfigureSession.intituteTypeId;
+          const typeId = this.instituteConfigureSession.instituteTypeId;
           const groupStructureId = this.instituteConfigureSession.groupStructureId;
           const boardId = this.instituteConfigureSession.boardId;
           const mediumId = this.instituteConfigureSession.mediumId;
           const currentStep = this.instituteConfigureSession.currentStep;
 
-          this.instituteTypeId = this.instituteConfigService.intituteTypeId = !!typeId ? typeId : null;
+          this.instituteTypeId = this.instituteConfigService.instituteTypeId = !!typeId ? typeId : null;
           this.groupStructureId = this.instituteConfigService.groupStructureId = !!groupStructureId ? groupStructureId : null;
           this.boardId = this.instituteConfigService.boardId = !!boardId ? boardId : null;
           this.mediumId = this.instituteConfigService.mediumId = !!mediumId ? mediumId : null;
@@ -156,7 +156,7 @@ export class InstituteConfigureComponent implements OnInit {
       mediumId: this.instituteConfigService.mediumId,
       currentStep: this.getCurrentStep(),
       groupStructureId: this.instituteConfigService.groupStructureId,
-      intituteTypeId: this.instituteConfigService.intituteTypeId
+      instituteTypeId: this.instituteConfigService.instituteTypeId
     };
 
     this.instituteConfigService.saveInstituteConfigureSession(JSON.stringify(sessionObj))
@@ -172,7 +172,7 @@ export class InstituteConfigureComponent implements OnInit {
     const sessionObj: Institute = {
       instituteId: this.instituteId,
       groupStructureId: this.instituteConfigService.groupStructureId,
-      intituteTypeId: this.instituteConfigService.intituteTypeId
+      instituteTypeId: this.instituteConfigService.instituteTypeId
     };
 
     this.instituteService.updateInstitute(JSON.stringify(sessionObj))

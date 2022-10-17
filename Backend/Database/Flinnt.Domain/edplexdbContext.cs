@@ -466,7 +466,7 @@ namespace Flinnt.Domain
 
                 entity.HasOne(d => d.IntituteType)
                     .WithMany(p => p.InstituteConfigureSessions)
-                    .HasForeignKey(d => d.IntituteTypeId)
+                    .HasForeignKey(d => d.InstituteTypeId)
                     .HasConstraintName("fk_institute_configure_session_institute_type_id");
 
                 entity.HasOne(d => d.Medium)

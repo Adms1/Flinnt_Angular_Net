@@ -36,7 +36,7 @@ namespace Flinnt.Services
                         InstituteId = model.InstituteId,
                         CurrentStep = model.CurrentStep,
                         GroupStructureId = model.GroupStructureId,
-                        IntituteTypeId = model.IntituteTypeId
+                        InstituteTypeId = model.InstituteTypeId
                     }));
 
             return true;
