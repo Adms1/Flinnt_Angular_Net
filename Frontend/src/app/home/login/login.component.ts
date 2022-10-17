@@ -52,10 +52,10 @@ export class LoginComponent implements OnInit {
           localStorage.setItem(Constants.TOKEN, res.data.token);
           localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.userProfile));
           localStorage.setItem(Constants.LOGIN_PAGE.INSTITUTE_ID, res.data.instituteId);
-          localStorage.setItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ, res.data.InstituteModel);
+          localStorage.setItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ, JSON.stringify(res.data.instituteModel));
           if (res.data.applicationUser.isVerified) {
-            if (!!res.data.InstituteModel && (!!res.data.InstituteModel?.GroupStructureId
-              && res.data.InstituteModel.GroupStructureId > 0)) {
+            if (!!res.data.instituteModel && (!!res.data.instituteModel?.groupStructureId
+              && res.data.instituteModel.groupStructureId > 0)) {
               this.route.navigate(['institute/dashboard']);
             }
             else {
