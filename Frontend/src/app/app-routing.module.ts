@@ -9,7 +9,12 @@ const routes: Routes = [
   },
   {
     path:"institute/configure",
-    loadChildren: () => import('./institute/institute.module').then(m=>m.InstituteModule),
+    loadChildren: () => import('./institute/institute-configure/institute-configure.module').then(m=>m.InstituteModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path:"institute/dashboard",
+    loadChildren: () => import('./institute/institute-dashboard/institute-dashboard.module').then(m=>m.InstituteDashboardModule),
     canActivate: [AuthGuard]
   }
 ];

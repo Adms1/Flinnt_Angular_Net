@@ -97,7 +97,8 @@ export class InstituteStandardComponent implements OnInit {
     const that = this;
     let saveObj: Group = {} as Group;
     saveObj.instituteId = this.instituteId;
-    saveObj.mediumId = this.instituteConfigService.mediumId
+    saveObj.groupStructureId = this.instituteConfigService.groupStructureId;
+    saveObj.mediumId = this.instituteConfigService.mediumId;
     saveObj.boardId = this.instituteConfigService.boardId;
     saveObj.standards = [];
     this.selectedStandardIds.forEach(element => {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../shared/SharedModule.module';
-import { InstituteConfigureComponent } from './institute-configure/institute-configure.component';
+import { SharedModule } from 'src/app/shared/SharedModule.module';
+import { InstituteConfigureComponent } from './institute-configure.component';
 
 const routes: Routes = [
   {

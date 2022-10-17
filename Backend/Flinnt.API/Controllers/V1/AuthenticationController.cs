@@ -13,6 +13,7 @@ using Flinnt.Business.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 using Flinnt.Mail.Models;
+using Flinnt.Services;
 
 namespace Flinnt.API.Controllers
 {
@@ -27,6 +28,7 @@ namespace Flinnt.API.Controllers
         private readonly IUserAccountVerificationService _userAccountVerificationService;
         private readonly IUserInstituteService _userInstituteService;
         private readonly IUserService _userService;
+        private readonly IInstituteService _instituteService;
         private readonly IUserProfileService _userProfileService;
         private readonly ILoginHistoryService _loginHistoryService;
 
@@ -38,6 +40,7 @@ namespace Flinnt.API.Controllers
             UserManager<ApplicationUser> userManager, 
             IUserAccountVerificationService userAccountVerificationService,
             IUserService userService,
+            IInstituteService instituteService,
             IUserInstituteService userInstituteService,
             IUserProfileService userProfileService,
             ILoginHistoryService loginHistoryService)
@@ -48,6 +51,7 @@ namespace Flinnt.API.Controllers
             _userAccountVerificationService = userAccountVerificationService;
             _userService = userService;
             _userInstituteService = userInstituteService;
+            _instituteService = instituteService;
             _loginHistoryService = loginHistoryService;
             _userProfileService = userProfileService;
             _localizer = localizer;
@@ -102,12 +106,20 @@ namespace Flinnt.API.Controllers
 
                         if(userInstitute != null)
                         {
+                            var instituteId = userInstitute.InstituteId;
                             loginResponse.InstituteId = userInstitute.InstituteId;
+
+                            var institute = await _instituteService.GetAsync(instituteId);
+
+                            if (institute != null)
+                                loginResponse.InstituteModel = institute;
                         }
+
                         if(userProfile != null)
                         {
                             loginResponse.UserProfile = userProfile;
                         }
+
                         if (userOtpRes != null)
                         {
                             if(!userOtpRes.IsVerified.Value)

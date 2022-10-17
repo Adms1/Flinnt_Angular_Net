@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Constants } from 'src/app/_helpers/constants';
+import { Institute } from 'src/app/_models/institute';
 import { InstituteConfigureSession } from 'src/app/_models/institute-configure-session';
 import { ApiResponse } from 'src/app/_models/response';
 import { UserProfile } from 'src/app/_models/user-profile';
 import { InstituteConfigureService } from 'src/app/_services/institute-configure.service';
+import { InstituteService } from 'src/app/_services/institute.service';
 import { UtilityService } from 'src/app/_services/utility.service';
 
 @Component({
@@ -35,7 +37,8 @@ export class InstituteConfigureComponent implements OnInit {
   constructor(
     private router: Router,
     private utilityService: UtilityService,
-    private instituteConfigService: InstituteConfigureService) { }
+    private instituteConfigService: InstituteConfigureService,
+    private instituteService: InstituteService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -159,6 +162,23 @@ export class InstituteConfigureComponent implements OnInit {
     this.instituteConfigService.saveInstituteConfigureSession(JSON.stringify(sessionObj))
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
+        }
+      });
+  }
+
+  onFinishConfigure(){
+    console.log('-----Institute JSON Format-----');
+    // APIs
+    const sessionObj: Institute = {
+      instituteId: this.instituteId,
+      groupStructureId: this.instituteConfigService.groupStructureId,
+      intituteTypeId: this.instituteConfigService.intituteTypeId
+    };
+
+    this.instituteService.updateInstitute(JSON.stringify(sessionObj))
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
+          this.router.navigate(["institute/dashboard"]);
         }
       });
   }

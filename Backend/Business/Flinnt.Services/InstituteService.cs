@@ -31,12 +31,13 @@ namespace Flinnt.Services
             return mapper.Map<InstituteModel>(await Task.FromResult(await unitOfWork.InstituteRepository.AddAsync(mapper.Map<InstituteModel, Institute>(model))));
         }
 
-        public async Task<bool> UpdateAsync(InstituteModel model)
+        public async Task<bool> UpdateAsync(InstituteViewModel model)
         {
             var institute = await unitOfWork.InstituteRepository.GetAsync(model.InstituteId);
             if (institute != null)
             {
-                institute.InstituteId = model.InstituteId;
+                institute.InstituteTypeId = model.InstituteTypeId;
+                institute.GroupStructureId = model.GroupStructureId;
                 //MAP other fields
                 await unitOfWork.InstituteRepository.UpdateAsync(institute);
                 return await Task.FromResult(true);

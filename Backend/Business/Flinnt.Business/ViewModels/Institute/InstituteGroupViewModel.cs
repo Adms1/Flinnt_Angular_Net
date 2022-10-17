@@ -10,6 +10,7 @@ namespace Flinnt.Business.ViewModels
     {
         public int InstituteGroupId { get; set; }
         public int InstituteId { get; set; }
+        public byte? GroupStructureId { get; set; }
         public byte? BoardId { get; set; }
         public byte? MediumId { get; set; }
         public byte? StandardId { get; set; }

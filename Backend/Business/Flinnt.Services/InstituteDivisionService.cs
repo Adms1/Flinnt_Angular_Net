@@ -42,19 +42,26 @@ namespace Flinnt.Services
                 {
                     DisplayOrder = existingDivisions.ToList().OrderByDescending(x => x.InstituteGroupId).FirstOrDefault().DisplayOrder.Value;
                 }
-                
+
                 string[] divisions = model.DivisionName.Split('\n');
                 foreach (var item in divisions)
                 {
                     DisplayOrder++;
+                    bool isExist = false;
+                    if (existingDivisions.Any())
+                    {
+                        isExist = existingDivisions.ToList().Any(x => x.DivisionName.ToLower() == item.ToLower());
+                    }
+
+                    if (isExist) continue;
                     await unitOfWork.InstituteDivisionRepository.AddAsync(
-                        mapper.Map<InstituteDivisionViewModel, InstituteDivision>(new InstituteDivisionViewModel
-                        {
-                            DivisionName = item,
-                            InstituteGroupId = model.InstituteGroupId,
-                            DisplayOrder = DisplayOrder,
-                            CreateDateTime = DateTime.Now 
-                        }));
+                    mapper.Map<InstituteDivisionViewModel, InstituteDivision>(new InstituteDivisionViewModel
+                    {
+                        DivisionName = item,
+                        InstituteGroupId = model.InstituteGroupId,
+                        DisplayOrder = DisplayOrder,
+                        CreateDateTime = DateTime.Now
+                    }));
                 }
             }
             else

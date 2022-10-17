@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { CoreModule } from './core/core.module';
-import { InstituteModule } from './institute/institute.module';
+import { InstituteModule } from './institute/institute-configure/institute-configure.module';
 
 
 @NgModule({

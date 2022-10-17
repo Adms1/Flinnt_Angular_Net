@@ -145,7 +145,7 @@ namespace Flinnt.API.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<object> Put([FromBody] InstituteModel model)
+        public async Task<object> Put([FromBody] InstituteViewModel model)
         {
             return await GetDataWithMessage(async () =>
             {
@@ -174,7 +174,6 @@ namespace Flinnt.API.Controllers
             };
             var city = await _cityService.AddAsync(cityViewModel);
 
-            model.InstituteTypeId = 1;
             model.CityId = city.CityId;
             var otpNumber = GenerateRandomNo();
 
@@ -301,7 +300,7 @@ namespace Flinnt.API.Controllers
             return _rdm.Next(_min, _max).ToString();
         }
 
-        private async Task<Tuple<InstituteModel, string, HttpStatusCode>> UpdateAsync(InstituteModel model)
+        private async Task<Tuple<InstituteViewModel, string, HttpStatusCode>> UpdateAsync(InstituteViewModel model)
         {
             var flag = await _instituteService.UpdateAsync(model);
             if (flag)

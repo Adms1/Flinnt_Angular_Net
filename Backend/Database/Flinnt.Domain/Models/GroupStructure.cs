@@ -12,6 +12,8 @@ namespace Flinnt.Domain
         {
             GroupStructureTypes = new HashSet<GroupStructureType>();
             InstituteConfigureSessions = new HashSet<InstituteConfigureSession>();
+            InstituteGroups = new HashSet<InstituteGroup>();
+            Institutes = new HashSet<Institute>();
         }
 
         /// <summary>
@@ -45,5 +47,7 @@ namespace Flinnt.Domain
 
         public virtual ICollection<GroupStructureType> GroupStructureTypes { get; set; }
         public virtual ICollection<InstituteConfigureSession> InstituteConfigureSessions { get; set; }
+        public virtual ICollection<InstituteGroup> InstituteGroups { get; set; }
+        public virtual ICollection<Institute> Institutes { get; set; }
     }
 }

@@ -71,7 +71,7 @@
                   <app-institute-division *ngIf="step5Activated" [instituteId]="instituteId"></app-institute-division>
                   <button class="btn btn-primary mr-5" (click)="showPreviousStep($event)"
                     type="button">Previous</button>
-                  <button class="btn btn-primary" type="button">Finish</button>
+                  <button class="btn btn-primary" (click)="onFinishConfigure()" type="button">Finish</button>
                 </div>
               </form>
             </div>

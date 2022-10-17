@@ -20,4 +20,8 @@ export class InstituteService {
   accountVerify(userId, otp){
     return this.apiService.post(`${API.INSTITUTE_ROUTES.accountVerify}/${userId}/${otp}`,null, true);
   }
+
+  updateInstitute(params){
+    return this.apiService.put(`${API.INSTITUTE_ROUTES.updateInstitute}`, params, true);
+  }
 }

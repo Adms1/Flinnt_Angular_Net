@@ -295,6 +295,8 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.InstituteId).HasComment("The unique identifier.");
 
+                entity.Property(e => e.GroupStructureId).HasComment("GroupStructureId");
+
                 entity.Property(e => e.Address)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -382,6 +384,11 @@ namespace Flinnt.Domain
                     .WithMany(p => p.Institutes)
                     .HasForeignKey(d => d.StateId)
                     .HasConstraintName("fk_institutions_state_id");
+
+                entity.HasOne(d => d.GroupStructure)
+                    .WithMany(p => p.Institutes)
+                    .HasForeignKey(d => d.GroupStructureId)
+                    .HasConstraintName("fk_institute_group_structure_id");
             });
 
             modelBuilder.Entity<InstituteBatch>(entity =>
@@ -513,6 +520,8 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.InstituteId).HasComment("The institute identifier this group belongs to. Ref.: Institute.InstituteId");
 
+                entity.Property(e => e.GroupStructureId).HasComment("The group structureId of the group structureId");
+
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))")
                     .HasComment("If 1, the group is ready to use.");
@@ -543,6 +552,11 @@ namespace Flinnt.Domain
                     .WithMany(p => p.InstituteGroups)
                     .HasForeignKey(d => d.StandardId)
                     .HasConstraintName("fk_institute_group_standard_id");
+
+                entity.HasOne(d => d.GroupStructure)
+                   .WithMany(p => p.InstituteGroups)
+                   .HasForeignKey(d => d.GroupStructureId)
+                   .HasConstraintName("fk_institute_group_group_structure_id");
             });
 
             modelBuilder.Entity<InstituteSemester>(entity =>

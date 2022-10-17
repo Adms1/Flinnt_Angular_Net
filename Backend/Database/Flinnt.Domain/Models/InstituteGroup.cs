@@ -14,6 +14,7 @@ namespace Flinnt.Domain
 
         public int InstituteGroupId { get; set; }
         public int InstituteId { get; set; }
+        public byte? GroupStructureId { get; set; }
         public byte? BoardId { get; set; }
         public byte? MediumId { get; set; }
         public byte? StandardId { get; set; }
@@ -26,6 +27,7 @@ namespace Flinnt.Domain
         public virtual Institute Institute { get; set; }
         public virtual Medium Medium { get; set; }
         public virtual Standard Standard { get; set; }
+        public virtual GroupStructure GroupStructure { get; set; }
         public virtual ICollection<InstituteDivision> InstituteDivisions { get; set; }
     }
 }

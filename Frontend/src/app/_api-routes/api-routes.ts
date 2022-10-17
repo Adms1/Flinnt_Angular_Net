@@ -8,6 +8,7 @@ export class API {
   public static INSTITUTE_ROUTES = {
     getInstitute: `/${environment.API_Version}/institute`,
     saveInstitute: `/${environment.API_Version}/institute/create`,
+    updateInstitute: `/${environment.API_Version}/institute/update`,
     accountVerify: `/${environment.API_Version}/institute/account-verify`
   };
 

@@ -52,8 +52,15 @@ export class LoginComponent implements OnInit {
           localStorage.setItem(Constants.TOKEN, res.data.token);
           localStorage.setItem(Constants.LOGIN_PAGE.USER_OBJ, JSON.stringify(res.data.userProfile));
           localStorage.setItem(Constants.LOGIN_PAGE.INSTITUTE_ID, res.data.instituteId);
-          if(res.data.applicationUser.isVerified){
-            this.route.navigate(['institute/configure']);
+          localStorage.setItem(Constants.INSTITUTE_PAGE.INSTITUTE_OBJ, res.data.InstituteModel);
+          if (res.data.applicationUser.isVerified) {
+            if (!!res.data.InstituteModel && (!!res.data.InstituteModel?.GroupStructureId
+              && res.data.InstituteModel.GroupStructureId > 0)) {
+              this.route.navigate(['institute/dashboard']);
+            }
+            else {
+              this.route.navigate(['institute/configure']);
+            }
           }
           else{
             this.utilityService.showSuccessToast("Otp sent successfully!");

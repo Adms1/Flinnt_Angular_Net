@@ -16,7 +16,8 @@ namespace Flinnt.Domain
 
         public int InstituteId { get; set; }
         public string InstituteName { get; set; }
-        public byte InstituteTypeId { get; set; }
+        public byte? InstituteTypeId { get; set; }
+        public byte? GroupStructureId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailId { get; set; }
@@ -38,6 +39,7 @@ namespace Flinnt.Domain
         public virtual Country Country { get; set; }
         public virtual InstituteType InstituteType { get; set; }
         public virtual State State { get; set; }
+        public virtual GroupStructure GroupStructure { get; set; }
         public virtual ICollection<InstituteGroup> InstituteGroups { get; set; }
         public virtual ICollection<InstituteSemester> InstituteSemesters { get; set; }
         public virtual ICollection<UserInstitute> UserInstitutes { get; set; }
