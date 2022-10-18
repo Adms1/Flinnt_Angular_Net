@@ -16,6 +16,11 @@ const routes: Routes = [
     path:"institute/dashboard",
     loadChildren: () => import('./institute/institute-dashboard/institute-dashboard.module').then(m=>m.InstituteDashboardModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path:"institute/parent",
+    loadChildren: () => import('./institute/parent/parent.module').then(m=>m.ParentModule),
+    canActivate: [AuthGuard]
   }
 ];
 
