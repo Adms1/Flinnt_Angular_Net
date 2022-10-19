@@ -9,7 +9,6 @@ import { InstituteSignupComponent } from './institute-signup/institute-signup.co
 import { SharedModule } from '../shared/SharedModule.module';
 import { VarifyAccountComponent } from './varify-account/varify-account.component';
 import { InstituteService } from '../_services/institute.service';
-import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -21,8 +20,7 @@ import { NgSelect2Module } from 'ng-select2';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule,
-    NgSelect2Module
+    SharedModule
   ],
   providers:[
     InstituteService

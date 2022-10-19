@@ -1,8 +1,8 @@
 <div class="content-wrap">
-    <div class="container clearfix text-center">
+    <div class="container clearfix">
         <div id="backdropbox" class="col_full col_last">
-            <h1 class="v4">Add a new parent</h1>
-            <div class="col_full nobottommargin">
+            <h1 class="v4 text-center">Add a new parent</h1>
+            <div class="col_full nobottommargin text-center">
                 <h4>
                     Add parent information. Upon saving the information, a new user account will be
                     created for the parent. The password will be auto-generated and sent to the parent
@@ -11,6 +11,157 @@
                 <h4>Fields marked with * are mandatory</h4>
             </div>
             <div class="clear"></div>
+            <div class="col_full">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Single Parent?
+                    </label>
+                </div>
+            </div>
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Parent 1</legend>
+                <div class="col_full nobottommargin">
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                value="option1">
+                            <label class="form-check-label" for="inlineRadio1">Father</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                value="option2">
+                            <label class="form-check-label" for="inlineRadio2">Mother</label>
+                        </div>
+                    </div>
+                    <div class="col_half nobottommargin">
+                        <div class="form-group">
+                            <label>First Name*</label>
+                            <input type="text" name="first_name_1" autofocus="true" id="first_name_1" value=""
+                                class="input-block-level" placeholder="First Name" autocomplete="on" />
+                            <label class="error">First Name is required.</label>
+                        </div>
+                    </div>
+            
+                    <div class="col_half nobottommargin">
+                        <div class="form-group">
+                            <label>Last Name*</label>
+                            <input type="text" name="last_name_1" autofocus="true" id="last_name_1" value=""
+                                class="input-block-level" placeholder="Last name" autocomplete="on" />
+                            <label class="error">Last name is required.</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Parent 2</legend>
+                <div class="col_full nobottommargin">
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="parent1_rbt1" value="fater">
+                            <label class="form-check-label">Father</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="parent2_rbt2" value="mother">
+                            <label class="form-check-label">Mother</label>
+                        </div>
+                    </div>
+                    <div class="col_half nobottommargin">
+                        <div class="form-group">
+                            <label>First Name*</label>
+                            <input type="text" name="first_name_2" autofocus="true" id="first_name_2" value=""
+                                class="input-block-level" placeholder="First name" autocomplete="on" />
+                            <label class="error">First name is required.</label>
+                        </div>
+                    </div>
+            
+                    <div class="col_half nobottommargin">
+                        <div class="form-group">
+                            <label>Last Name*</label>
+                            <input type="text" name="last_name_2" autofocus="true" id="last_name_2" value=""
+                                class="input-block-level" placeholder="Last name" autocomplete="on" />
+                            <label class="error">Last name is required.</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="col_full nobottommargin">
+                <div class="col_half nobottommargin">
+                    <div class="form-group">
+                        <label>Primary Email address*</label>
+                        <input type="text" name="primary_email_name" autofocus="true" id="primary_email_name" value=""
+                            class="input-block-level" placeholder="Primary email name" autocomplete="on" />
+                        <label class="error">Primary Email address is required.</label>
+                    </div>
+                </div>
+    
+                <div class="col_half nobottommargin">
+                    <div class="form-group">
+                        <label>Contact Number*</label>
+                        <input type="text" name="contact_name" autofocus="true" id="contact_name" value=""
+                            class="input-block-level" placeholder="Contact name" autocomplete="on" />
+                        <label class="error">Contact Number is required.</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col_full nobottommargin">
+                <div class="form-group">
+                    <label>Address Line 1</label>
+                    <input type="text" name="address_line_1" autofocus="true" id="address_line_1" value=""
+                        class="input-block-level" placeholder="Address line 1" autocomplete="on" />
+                </div>
+                <div class="form-group">
+                    <label>Address Line 2</label>
+                    <input type="text" name="address_line_2" autofocus="true" id="address_line_2" value=""
+                        class="input-block-level" placeholder="Address line 2" autocomplete="on" />
+                </div>
+            </div>
+
+            <div class="clear"></div>
+            <div class="col_full nobottommargin">
+                <div class="col_half nobottommargin">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" name="city" autofocus="true" id="city" value=""
+                        class="input-block-level nobottommargin" placeholder="City" autocomplete="on" />
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <ng-select2 placeholder="Select country">
+                        </ng-select2>
+                    </div>
+                </div>
+    
+                <div class="col_half">
+                    <div class="form-group">
+                        <label>State</label>
+                        <ng-select2 [data]="stateData" placeholder="Select state">
+                        </ng-select2>
+                    </div>
+                    <div class="form-group">
+                        <label>Pincode</label>
+                        <input type="text" name="pincode" autofocus="true" id="pincode" value=""
+                            class="input-block-level" placeholder="pincode" autocomplete="on" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col_full nobottommargin text-center">
+                <a routerLink="add-parent">
+                    <button type="button" class="btn btn-primary btn-embossed m-2">Add new &nbsp;<i class="fa fa-arrow-right"
+                            aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="clear"></div>
+
+            <div class="col_full nobottommargin text-center">
+                <h6>
+                   By adding a new parent, you agree to out <a href="#">terms & conditions</a>
+                </h6>
+            </div>
         </div>
     </div>
 </div>
