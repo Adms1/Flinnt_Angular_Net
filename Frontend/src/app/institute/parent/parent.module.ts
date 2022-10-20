@@ -6,7 +6,7 @@ import { AddParentComponent } from './add-parent/add-parent.component';
 import { ImportParentComponent } from './import-parent/import-parent.component';
 import { SharedModule } from 'src/app/shared/SharedModule.module';
 import { ParentComponent } from './parent/parent.component';
-import { ParentHomeComponent } from './parent-homecomponent';
+import { ParentHomeComponent } from './parent-home/parent-homecomponent';
 
 
 @NgModule({

@@ -1,0 +1,120 @@
+<div class="content-wrap">
+    <div class="container clearfix">
+        <span class="text-center">
+            <h1 class="v4">Add Student</h1>
+            <div class="col_full nobottommargin">
+                <h4>
+                    Select an appropriate group to map students, doing so will help to associate
+                    course, move students between groups and communicate in individual groups
+                </h4>
+            </div>
+        </span>
+
+        <div id="backdropbox" class="col_full col_last">
+            <span class="text-center">
+                <h2 class="v4">Select an appropriate group</h2>
+                <div class="col_full nobottommargin">
+                    <h4>
+                        Fields marked with * are mandatory
+                    </h4>
+                </div>
+            </span>
+            <div class="clear"></div>
+            <div class="col_full nobottommargin">
+                <div class="col_half">
+                    <div class="form-group">
+                        <label>Select Board*</label>
+                        <select class="form-select" aria-label="Board Name">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col_half">
+                    <div class="form-group">
+                        <label>Select Standard*</label>
+                        <select class="form-select" aria-label="Standard Name">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col_full nobottommargin">
+                <div class="col_half">
+                    <div class="form-group">
+                        <label>Select Study Medium*</label>
+                        <select class="form-select" aria-label="Medium Name">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col_half">
+                    <div class="form-group">
+                        <label>Select Division*</label>
+                        <select class="form-select" aria-label="Division Name">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col_full nobottommargin">
+                <div class="mt-5">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-12">
+                            <div class="bg-white">
+                                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation"> <button class="nav-link active"
+                                            id="faq_tab_1-tab" data-bs-toggle="tab" data-bs-target="#faq_tab_1"
+                                            type="button" role="tab" aria-controls="faq_tab_1" aria-selected="true">
+                                            <div class="d-flex flex-column lh-lg"> <span>Add</span> </div>
+                                        </button> </li>
+                                    <li class="nav-item" role="presentation"> <button class="nav-link"
+                                            id="faq_tab_2-tab" data-bs-toggle="tab" data-bs-target="#faq_tab_2"
+                                            type="button" role="tab" aria-controls="faq_tab_2" aria-selected="false">
+                                            <div class="d-flex flex-column lh-lg"> <span>Import</span> </div>
+                                        </button> </li>
+                                    <li class="nav-item" role="presentation"> <button class="nav-link"
+                                            id="faq_tab_3-tab" data-bs-toggle="tab" data-bs-target="#faq_tab_3"
+                                            type="button" role="tab" aria-controls="faq_tab_3" aria-selected="false">
+                                            <div class="d-flex flex-column lh-lg"> <span>Invite</span> </div>
+                                        </button> </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane active show" id="faq_tab_1" role="tabpanel"
+                                        aria-labelledby="faq_tab_1-tab">
+                                        <div class="p-3">
+                                            <app-add-student></app-add-student>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="faq_tab_2" role="tabpanel"
+                                        aria-labelledby="faq_tab_2-tab">
+                                        <div class="p-3">
+                                            Import Students
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="faq_tab_3" role="tabpanel"
+                                        aria-labelledby="faq_tab_3-tab">
+                                        <div class="p-3">
+                                            Invite
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+:host ::ng-deep .configures1option {
+    display: block;
+    position: relative;
+    float: left;
+}
+
+:host ::ng-deep .cofigure_s1_option {
+    position: relative;
+    float: left;
+    margin: 15px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+:host ::ng-deep .card:hover {
+    border: 1px solid #0d6efd;
+}
+
+:host ::ng-deep .cofigure_s1_option .cofigure_s1_option-itminf {
+    border-radius: 5px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+:host ::ng-deep .cofigure_s1_option-title {
+    position: relative;
+    padding: 7px 10px 0;
+    overflow: hidden;
+}

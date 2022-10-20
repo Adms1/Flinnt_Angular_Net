@@ -3,7 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { CoreModule } from './core/core.module';
 import { InstituteModule } from './institute/institute-configure/institute-configure.module';
 
@@ -16,12 +16,11 @@ import { InstituteModule } from './institute/institute-configure/institute-confi
     BrowserModule,
     CoreModule,
     AppRoutingModule,
-    InstituteModule,
-    
+    InstituteModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy}],
+    { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
-  
+
 })
 export class AppModule { }
