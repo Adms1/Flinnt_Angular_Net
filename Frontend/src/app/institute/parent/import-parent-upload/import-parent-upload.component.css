@@ -1,0 +1,9 @@
+.valid_mark{
+border: 1px solid green;
+background-color: lightgreen;
+}
+
+.invalid_mark{
+    border: 1px solid pink;
+    background-color: lightpink;
+}

@@ -7,6 +7,7 @@ import { ImportParentComponent } from './import-parent/import-parent.component';
 import { SharedModule } from 'src/app/shared/SharedModule.module';
 import { ParentComponent } from './parent/parent.component';
 import { ParentHomeComponent } from './parent-home/parent-homecomponent';
+import { ImportParentUploadComponent } from './import-parent-upload/import-parent-upload.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ParentHomeComponent } from './parent-home/parent-homecomponent';
     AddParentComponent,
     ParentComponent,
     ImportParentComponent,
-    ParentHomeComponent
+    ParentHomeComponent,
+    ImportParentUploadComponent
   ],
   imports: [
     CommonModule,
