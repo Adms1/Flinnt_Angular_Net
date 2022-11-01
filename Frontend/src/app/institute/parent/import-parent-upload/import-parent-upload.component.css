@@ -7,3 +7,25 @@ background-color: lightgreen;
     border: 1px solid pink;
     background-color: lightpink;
 }
+
+table {
+    border: none !important;
+}
+
+.th_shadow--blue{
+    color: blue;
+    background-color: lightblue;
+}
+
+.th_shadow--gray{
+    background-color: lightgray;
+}
+
+.th_text--red{
+    color: red;
+}
+
+.txt_warning--yellow{
+    border: 3px solid darkorange;
+    color: darkorange;
+}
