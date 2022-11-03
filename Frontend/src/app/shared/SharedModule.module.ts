@@ -6,6 +6,7 @@ import { Footer404Component } from './footer404/footer404.component';
 import { DataTablesModule } from "angular-datatables";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NgSelect2Module } from 'ng-select2';
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelect2Module
+    NgSelect2Module,
+    NgbModule
   ],
   exports:[
     HeaderComponent,
@@ -27,7 +29,8 @@ import { NgSelect2Module } from 'ng-select2';
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelect2Module
+    NgSelect2Module,
+    NgbModule
   ]
 })
 export class SharedModule { }

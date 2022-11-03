@@ -1270,6 +1270,9 @@
   .fade.in {
     opacity: 1;
   }
+  .fade.show {
+    opacity: 1;
+  }
   .collapse {
     display: none;
   }
@@ -3416,7 +3419,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 1060;
   }
   .modal.fade .modal-dialog {
     -webkit-transform: translate(0, -25%);
@@ -3485,8 +3488,8 @@
     padding: 20px;
   }
   .modal-footer {
-    margin-top: 15px;
-    padding: 19px 20px 20px;
+    margin-top: 10px;
+    padding: 10px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
   }
@@ -3527,7 +3530,7 @@
   @media screen and (min-width: 768px) {
     .modal-dialog {
       width: 600px;
-      padding-top: 30px;
+      padding-top: 90px;
       padding-bottom: 30px;
     }
     .modal-content {
@@ -4396,4 +4399,3 @@
       display: none !important;
     }
   }
-  

@@ -27,7 +27,13 @@ const routes: Routes = [
   }, 
   {
     path: "import-parent-upload",
-    component: ImportParentUploadComponent
+    component: ParentHomeComponent,
+    children:[
+      {
+        path: "",
+        component: ImportParentUploadComponent
+      },
+    ]
   }
 ];
 
