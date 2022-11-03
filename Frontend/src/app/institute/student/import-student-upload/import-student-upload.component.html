@@ -1,0 +1,257 @@
+<div class="content-wrap">
+    <div class="container clearfix">
+        <div id="backdropbox" class="col_full col_last">
+            <h1 class="v4 text-center">Import Student Data</h1>
+            <div class="col_full nobottommargin text-center">
+                <h4>Fields marked with * are mandatory</h4>
+            </div>
+            <div class="clear"></div>
+
+            <!-- header info -->
+            <div class="row">
+                <div class="col_full nobottommargin">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="col_half nobottommargin">
+                            <h6>
+                                <span class="valid_mark">Valid</span> All details are OK
+                            </h6>
+                            <h6>
+                                <a href="javascript:void(0)">See error</a> Click to see list of errors
+                            </h6>
+                            <h6>
+                                &lt;&lt;no-data&gt;&gt; The information is not available in excel file
+                            </h6>
+                        </div>
+                        <div class="col_half nobottommargin">
+                            <h6>
+                                <span class="invalid_mark">Invalid</span> One of more details are incorrect
+                            </h6>
+                            <h6>
+                                <i class="fa fa-user-plus blue"
+                                    aria-hidden="true"></i>&nbsp; User account already exists
+                            </h6>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+           
+            <div class="clear"></div>
+
+            <div class="row mt-3 mb-3">
+                <div class="col_full nobottommargin">
+                    <div class="card txt_warning--yellow">
+                      <div class="card-body">
+                            <label style="color: red;">
+                                One or more student details are invalid. Please rectify the errors and re-upload the file
+                            </label>
+                            <span style="float: right; padding: absolute;">
+                                <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+                            </span>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col_full nobottommargin">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
+                            </th>
+                            <th>
+                                Mobile
+                            </th>
+                            <th>
+                                Email Address
+                            </th>
+                            <th>
+                                DOB
+                            </th>
+                            <th>
+                                Gender
+                            </th>
+                            <th>
+                                Roll No.
+                            </th>
+                            <th>
+                                G. R. No.
+                            </th>
+                            <th>
+                                Parent Email Address
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Rohit
+                                </td>
+                                <td>
+                                    Verma
+                                </td>
+                                <td>
+                                    1234567890
+                                </td>
+                                <td>
+                                    rohit.verma@gmail.com
+                                </td>
+                                <td>
+                                    01/01/1999
+                                </td>
+                                <td>
+                                    Male
+                                </td>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    9990
+                                </td>
+                                <td>
+                                    sushant.verma@gmail.com
+                                </td>
+                                <td>
+                                    <span class="valid_mark">Valid</span>&nbsp; <i class="fa fa-user-plus blue" aria-hidden="true"></i>
+                                </td>   
+                            </tr>                            
+                            <tr>
+                                <td>
+                                    Aarti
+                                </td>
+                                <td>
+                                    Purohit
+                                </td>
+                                <td>
+                                    1234567891
+                                </td>
+                                <td>
+                                    aarti.purohit@gmail.com
+                                </td>
+                                <td>
+                                    01/01/2005
+                                </td>
+                                <td>
+                                    Female
+                                </td>
+                                <td>
+                                    2
+                                </td>
+                                <td>
+                                    9991
+                                </td>
+                                <td>
+                                    kamini.purohit@gmail.com
+                                </td>
+                                <td>
+                                    <span class="valid_mark">Valid</span>&nbsp; <i class="fa fa-user-plus blue" aria-hidden="true"></i>
+                                </td>   
+                            </tr>
+                            <tr>
+                                <td class="th_text--red">
+                                    &lt;&lt;no-data&gt;&gt;
+                                </td>
+                                <td>
+                                    Shah
+                                </td>
+                                <td class="th_text--red">
+                                    12345678
+                                </td>
+                                <td class="th_text--red">
+                                    pratik.shah@gmail.com
+                                </td>
+                                <td>
+                                    01/01/2010
+                                </td>
+                                <td class="th_text--red">
+                                    &lt;&lt;no-data&gt;&gt;
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                                <td>
+                                    9992
+                                </td>
+                                <td class="th_text--red">
+                                    pratik.shah@gmail.com
+                                </td>
+                                <td>
+                                    <span class="invalid_mark">Invalid</span>&nbsp; <a href="javascript:void(0)" (click)="open(mymodal)">See error</a>
+                                </td>   
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col_full nobottommargin text-center">
+                <a routerLink="add-parent">
+                    <button type="button" class="btn btn-danger btn-embossed m-2">Cancel &nbsp;<i class="fa fa-refresh"
+                            aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="col_full nobottommargin text-center">
+                <a routerLink="add-parent">
+                    <button type="button" class="btn btn-primary btn-embossed m-2">Import &nbsp;<i class="fa fa-user-plus"
+                            aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="clear"></div>
+            <div class="col_full nobottommargin text-center">
+                <h6>
+                    By importing parens, you agree to our <a href="javascript:void(0)">terms & conditions</a>
+                </h6>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #mymodal let-modal>
+        <div class="modal-header">
+            <label class="modal-title" id="modal-basic-title">Error Report</label>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>
+                        The First Name could not be blank
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <label>
+                        The Last Name could not be blank
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <label>
+                        The mobile no. must contain 10 digits.
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <label>
+                        The Gender could not be blank and it must be Male or Female
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <label>
+                        The student Email Address and Parent Email Address could not be same.
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <label>
+                        There is no parent account with the provided Parent Email Address. You have to first create a parent accont.
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Ok</button>
+        </div>
+    </ng-template>

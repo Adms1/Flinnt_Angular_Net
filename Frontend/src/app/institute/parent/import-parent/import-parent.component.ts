@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-import-parent',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./import-parent.component.css']
 })
 export class ImportParentComponent implements OnInit {
+  parentDataImporting: boolean = false;
 
-  constructor() { }
+  constructor(private route : Router) { }
 
   ngOnInit(): void {
   }
 
+  onUploadBtn(){
+    this.parentDataImporting = true;
+
+    setTimeout(() => {
+      this.route.navigate(["/institute/parent/import-parent-upload"]);
+    }, 3000);
+  }
 }

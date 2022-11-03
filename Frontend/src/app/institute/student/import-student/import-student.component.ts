@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./import-student.component.css']
 })
 export class ImportStudentComponent implements OnInit {
-
+  studentDataImported: boolean = false;
+  studentDataImporting: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onUploadBtn() {
+    this.studentDataImporting = true;
+
+    setTimeout(() => {
+      this.studentDataImporting = false;
+      this.studentDataImported = true;
+    }, 3000);
+  }
 }

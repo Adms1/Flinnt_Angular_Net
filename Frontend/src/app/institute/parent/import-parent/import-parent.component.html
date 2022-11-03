@@ -1,42 +1,49 @@
-<div class="content-wrap">
-    <div class="container clearfix">
-        <div id="backdropbox" class="col_full col_last">
-            <h1 class="v4 text-center">Import Parent Data</h1>
-            <div class="col_full nobottommargin text-center">
-                <h4>Fields marked with * are mandatory</h4>
-            </div>
-            <div class="clear"></div>
-            <div class="col_full nobottommargin">
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input class="custom-file-input" id="inputGroupFile04" type="file">
-                        <label class="custom-file-label" for="inputGroupFile04">
-                            Allowed file types .XLS, .XLSX. Your file should not contain more than 100 parents.
-                        </label>
-                    </div>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary btn-embossed" routerLink="/institute/parent/import-parent-upload">Upload &nbsp;<i class="fa fa-upload"
-                                aria-hidden="true"></i></button>
+<ng-container *ngIf="!parentDataImporting">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            <div id="backdropbox" class="col_full col_last">
+                <h1 class="v4 text-center">Import Parent Data</h1>
+                <div class="col_full nobottommargin text-center">
+                    <h4>Fields marked with * are mandatory</h4>
+                </div>
+                <div class="clear"></div>
+                <div class="col_full nobottommargin">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input class="custom-file-input" id="inputGroupFile04" type="file">
+                            <label class="custom-file-label" for="inputGroupFile04">
+                                Allowed file types .XLS, .XLSX. Your file should not contain more than 100 parents.
+                            </label>
+                        </div>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary btn-embossed" (click)="onUploadBtn();">Upload
+                                &nbsp;<i class="fa fa-upload" aria-hidden="true"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="clear"></div>
+                <div class="clear"></div>
 
-            <div class="col_full nobottommargin">
-                <a href="javascript:void(0)">Download</a>
-                <small>
-                    sample file format. You must upload file in this format only.
-                    Fill vaules in all columns which are marked as mandatory (prefixed with label Mandatory)
-                </small>
-            </div>
+                <div class="col_full nobottommargin">
+                    <a href="javascript:void(0)">Download</a>
+                    <small>
+                        sample file format. You must upload file in this format only.
+                        Fill vaules in all columns which are marked as mandatory (prefixed with label Mandatory)
+                    </small>
+                </div>
 
-            <br/>
-            <div class="clear"></div>
+                <br />
+                <div class="clear"></div>
 
-            <div class="col_full nobottommargin text-center">
-                <h6>
-                    By importing parens, you agree to our <a href="javascript:void(0)">terms & conditions</a>
-                </h6>
+                <div class="col_full nobottommargin text-center">
+                    <h6>
+                        By importing parens, you agree to our <a href="javascript:void(0)">terms & conditions</a>
+                    </h6>
+                </div>
             </div>
         </div>
     </div>
+</ng-container>
+
+<ng-container *ngIf="parentDataImporting">
+    <app-import-parent-uploading></app-import-parent-uploading>
+</ng-container>
