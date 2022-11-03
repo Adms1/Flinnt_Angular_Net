@@ -1,0 +1,208 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Search Parent</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <h1 class="v4 text-center">Search Parent</h1>
+    <div class="col_full nobottommargin text-center">
+        <h4>Fill in one or more criteria and click on the search button to see a list of parents. You can
+            select
+            only one parent account </h4>
+    </div>
+    <div class="col_full nobottommargin text-center">
+        <h4>Fields marked with * are mandatory</h4>
+    </div>
+    <div class="clear"></div>
+    <div class="col_full nobottommargin">
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="first_name_1" autofocus="true" id="first_name_1" value=""
+                    class="input-block-level" placeholder="First Name" autocomplete="on" />
+            </div>
+        </div>
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="last_name_1" autofocus="true" id="last_name_1" value=""
+                    class="input-block-level" placeholder="Last Name" autocomplete="on" />
+            </div>
+        </div>
+    </div>
+    <div class="col_full nobottommargin">
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>Single Parent</label>
+                <select class="form-select" aria-label="Board Name">
+                    <option>Doesn't matter</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>Search name for Father/Mother</label>
+                <select class="form-select" aria-label="Board Name">
+                    <option>Mother and Father Both</option>
+                    <option>Father</option>
+                    <option>Mother</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col_full nobottommargin">
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="text" name="email_address_1" autofocus="true" id="email_address_1" value=""
+                    class="input-block-level" autocomplete="on" />
+            </div>
+        </div>
+        <div class="col_half nobottommargin">
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="text" name="contact_number_1" autofocus="true" id="contact_number_1" value=""
+                    class="input-block-level" autocomplete="on" />
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="clear"></div>
+
+    <div class="col_full nobottommargin text-center">
+        <div class="col_half nobottommargin">
+            <button type="button" class="btn btn-primary btn-embossed m-2">Clear Search &nbsp;<i
+                class="fa fa-times" aria-hidden="true"></i></button>
+        </div>
+        <div class="col_half nobottommargin">
+            <button type="button" class="btn btn-primary btn-embossed m-2">Search &nbsp;<i class="fa fa-circle"
+                aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="row col-12">
+          <table class="table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+              <tr>
+                <th scope="col">Parent 1 - First Name</th>
+                <th scope="col">Parent 1 - Last Name</th>
+                <th scope="col">Parent 2 - First Name</th>
+                <th scope="col">Parent 2 - Last Name</th>
+                <th scope="col">Primary Email Address</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Address</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <span class="th_shadow--blue">Father</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="th_shadow--blue">Mother</span>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <span class="th_shadow--gray">City \ State \ County</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Rakesh
+                    </td>
+                    <td>
+                        Sharma
+                    </td>
+                    <td>
+                        Rekha
+                    </td>
+                    <td>
+                        Sharma
+                    </td>
+                    <td>
+                        rakesh.sharma@gmail.com
+                    </td>
+                    <td>
+                        1234567890
+                    </td>
+                    <td>
+                        Ahmedabad \ \ India
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2"></td>
+                    <td colspan="3" class="th_shadow--gray">
+                        Single Parent
+                    </td>
+                    <td colspan="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">NO</td>
+                    <td colspan="3"></td>
+                </tr>
+                <br />
+
+                <tr>
+                    <td colspan="2">
+                        <span class="th_shadow--blue">Father</span>
+                    </td>
+                    <td colspan="2">
+                        <span class="th_shadow--blue">Mother</span>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <span class="th_shadow--gray">City \ State \ County</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Monika
+                    </td>
+                    <td>
+                        Shah
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        monika.shah@gmail.com
+                    </td>
+                    <td>
+                        1234567899
+                    </td>
+                    <td>
+                        Ahmedabad \ \ India
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2"></td>
+                    <td colspan="3" class="th_shadow--gray">
+                        Single Parent
+                    </td>
+                    <td colspan="3">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">NO</td>
+                    <td colspan="3"></td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>

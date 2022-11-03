@@ -3422,9 +3422,9 @@
     z-index: 1060;
   }
   .modal.fade .modal-dialog {
-    -webkit-transform: translate(0, -25%);
-    -ms-transform: translate(0, -25%);
-    transform: translate(0, -25%);
+    -webkit-transform: translate(0, 0%);
+    -ms-transform: translate(0, 0%);
+    transform: translate(0, 0%);
     -webkit-transition: -webkit-transform 0.3s ease-out;
     -moz-transition: -moz-transform 0.3s ease-out;
     -o-transition: -o-transform 0.3s ease-out;
@@ -3530,8 +3530,8 @@
   @media screen and (min-width: 768px) {
     .modal-dialog {
       width: 600px;
-      padding-top: 90px;
-      padding-bottom: 30px;
+      padding-top: 0px;
+      padding-bottom: 0px;
     }
     .modal-content {
       -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
