@@ -6,7 +6,11 @@ import { AppComponent } from './app.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { CoreModule } from './core/core.module';
 import { InstituteModule } from './institute/institute-configure/institute-configure.module';
+import { JwtModule } from "@auth0/angular-jwt";
 
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -16,7 +20,14 @@ import { InstituteModule } from './institute/institute-configure/institute-confi
     BrowserModule,
     CoreModule,
     AppRoutingModule,
-    InstituteModule
+    InstituteModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["example.com"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy }],

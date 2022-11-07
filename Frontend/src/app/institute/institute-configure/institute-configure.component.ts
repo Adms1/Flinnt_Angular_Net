@@ -178,7 +178,7 @@ export class InstituteConfigureComponent implements OnInit {
     this.instituteService.updateInstitute(JSON.stringify(sessionObj))
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
-          this.router.navigate(["institute/dashboard"]);
+          this.router.navigate([""]);
         }
       });
   }

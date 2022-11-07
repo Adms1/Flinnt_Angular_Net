@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           if (res.data.applicationUser.isVerified) {
             if (!!res.data.instituteModel && (!!res.data.instituteModel?.groupStructureId
               && res.data.instituteModel.groupStructureId > 0)) {
-              this.route.navigate(['institute/dashboard']);
+              this.route.navigate(['']);
             }
             else {
               this.route.navigate(['institute/configure']);

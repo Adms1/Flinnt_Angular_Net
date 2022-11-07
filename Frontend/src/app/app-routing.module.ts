@@ -5,6 +5,11 @@ import { AuthGuard } from './_services/auth.guard';
 const routes: Routes = [
   {
     path: '',
+    pathMatch:"full",
+    redirectTo:"institute/dashboard"
+  },
+  {
+    path: 'home',
     loadChildren: () => import('./home/home.module').then(m=>m.HomeModule)
   },
   {
