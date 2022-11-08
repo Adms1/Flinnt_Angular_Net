@@ -11,6 +11,15 @@ using System.Net;
 using System;
 using System.Threading.Tasks;
 using Flinnt.Business.ViewModels;
+using Flinnt.Business.Helpers;
+using Flinnt.Business.ViewModels.General;
+using Hangfire;
+using System.Collections.Generic;
+using System.Data;
+using System.Formats.Asn1;
+using System.IO;
+using System.Security.Claims;
+using System.Net.Http.Headers;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -77,6 +86,34 @@ namespace Flinnt.API.Controllers.V1
                 return Response(student, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(student, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
+
+        [Route("import-roster")]
+        [HttpPost, DisableRequestSizeLimit]
+        public object ImportParentRoster()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+                if (file.Length > 0)
+                {
+                    return Ok(fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("DataFilter")]
+        public object DataFilter(DataTableAjaxPostModel model)
+        {
+            return _parentService.GetAllAsync().Result.GetFilteredData(model);
         }
     }
 }
