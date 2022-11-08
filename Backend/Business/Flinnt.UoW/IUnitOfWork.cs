@@ -25,5 +25,7 @@ namespace Flinnt.UoW
         IInstituteGroupRepository InstituteGroupRepository { get; }
         IInstituteDivisionRepository InstituteDivisionRepository { get; }
         IInstituteConfigureSessionRepository InstituteConfigureSessionRepository { get; }
+        IParentRepository ParentRepository { get; }
+        IStudentRepository StudentRepository { get; }
     }
 }
