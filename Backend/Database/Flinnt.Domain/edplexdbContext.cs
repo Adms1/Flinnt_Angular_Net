@@ -65,6 +65,8 @@ namespace Flinnt.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
             modelBuilder.Entity<AcademicYear>(entity =>
             {
                 entity.ToTable("AcademicYear");
@@ -1681,7 +1683,8 @@ namespace Flinnt.Domain
                     .HasComment("The user type.\r\nPossible Values: Institution Staff, Parent, Student");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            //OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
