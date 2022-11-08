@@ -54,7 +54,7 @@ namespace Flinnt.API.Controllers.V1
 
         [HttpPost]
         [Route("create")]
-        public async Task<object> Post([FromBody] CityViewModel model)
+        public async Task<object> Post([FromBody] StudentViewModel model)
         {
             return await GetDataWithMessage(async () =>
             {
@@ -68,7 +68,7 @@ namespace Flinnt.API.Controllers.V1
 
         }
 
-        private async Task<Tuple<CityViewModel, string, HttpStatusCode>> AddStudentAsync(CityViewModel model)
+        private async Task<Tuple<StudentViewModel, string, HttpStatusCode>> AddStudentAsync(StudentViewModel model)
         {
             var student = await _studentService.AddAsync(model);
             if (student != null)

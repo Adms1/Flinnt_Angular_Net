@@ -6,7 +6,7 @@ namespace Flinnt.Domain
     /// <summary>
     /// This entity stores mapping between a group structure and institute types.
     /// </summary>
-    public partial class GroupStructureType
+    public partial class GroupStructureType: BaseEntity
     {
         /// <summary>
         /// The unique identifier.

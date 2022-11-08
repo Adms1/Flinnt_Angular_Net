@@ -50,6 +50,12 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<InstituteConfigureSessionViewModel, InstituteConfigureSession>();
             CreateMap<InstituteConfigureSession, InstituteConfigureSessionViewModel>();
+
+            CreateMap<ParentViewModel, Parent>();
+            CreateMap<Parent, ParentViewModel>();
+
+            CreateMap<StudentViewModel, Student>();
+            CreateMap<Student, StudentViewModel>();
         }
     }
 }

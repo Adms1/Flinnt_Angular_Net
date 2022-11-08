@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System;
 using System.Threading.Tasks;
+using Flinnt.Business.ViewModels;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -54,7 +55,7 @@ namespace Flinnt.API.Controllers.V1
 
         [HttpPost]
         [Route("create")]
-        public async Task<object> Post([FromBody] CityViewModel model)
+        public async Task<object> Post([FromBody] ParentViewModel model)
         {
             return await GetDataWithMessage(async () =>
             {
@@ -68,7 +69,7 @@ namespace Flinnt.API.Controllers.V1
 
         }
 
-        private async Task<Tuple<CityViewModel, string, HttpStatusCode>> AddParentAsync(CityViewModel model)
+        private async Task<Tuple<ParentViewModel, string, HttpStatusCode>> AddParentAsync(ParentViewModel model)
         {
             var student = await _parentService.AddAsync(model);
             if (student != null)

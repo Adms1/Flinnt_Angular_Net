@@ -1,12 +1,6 @@
-﻿using System;
-using Flinnt.Business.ViewModels.Account;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Flinnt.Business.ViewModels;
-using Microsoft.AspNetCore.Identity;
-
-#nullable disable
 
 namespace Flinnt.Domain
 {
@@ -27,6 +21,8 @@ namespace Flinnt.Domain
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<GroupStructure> GroupStructures { get; set; }
+        public virtual DbSet<GroupStructureType> GroupStructureTypes { get; set; }
         public virtual DbSet<Institute> Institutes { get; set; }
         public virtual DbSet<InstituteBatch> InstituteBatches { get; set; }
         public virtual DbSet<InstituteConfiguration> InstituteConfigurations { get; set; }
@@ -38,17 +34,21 @@ namespace Flinnt.Domain
         public virtual DbSet<InstituteType> InstituteTypes { get; set; }
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
         public virtual DbSet<Medium> Medium { get; set; }
+        public virtual DbSet<Parent> Parents { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
         public virtual DbSet<Semester> Semesters { get; set; }
         public virtual DbSet<Standard> Standards { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAccountHistory> UserAccountHistories { get; set; }
         public virtual DbSet<UserAccountVerification> UserAccountVerifications { get; set; }
         public virtual DbSet<UserDevice> UserDevices { get; set; }
         public virtual DbSet<UserInstitute> UserInstitutes { get; set; }
+        public virtual DbSet<UserInstituteGroup> UserInstituteGroups { get; set; }
+        public virtual DbSet<UserParentChildRelationship> UserParentChildRelationships { get; set; }
         public virtual DbSet<UserPermission> UserPermissions { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
@@ -65,8 +65,6 @@ namespace Flinnt.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
             modelBuilder.Entity<AcademicYear>(entity =>
             {
                 entity.ToTable("AcademicYear");
@@ -88,6 +86,8 @@ namespace Flinnt.Domain
                     .HasColumnType("date")
                     .HasComment("The date when the academic year ends.");
 
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this institute belongs to.");
+
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))")
                     .HasComment("If 1, the academic year is ready to use.");
@@ -97,12 +97,17 @@ namespace Flinnt.Domain
                     .HasComment("The date when the academic year starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.Institute)
+                    .WithMany(p => p.AcademicYears)
+                    .HasForeignKey(d => d.InstituteId)
+                    .HasConstraintName("fk_academic_year_institute_id");
             });
 
             modelBuilder.Entity<AutheticationType>(entity =>
             {
                 entity.HasKey(e => e.AuthenticationTypeId)
-                    .HasName("PK__Authetic__886BDD752569B719");
+                    .HasName("_copy_29");
 
                 entity.ToTable("AutheticationType");
 
@@ -208,6 +213,32 @@ namespace Flinnt.Domain
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
             });
 
+            modelBuilder.Entity<Gender>(entity =>
+            {
+                entity.ToTable("Gender");
+
+                entity.HasComment("This entity stores a gender list.");
+
+                entity.Property(e => e.GenderId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.Gender1)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Gender")
+                    .HasComment("The gender.");
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the gender is ready to use.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
             modelBuilder.Entity<GroupStructure>(entity =>
             {
                 entity.ToTable("GroupStructure");
@@ -257,32 +288,11 @@ namespace Flinnt.Domain
                     .WithMany(p => p.GroupStructureTypes)
                     .HasForeignKey(d => d.GroupStructureId)
                     .HasConstraintName("fk_group_structure_type_group_structure_id");
-            });
 
-            modelBuilder.Entity<Gender>(entity =>
-            {
-                entity.ToTable("Gender");
-
-                entity.HasComment("This entity stores a gender list.");
-
-                entity.Property(e => e.GenderId)
-                    .ValueGeneratedOnAdd()
-                    .HasComment("The unique identifier.");
-
-                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
-
-                entity.Property(e => e.Gender1)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("Gender")
-                    .HasComment("The gender.");
-
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("If 1, the gender is ready to use.");
-
-                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+                entity.HasOne(d => d.InstituteType)
+                    .WithMany(p => p.GroupStructureTypes)
+                    .HasForeignKey(d => d.InstituteTypeId)
+                    .HasConstraintName("fk_group_structure_institute_type_id");
             });
 
             modelBuilder.Entity<Institute>(entity =>
@@ -294,8 +304,6 @@ namespace Flinnt.Domain
                 entity.HasIndex(e => e.InstituteTypeId, "idx_institute_institute_type_id");
 
                 entity.Property(e => e.InstituteId).HasComment("The unique identifier.");
-
-                entity.Property(e => e.GroupStructureId).HasComment("GroupStructureId");
 
                 entity.Property(e => e.Address)
                     .HasMaxLength(255)
@@ -311,7 +319,9 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.CountryId).HasComment("The country identifier this institute address belongs to.  Ref.: Country.CountryId\r\nMigrate: users.user_country");
 
-                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+                entity.Property(e => e.CreateDateTime)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasComment("The date and time when this entry was done.");
 
                 entity.Property(e => e.DisplayPicture)
                     .HasMaxLength(255)
@@ -326,6 +336,8 @@ namespace Flinnt.Domain
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(255)
                     .HasComment("The contact person first name.\r\nMigrate: users.user_firstname");
+
+                entity.Property(e => e.GroupStructureId).HasComment("The group structure identifier this institute belongs to.");
 
                 entity.Property(e => e.InstituteName)
                     .HasMaxLength(255)
@@ -374,30 +386,31 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("fk_institutions_country_id");
 
+                entity.HasOne(d => d.GroupStructure)
+                    .WithMany(p => p.Institutes)
+                    .HasForeignKey(d => d.GroupStructureId)
+                    .HasConstraintName("fk_institute_group_structure_id");
+
                 entity.HasOne(d => d.InstituteType)
                     .WithMany(p => p.Institutes)
                     .HasForeignKey(d => d.InstituteTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_institutions_inst_type_id");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.Institutes)
                     .HasForeignKey(d => d.StateId)
                     .HasConstraintName("fk_institutions_state_id");
-
-                entity.HasOne(d => d.GroupStructure)
-                    .WithMany(p => p.Institutes)
-                    .HasForeignKey(d => d.GroupStructureId)
-                    .HasConstraintName("fk_institute_group_structure_id");
             });
 
             modelBuilder.Entity<InstituteBatch>(entity =>
             {
                 entity.ToTable("InstituteBatch");
 
-                entity.HasComment("This entity stores a batch for institutes.");
+                entity.HasComment("This entity stores a list of batches for institutes.");
 
                 entity.Property(e => e.InstituteBatchId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.AcademicYearId).HasComment("The academic year this batch belongs to. Ref.: AcademicYear.YearId");
 
                 entity.Property(e => e.BatchName)
                     .IsRequired()
@@ -415,6 +428,11 @@ namespace Flinnt.Domain
                 entity.Property(e => e.StartTime).HasComment("The time when the batch starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.AcademicYear)
+                    .WithMany(p => p.InstituteBatches)
+                    .HasForeignKey(d => d.AcademicYearId)
+                    .HasConstraintName("fk_institute_academic_year_id");
             });
 
             modelBuilder.Entity<InstituteConfiguration>(entity =>
@@ -447,8 +465,6 @@ namespace Flinnt.Domain
             {
                 entity.ToTable("InstituteConfigureSession");
 
-                entity.Property(e => e.CurrentStep).HasComment("");
-
                 entity.HasOne(d => d.Board)
                     .WithMany(p => p.InstituteConfigureSessions)
                     .HasForeignKey(d => d.BoardId)
@@ -464,7 +480,7 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.InstituteId)
                     .HasConstraintName("fk_institute_configure_session_institute_id");
 
-                entity.HasOne(d => d.IntituteType)
+                entity.HasOne(d => d.InstituteType)
                     .WithMany(p => p.InstituteConfigureSessions)
                     .HasForeignKey(d => d.InstituteTypeId)
                     .HasConstraintName("fk_institute_configure_session_institute_type_id");
@@ -514,13 +530,15 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.BoardId).HasComment("The board identifier this group belongs to. Ref.: Board.BoardId");
 
-                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+                entity.Property(e => e.CreateDateTime)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasComment("The date and time when this entry was done.");
 
                 entity.Property(e => e.DisplayOrder).HasComment("The display order of the group.");
 
-                entity.Property(e => e.InstituteId).HasComment("The institute identifier this group belongs to. Ref.: Institute.InstituteId");
+                entity.Property(e => e.GroupStructureId).HasComment("The group structure identifier this group belongs to.");
 
-                entity.Property(e => e.GroupStructureId).HasComment("The group structureId of the group structureId");
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this group belongs to. Ref.: Institute.InstituteId");
 
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))")
@@ -537,6 +555,11 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.BoardId)
                     .HasConstraintName("fk_institute_group_board_id");
 
+                entity.HasOne(d => d.GroupStructure)
+                    .WithMany(p => p.InstituteGroups)
+                    .HasForeignKey(d => d.GroupStructureId)
+                    .HasConstraintName("fk_institute_group_group_structure_id");
+
                 entity.HasOne(d => d.Institute)
                     .WithMany(p => p.InstituteGroups)
                     .HasForeignKey(d => d.InstituteId)
@@ -552,11 +575,6 @@ namespace Flinnt.Domain
                     .WithMany(p => p.InstituteGroups)
                     .HasForeignKey(d => d.StandardId)
                     .HasConstraintName("fk_institute_group_standard_id");
-
-                entity.HasOne(d => d.GroupStructure)
-                   .WithMany(p => p.InstituteGroups)
-                   .HasForeignKey(d => d.GroupStructureId)
-                   .HasConstraintName("fk_institute_group_group_structure_id");
             });
 
             modelBuilder.Entity<InstituteSemester>(entity =>
@@ -625,13 +643,16 @@ namespace Flinnt.Domain
                 entity.Property(e => e.StartTime).HasComment("The time when the session starts.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.InstituteBatch)
+                    .WithMany(p => p.InstituteSessions)
+                    .HasForeignKey(d => d.InstituteBatchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_institute_session_batch_id");
             });
 
             modelBuilder.Entity<InstituteType>(entity =>
             {
-                entity.HasKey(e => e.InstituteTypeId)
-                    .HasName("PK__Institut__840D4EE2086237CA");
-
                 entity.ToTable("InstituteType");
 
                 entity.HasComment("This entity stores a list of institute types.");
@@ -720,6 +741,88 @@ namespace Flinnt.Domain
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
             });
 
+            modelBuilder.Entity<Parent>(entity =>
+            {
+                entity.ToTable("Parent");
+
+                entity.HasComment("This entity stores information about parents.");
+
+                entity.Property(e => e.ParentId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.Parent1EmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The email address of parent 1.");
+
+                entity.Property(e => e.Parent1FirstName)
+                    .HasMaxLength(100)
+                    .HasComment("The first name of the parent 1.");
+
+                entity.Property(e => e.Parent1LastName)
+                    .HasMaxLength(100)
+                    .HasComment("The last name of the parent 1.");
+
+                entity.Property(e => e.Parent1MobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The mobile no. of parent 1.");
+
+                entity.Property(e => e.Parent1Relationship)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The relationship between the parent 1 and a student.");
+
+                entity.Property(e => e.Parent2EmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The email address of parent 2.");
+
+                entity.Property(e => e.Parent2FirstName)
+                    .HasMaxLength(100)
+                    .HasComment("The first name of the parent 2.");
+
+                entity.Property(e => e.Parent2LastName)
+                    .HasMaxLength(100)
+                    .HasComment("The last name of the parent 2.");
+
+                entity.Property(e => e.Parent2MobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The mobile no. of parent 2.");
+
+                entity.Property(e => e.Parent2Relationship)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The relationship between the parent 2 and a student.");
+
+                entity.Property(e => e.PrimaryEmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The primary email address to contact.");
+
+                entity.Property(e => e.PrimaryMobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The primary mobile not to contact.");
+
+                entity.Property(e => e.SingleParent)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, only parent 1 relationship is there.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this parent belongs to.");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Parents)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_parent_user_id");
+            });
+
             modelBuilder.Entity<Permission>(entity =>
             {
                 entity.ToTable("Permission");
@@ -773,12 +876,19 @@ namespace Flinnt.Domain
                     .HasDefaultValueSql("((1))")
                     .HasComment("If 1, the role is ready to use.");
 
+                entity.Property(e => e.ParentRoleId).HasComment("The parent role identifier this role belongs to.");
+
                 entity.Property(e => e.RoleName)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasComment("The role name.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.ParentRole)
+                    .WithMany(p => p.InverseParentRole)
+                    .HasForeignKey(d => d.ParentRoleId)
+                    .HasConstraintName("role_parent_role_id");
             });
 
             modelBuilder.Entity<RolePermission>(entity =>
@@ -848,6 +958,8 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
 
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the standard.");
+
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))")
                     .HasComment("If 1, the standard is ready to use.");
@@ -892,6 +1004,61 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.CountryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_states_country_id");
+            });
+
+            modelBuilder.Entity<Student>(entity =>
+            {
+                entity.ToTable("Student");
+
+                entity.Property(e => e.StudentId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The email address of the student");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(100)
+                    .HasComment("The first name of the student.");
+
+                entity.Property(e => e.GenderId).HasComment("The gender identifier of the student");
+
+                entity.Property(e => e.Grno)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("GRNo")
+                    .HasComment("The general register number of the student.");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(100)
+                    .HasComment("The last name of the student.");
+
+                entity.Property(e => e.MobileNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComment("The mobile number of the student");
+
+                entity.Property(e => e.RollNo)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("The enrollment number of the student.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this student belongs to.");
+
+                entity.HasOne(d => d.Gender)
+                    .WithMany(p => p.Students)
+                    .HasForeignKey(d => d.GenderId)
+                    .HasConstraintName("fk_student_gender_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Students)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_student_user_id");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -1011,7 +1178,9 @@ namespace Flinnt.Domain
                     .IsUnicode(false)
                     .HasComment("The action performed on the user account.");
 
-                entity.Property(e => e.HistoryDateTime).HasComment("The date and time when the action was performed.");
+                entity.Property(e => e.HistoryDateTime)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasComment("The date and time when the action was performed.");
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this history belongs to. Ref.: User.UserId");
 
@@ -1171,6 +1340,128 @@ namespace Flinnt.Domain
                     .HasConstraintName("fk_user_institute_user_type_id");
             });
 
+            modelBuilder.Entity<UserInstituteGroup>(entity =>
+            {
+                entity.ToTable("UserInstituteGroup");
+
+                entity.HasComment("This entity stores user, institute and group mapping details like standard, division etc.");
+
+                entity.Property(e => e.UserInstituteGroupId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.AcademicYearId).HasComment("The academic year identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteBatchId).HasComment("The institute batch identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteDivisionId).HasComment("The institute division identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteGroupId).HasComment("The institute group identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteSemesterId).HasComment("The institute semester identifier this group belongs to.");
+
+                entity.Property(e => e.InstituteSessionId).HasComment("The institute session identifier this group belongs to.");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this group belongs to.");
+
+                entity.HasOne(d => d.AcademicYear)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.AcademicYearId)
+                    .HasConstraintName("fk_user_institute_group_academic_year_id");
+
+                entity.HasOne(d => d.InstituteBatch)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteBatchId)
+                    .HasConstraintName("fk_user_institute_group_institute_batch_id");
+
+                entity.HasOne(d => d.InstituteDivision)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteDivisionId)
+                    .HasConstraintName("fk_user_institute_group_institute_division_id");
+
+                entity.HasOne(d => d.InstituteGroup)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteGroupId)
+                    .HasConstraintName("fk_user_institute_group_institute_group_id");
+
+                entity.HasOne(d => d.Institute)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_institute_group_institute_id");
+
+                entity.HasOne(d => d.InstituteSemester)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteSemesterId)
+                    .HasConstraintName("fk_user_institute_group_institute_semester_id");
+
+                entity.HasOne(d => d.InstituteSession)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.InstituteSessionId)
+                    .HasConstraintName("fk_user_institute_group_institute_session_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserInstituteGroups)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_institute_group_user_id");
+            });
+
+            modelBuilder.Entity<UserParentChildRelationship>(entity =>
+            {
+                entity.ToTable("UserParentChildRelationship");
+
+                entity.HasComment("This entity stores information regarding a parent and child relationship between two users.");
+
+                entity.Property(e => e.UserParentChildRelationshipId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.ChildUserId).HasComment("The child user identifier this relationship belongs to.");
+
+                entity.Property(e => e.ChildUserTypeId).HasComment("The child user type identifier this relationship belongs to.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this relationship belongs to.");
+
+                entity.Property(e => e.IsActive).HasComment("If 1, the relationship is intact.");
+
+                entity.Property(e => e.ParentUserId).HasComment("The parent user identifier this relationship belongs to.");
+
+                entity.Property(e => e.ParentUserTypeId).HasComment("The parent user type identifier this relationship belongs to.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.ChildUser)
+                    .WithMany(p => p.UserParentChildRelationshipChildUsers)
+                    .HasForeignKey(d => d.ChildUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_parent_child_relationship_child_user_id");
+
+                entity.HasOne(d => d.ChildUserType)
+                    .WithMany(p => p.UserParentChildRelationshipChildUserTypes)
+                    .HasForeignKey(d => d.ChildUserTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_parent_child_relationship_child_user_type_id");
+
+                entity.HasOne(d => d.Institute)
+                    .WithMany(p => p.UserParentChildRelationships)
+                    .HasForeignKey(d => d.InstituteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_parent_child_relationship_institute_id");
+
+                entity.HasOne(d => d.ParentUser)
+                    .WithMany(p => p.UserParentChildRelationshipParentUsers)
+                    .HasForeignKey(d => d.ParentUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_parent_child_relationship_parent_user_id");
+
+                entity.HasOne(d => d.ParentUserType)
+                    .WithMany(p => p.UserParentChildRelationshipParentUserTypes)
+                    .HasForeignKey(d => d.ParentUserTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_user_parent_child_relationship_parent_user_type_id");
+            });
+
             modelBuilder.Entity<UserPermission>(entity =>
             {
                 entity.ToTable("UserPermission");
@@ -1219,11 +1510,11 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.CityId).HasComment("The city identifier this profile belongs to. Ref.: City.CityId\r\nMigrate: users.user_city");
 
-                entity.Property(e => e.CountryId)
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("The country identifier this profile belongs to. Ref.: Country.CountryId\r\nMigrate: users.user_country");
+                entity.Property(e => e.CountryId).HasComment("The country identifier this profile belongs to. Ref.: Country.CountryId\r\nMigrate: users.user_country");
 
-                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+                entity.Property(e => e.CreateDateTime)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasComment("The date and time when this entry was done.");
 
                 entity.Property(e => e.DisplayPicture)
                     .HasMaxLength(255)
@@ -1390,8 +1681,7 @@ namespace Flinnt.Domain
                     .HasComment("The user type.\r\nPossible Values: Institution Staff, Parent, Student");
             });
 
-            base.OnModelCreating(modelBuilder);
-            //OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

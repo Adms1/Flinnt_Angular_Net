@@ -6,7 +6,7 @@ namespace Flinnt.Domain
     /// <summary>
     /// This entity stores a list of group structures, like: Board-&gt;Medium-&gt;Standard, Board-&gt;Medium-&gt;Standard-&gt;Division etc.
     /// </summary>
-    public partial class GroupStructure : BaseEntity
+    public partial class GroupStructure: BaseEntity
     {
         public GroupStructure()
         {

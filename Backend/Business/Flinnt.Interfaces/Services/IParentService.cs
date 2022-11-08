@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Flinnt.Interfaces.Services
 {
-    public interface IParentService : IBaseService<City>
+    public interface IParentService : IBaseService<Parent>
     {
-        Task<List<CityViewModel>> GetAllAsync();
-        Task<CityViewModel> GetAsync(int id);
-        Task<CityViewModel> AddAsync(CityViewModel model);
+        Task<List<ParentViewModel>> GetAllAsync();
+        Task<ParentViewModel> GetAsync(int id);
+        Task<ParentViewModel> AddAsync(ParentViewModel model);
     }
 }

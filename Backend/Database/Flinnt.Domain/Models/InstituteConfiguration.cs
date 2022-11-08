@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class InstituteConfiguration
+    public partial class InstituteConfiguration: BaseEntity
     {
         /// <summary>
         /// The unique identifier.

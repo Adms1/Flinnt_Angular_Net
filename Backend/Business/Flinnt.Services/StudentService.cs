@@ -15,20 +15,20 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<CityViewModel>> GetAllAsync()
+        public async Task<List<StudentViewModel>> GetAllAsync()
         {
-            var result = mapper.Map<List<CityViewModel>>(await unitOfWork.CityRepository.GetAllAsync());
+            var result = mapper.Map<List<StudentViewModel>>(await unitOfWork.StudentRepository.GetAllAsync());
             return result.ToList();
         }
 
-        public async Task<CityViewModel> GetAsync(int id)
+        public async Task<StudentViewModel> GetAsync(int id)
         {
-            return mapper.Map<CityViewModel>(await unitOfWork.CityRepository.GetAsync(id));
+            return mapper.Map<StudentViewModel>(await unitOfWork.StudentRepository.GetAsync(id));
         }
 
-        public async Task<CityViewModel> AddAsync(CityViewModel model)
+        public async Task<StudentViewModel> AddAsync(StudentViewModel model)
         {
-            return mapper.Map<CityViewModel>(await Task.FromResult(await unitOfWork.CityRepository.AddAsync(mapper.Map<CityViewModel, City>(model))));
+            return mapper.Map<StudentViewModel>(await Task.FromResult(await unitOfWork.StudentRepository.AddAsync(mapper.Map<StudentViewModel, Student>(model))));
         }
     }
 }

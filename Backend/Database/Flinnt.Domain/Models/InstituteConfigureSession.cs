@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Flinnt.Domain
 {
-    public partial class InstituteConfigureSession : BaseEntity
+    public partial class InstituteConfigureSession: BaseEntity
     {
         public int InstituteConfigureSessionId { get; set; }
         public byte? CurrentStep { get; set; }
@@ -16,7 +16,7 @@ namespace Flinnt.Domain
         public virtual Board Board { get; set; }
         public virtual GroupStructure GroupStructure { get; set; }
         public virtual Institute Institute { get; set; }
-        public virtual InstituteType IntituteType { get; set; }
+        public virtual InstituteType InstituteType { get; set; }
         public virtual Medium Medium { get; set; }
     }
 }

@@ -1,1 +1,1 @@
-﻿Scaffold-DbContext "Data Source=101.53.144.96,1232;Initial Catalog=edplexdb;User ID=edplexdb_user;Password=ad9g@z385;MultipleActiveResultSets=False;" 
+﻿Scaffold-DbContext "Data Source=101.53.144.96,1232;Initial Catalog=edplexdb;User ID=edplexdb_user;Password=ad9g@z385;MultipleActiveResultSets=False;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir tempDB

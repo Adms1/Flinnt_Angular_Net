@@ -13,7 +13,7 @@ namespace Flinnt.Domain
     /// ClientDevice &lt; login_history.device_type + login_history.device_detail
     /// AccessUrl	&lt; login_history.access_url
     /// </summary>
-    public partial class LoginHistory : BaseEntity
+    public partial class LoginHistory: BaseEntity
     {
         /// <summary>
         /// The unique identifier.
