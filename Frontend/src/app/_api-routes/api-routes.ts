@@ -34,4 +34,9 @@ export class API {
   public static STATE_ROUTES = {
     getStateByCountryId: `/${environment.API_Version}/state/get-by-countryId`
   }
+
+  public static PARENT_ROUTES = {
+    getParents: `/${environment.API_Version}/parent/list`,
+    saveParent: `/${environment.API_Version}/parent/create`,
+  };
 }
