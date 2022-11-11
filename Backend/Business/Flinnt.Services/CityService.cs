@@ -30,5 +30,10 @@ namespace Flinnt.Services
         {
             return mapper.Map<CityViewModel>(await Task.FromResult(await unitOfWork.CityRepository.AddAsync(mapper.Map<CityViewModel, City>(model))));
         }
+
+        public async Task<CityViewModel> GetByCityNameAsync(string cityName)
+        {
+            return mapper.Map<CityViewModel>(await Task.FromResult(await unitOfWork.CityRepository.FindByFirstOrDefaultAsync(x => x.CityName.ToLower() == cityName.ToLower())));
+        }
     }
 }

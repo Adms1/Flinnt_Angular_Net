@@ -1,8 +1,5 @@
 ﻿using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
-using Flinnt.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using NLog;
@@ -12,14 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Flinnt.Business.ViewModels;
 using Flinnt.Business.Helpers;
-using Flinnt.Business.ViewModels.General;
-using Hangfire;
-using System.Collections.Generic;
 using System.Data;
-using System.Formats.Asn1;
-using System.IO;
-using System.Security.Claims;
 using System.Net.Http.Headers;
+using System.Linq.Dynamic;
+using Flinnt.Business.Enums.General;
+using Flinnt.Services;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -28,13 +22,25 @@ namespace Flinnt.API.Controllers.V1
     public class ParentController : BaseApiController
     {
         private readonly IParentService _parentService;
+        private readonly IUserService _userService;
+        private readonly IUserProfileService _userProfileService;
+        private readonly IUserInstituteService _userInstituteService;
+        private readonly ICityService _cityService;
         private readonly IHtmlLocalizer<ParentController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public ParentController(IParentService parentService,
+            IUserService userService, 
+            IUserInstituteService userInstituteService,
+            ICityService cityService, 
+            IUserProfileService userProfileService,
             IHtmlLocalizer<ParentController> htmlLocalizer)
         {
             _parentService = parentService;
+            _userService = userService;
+            _userInstituteService = userInstituteService;
+            _cityService = cityService;
+            _userProfileService = userProfileService;
             _localizer = htmlLocalizer;
         }
 
@@ -80,12 +86,91 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<ParentViewModel, string, HttpStatusCode>> AddParentAsync(ParentViewModel model)
         {
-            var student = await _parentService.AddAsync(model);
-            if (student != null)
+            var user = await _userService.GetUserByLoginId(model.PrimaryEmailId);
+
+            if (user != null)
             {
-                return Response(student, _localizer["RecordAddSuccess"].Value.ToString());
+                // usertype parent or student check
+                if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                {
+                    // consider dublicate row
+                    return Response(new ParentViewModel(), "User account already exist!", HttpStatusCode.Forbidden);
+                }
+
+                await _userInstituteService.AddAsync(new UserInstitute
+                {
+                    InstituteId = user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
+                    RoleId = (int)RolesEnum.PrimaryAccount,
+                    UserId = user.UserId,
+                    UserTypeId = (int)UserTypes.Parent,
+                    IsActive = true,
+                    CreateDateTime = DateTime.Now
+                });
             }
-            return Response(student, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+            else
+            {
+                // user not found it will need to create and mapped
+
+                var userRes = await _userService.AddAsync(new User
+                {
+                    LoginId = model.PrimaryEmailId,
+                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                    IsActive = true,
+                    IsDeleted = false,
+                    Password = "flinnt@123",
+                    OneTimePassword = "flinnt@123",
+                    UserTypeId = (int)UserTypes.InstituteStaff,
+                    RegistrationDateTime = DateTime.Now,
+                    LastLoginDateTime = DateTime.Now
+                });
+
+                if (userRes != null)
+                {
+                    //save city
+                    var existingCity = await _cityService.GetByCityNameAsync(model.City);
+
+                    if (existingCity == null)
+                    {
+                        CityViewModel cityViewModel = new CityViewModel
+                        {
+                            CityName = model.City,
+                            CreateDateTime = DateTime.Now,
+                            StateId = model.StateId,
+                            IsActive = true
+                        };
+                        var city = await _cityService.AddAsync(cityViewModel);
+
+                        model.CityId = city.CityId;
+                    }
+                    else
+                    {
+                        model.CityId = existingCity.CityId;
+                    }
+
+                    model.UserId = userRes.UserId;
+                    await _userProfileService.AddAsync(new UserProfile
+                    {
+                        FirstName = model.Parent1FirstName,
+                        LastName = model.Parent1LastName,
+                        EmailId = model.PrimaryEmailId,
+                        UserId = model.UserId,
+                        MobileNo = model.PrimaryMobileNo,
+                        GenderId = model.Parent1Relationship == "Male" ? (byte)GenderEnum.Male : (byte)GenderEnum.Female,
+                        CreateDateTime = DateTime.Now,
+                        CityId = model.CityId,
+                        Address = model.AddressLine1 +", "+ model.AddressLine2,
+                        CountryId = (byte)model.CountryId,
+                        StateId = (byte)model.StateId,
+                        Pincode = model.Pincode
+                    });
+                }
+            }
+            var parent = await _parentService.AddAsync(model);
+            if (parent != null)
+            {
+                return Response(parent, _localizer["RecordAddSuccess"].Value.ToString());
+            }
+            return Response(parent, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         [Route("import-roster")]

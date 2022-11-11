@@ -1,4 +1,5 @@
-﻿using Flinnt.Business.ViewModels;
+﻿using Flinnt.Business.Enums.General;
+using Flinnt.Business.ViewModels;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Background;
@@ -165,16 +166,26 @@ namespace Flinnt.API.Controllers
             }
 
             //save city
-            CityViewModel cityViewModel = new CityViewModel
-            {
-                CityName = model.CityName,
-                CreateDateTime = DateTime.Now,
-                StateId = model.StateId.Value,
-                IsActive = true
-            };
-            var city = await _cityService.AddAsync(cityViewModel);
+            var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
 
-            model.CityId = city.CityId;
+            if(existingCity == null)
+            {
+                CityViewModel cityViewModel = new CityViewModel
+                {
+                    CityName = model.CityName,
+                    CreateDateTime = DateTime.Now,
+                    StateId = model.StateId.Value,
+                    IsActive = true
+                };
+                var city = await _cityService.AddAsync(cityViewModel);
+
+                model.CityId = city.CityId;
+            }
+            else
+            {
+                model.CityId = existingCity.CityId;
+            }
+            
             var otpNumber = GenerateRandomNo();
 
             var extInstitute = await _instituteService.AddAsync(model);
@@ -184,12 +195,12 @@ namespace Flinnt.API.Controllers
                 User user = new User
                 {
                     LoginId = model.EmailId,
-                    AuthenticationTypeId = 1,
+                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
                     IsActive = true,
                     IsDeleted = false,
                     Password = model.Password,
                     OneTimePassword = model.Password,
-                    UserTypeId = 1,
+                    UserTypeId = (int)UserTypes.InstituteStaff,
                     RegistrationDateTime = DateTime.Now,
                     LastLoginDateTime = DateTime.Now
                 };
@@ -214,9 +225,9 @@ namespace Flinnt.API.Controllers
                     UserInstitute userInstitute = new UserInstitute
                     {
                         InstituteId = extInstitute.InstituteId,
-                        RoleId = 1,
+                        RoleId = (int)RolesEnum.PrimaryAccount,
                         UserId = userRes.UserId,
-                        UserTypeId = 1,
+                        UserTypeId = (int)UserTypes.InstituteStaff,
                         IsActive = true,
                         CreateDateTime = DateTime.Now
                     };
@@ -226,7 +237,7 @@ namespace Flinnt.API.Controllers
 
                     UserRole userRole = new UserRole
                     {
-                        RoleId = 1,
+                        RoleId = (int)RolesEnum.PrimaryAccount,
                         UserId = userRes.UserId,
                         CreateDateTime = DateTime.Now
                     };

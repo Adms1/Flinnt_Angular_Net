@@ -14,5 +14,7 @@ namespace Flinnt.Interfaces.Services
         Task<bool> UpdateAsync(User model);
 
         Task<bool> DeleteAsync(int id);
+
+        Task<User> GetUserByLoginId(string emailID);
     }
 }

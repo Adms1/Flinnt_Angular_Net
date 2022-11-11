@@ -20,5 +20,14 @@ namespace Flinnt.Business.ViewModels
         public string Parent2MobileNo { get; set; }
         public string PrimaryEmailId { get; set; }
         public string PrimaryMobileNo { get; set; }
+
+        //contact info
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
+        public int CityId { get; set; }
+        public int StateId { get; set; }
+        public int CountryId { get; set; }
+        public string Pincode { get; set; }
     }
 }

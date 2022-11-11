@@ -10,5 +10,6 @@ namespace Flinnt.Interfaces.Services
         Task<List<CityViewModel>> GetAllAsync();
         Task<CityViewModel> GetAsync(int id);
         Task<CityViewModel> AddAsync(CityViewModel model);
+        Task<CityViewModel> GetByCityNameAsync(string cityName);
     }
 }

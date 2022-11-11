@@ -54,5 +54,10 @@ namespace Flinnt.Services
             }
             return await Task.FromResult(false);
         }
+
+        public async Task<User> GetUserByLoginId(string emailID)
+        {
+            return await unitOfWork.UserRepository.FindByFirstOrDefaultAsync(x=>x.LoginId == emailID);
+        } 
     }
 }
