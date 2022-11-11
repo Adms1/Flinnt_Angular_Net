@@ -68,6 +68,26 @@ namespace Flinnt.API.Controllers.V1
             });
         }
 
+        [HttpGet]
+        [Route("get-by-primary-emailId/{emailId}")]
+        public async Task<object> GetByPrimaryEmailId(string emailId)
+        {
+            Logger.Info("Get");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _userService.GetUserByLoginId(emailId));
+
+                if(result != null)
+                {
+                    if(result.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                    {
+                        return Response(result, string.Empty);
+                    }
+                }
+                return Response(new User(), string.Empty);
+            });
+        }
+
         [HttpPost]
         [Route("create")]
         public async Task<object> Post([FromBody] ParentViewModel model)
