@@ -139,7 +139,7 @@ namespace Flinnt.API.Controllers.V1
                     IsDeleted = false,
                     Password = "flinnt@123",
                     OneTimePassword = "flinnt@123",
-                    UserTypeId = (int)UserTypes.InstituteStaff,
+                    UserTypeId = (int)UserTypes.Parent,
                     RegistrationDateTime = DateTime.Now,
                     LastLoginDateTime = DateTime.Now
                 });

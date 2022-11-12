@@ -10,5 +10,6 @@ namespace Flinnt.Interfaces.Services
         Task<List<StudentViewModel>> GetAllAsync();
         Task<StudentViewModel> GetAsync(int id);
         Task<StudentViewModel> AddAsync(StudentViewModel model);
+        Task<List<StudentViewModel>> ValidateStudent(StudentViewModel model);
     }
 }

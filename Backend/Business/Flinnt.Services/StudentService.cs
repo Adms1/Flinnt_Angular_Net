@@ -30,5 +30,18 @@ namespace Flinnt.Services
         {
             return mapper.Map<StudentViewModel>(await Task.FromResult(await unitOfWork.StudentRepository.AddAsync(mapper.Map<StudentViewModel, Student>(model))));
         }
+
+        public async Task<List<StudentViewModel>> ValidateStudent(StudentViewModel model)
+        {
+            return mapper.Map<List<StudentViewModel>>
+                (await Task.FromResult(await unitOfWork.StudentRepository.FindByAsync(x => 
+                x.EmailId == model.EmailId
+            && x.RollNo == model.RollNo
+            && x.MobileNo == model.MobileNo
+            && x.Grno == model.Grno
+            && x.UserId == model.UserId
+            && x.FirstName.ToLower() == model.FirstName.ToLower()
+            && x.LastName.ToLower() == model.LastName.ToLower())));
+        }
     }
 }

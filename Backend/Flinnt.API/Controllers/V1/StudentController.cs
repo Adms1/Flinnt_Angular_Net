@@ -1,4 +1,5 @@
-﻿using Flinnt.Business.Helpers;
+﻿using Flinnt.Business.Enums.General;
+using Flinnt.Business.Helpers;
 using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
@@ -20,13 +21,22 @@ namespace Flinnt.API.Controllers.V1
     public class StudentController : BaseApiController
     {
         private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
+        private readonly IUserInstituteService _userInstituteService;
+        private readonly IUserProfileService _userProfileService;
         private readonly IHtmlLocalizer<StudentController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public StudentController(IStudentService studentService,
+            IUserService userService,
+            IUserInstituteService userInstituteService,
+            IUserProfileService userProfileService,
             IHtmlLocalizer<StudentController> htmlLocalizer)
         {
             _studentService = studentService;
+            _userService = userService;
+            _userInstituteService = userInstituteService;
+            _userProfileService = userProfileService;
             _localizer = htmlLocalizer;
         }
 
@@ -72,8 +82,81 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<StudentViewModel, string, HttpStatusCode>> AddStudentAsync(StudentViewModel model)
         {
+            var extStudent = await _studentService.ValidateStudent(model);
+
+            if(extStudent.Any())
+            {
+                return Response(new StudentViewModel(), "Student account already exist!", HttpStatusCode.Forbidden);
+            }
+
+            var user = await _userService.GetUserByLoginId(model.EmailId);
+            if (user != null)
+            {
+                // usertype parent or student check
+                if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                {
+                    // consider dublicate row
+                    return Response(new StudentViewModel(), "Student account already exist!", HttpStatusCode.Forbidden);
+                }
+            }
+            else
+            {
+                // user not found it will need to create and mapped
+                var userRes = await _userService.AddAsync(new User
+                {
+                    LoginId = model.EmailId,
+                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                    IsActive = true,
+                    IsDeleted = false,
+                    Password = "flinnt@123",
+                    OneTimePassword = "flinnt@123",
+                    UserTypeId = (int)UserTypes.Student,
+                    RegistrationDateTime = DateTime.Now,
+                    LastLoginDateTime = DateTime.Now
+                });
+
+                if (userRes != null)
+                {
+                    // check relation with parent by passing parentId (userid)
+                    var parentUser = await _userService.GetAsync(model.UserId);
+
+                    if(parentUser == null)
+                    {
+                        return Response(new StudentViewModel(), "Parent account not exist!", HttpStatusCode.Forbidden);
+                    }
+
+                    var prtUsr = parentUser.UserProfiles.FirstOrDefault();
+
+                    await _userProfileService.AddAsync(new UserProfile
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        EmailId = model.EmailId,
+                        UserId = userRes.UserId,
+                        MobileNo = model.MobileNo,
+                        GenderId = model.GenderId,
+                        CreateDateTime = DateTime.Now,
+                        CityId = prtUsr?.CityId,
+                        Address = prtUsr?.Address,
+                        CountryId = prtUsr?.CountryId,
+                        StateId = prtUsr?.StateId,
+                        Pincode = prtUsr?.Pincode
+                    });
+
+                    await _userInstituteService.AddAsync(new UserInstitute
+                    {
+                        InstituteId = parentUser.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
+                        RoleId = (int)RolesEnum.PrimaryAccount,
+                        UserId = userRes.UserId,
+                        UserTypeId = (int)UserTypes.Student,
+                        IsActive = true,
+                        CreateDateTime = DateTime.Now
+                    });
+                }
+            }
+
             var student = await _studentService.AddAsync(model);
-            if (student != null)
+            if (student != null)    
             {
                 return Response(student, _localizer["RecordAddSuccess"].Value.ToString());
             }

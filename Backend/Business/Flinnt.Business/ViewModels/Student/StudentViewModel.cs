@@ -15,5 +15,11 @@ namespace Flinnt.Business.ViewModels
         public byte? GenderId { get; set; }
         public string RollNo { get; set; }
         public string Grno { get; set; }
+
+        // other info
+        public int BoardId { get; set; }
+        public int MediumId { get; set; }
+        public int StandardId { get; set; }
+        public int DivisionId { get; set; }
     }
 }
