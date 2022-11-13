@@ -1,4 +1,5 @@
-﻿using Flinnt.Business.Enums.General;
+﻿using Castle.Core.Internal;
+using Flinnt.Business.Enums.General;
 using Flinnt.Business.ViewModels;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Domain;
@@ -37,6 +38,10 @@ namespace Flinnt.API.Controllers
         public async Task<object> GetByPrimaryEmailId(string emailId)
         {
             Logger.Info("Get");
+
+            if (string.IsNullOrEmpty(emailId))
+                return Response(new User(), "Something went wrong!!", System.Net.HttpStatusCode.Forbidden);
+
             return await GetDataWithMessage(async () =>
             {
                 var result = (await _userService.GetUserByLoginId(emailId));
@@ -57,6 +62,10 @@ namespace Flinnt.API.Controllers
         public async Task<object> GetByUserId(int userId)
         {
             Logger.Info("Get");
+
+            if (userId > 0)
+                return Response(new User(), "Something went wrong!!", System.Net.HttpStatusCode.Forbidden);
+
             return await GetDataWithMessage(async () =>
             {
                 var result = (await _userService.GetAsync(userId));
