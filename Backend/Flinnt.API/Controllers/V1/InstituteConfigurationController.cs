@@ -125,6 +125,34 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
+        [Route("group/get")]
+        public async Task<object> GetInstituteGroup(int instituteId, int boardId, int mediumId, int standardId)
+        {
+            Logger.Info("GetInstituteGroupByInstituteId");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _instituteGroupService.GetByInstituteIdAsync(instituteId));
+
+                if(result != null)
+                {
+                    if(boardId > 0)
+                    {
+                        result = result.Where(x => x.BoardId == boardId).ToList();
+                    }
+                    if(mediumId > 0)
+                    {
+                        result = result.Where(x => x.MediumId == mediumId).ToList();
+                    }
+                    if(standardId > 0)
+                    {
+                        result = result.Where(x => x.StandardId == standardId).ToList();
+                    }
+                }
+                return Response(result, string.Empty);
+            });
+        }
+
+        [HttpGet]
         [Route("group/{instituteId}")]
         public async Task<object> GetInstituteGroupByInstituteId(int instituteId)
         {
@@ -193,6 +221,26 @@ namespace Flinnt.API.Controllers
             return await GetDataWithMessage(async () =>
             {
                 var result = (await _instituteDivisionService.GetDivisionByInstituteIdAsync(instituteId));
+                return Response(result, string.Empty);
+            });
+        }
+
+        [HttpGet]
+        [Route("division/{instituteId}/{instituteGroupId}")]
+        public async Task<object> GetInstituteDivisionByInstituteGroupId(int instituteId, int instituteGroupId)
+        {
+            Logger.Info("GetInstituteDivisionByInstituteGroupId");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = (await _instituteDivisionService.GetDivisionByInstituteIdAsync(instituteId));
+
+                if(result != null)
+                {
+                    if(instituteGroupId > 0)
+                    {
+                        result = result.Where(x => x.InstituteGroupId == instituteGroupId).ToList();
+                    }
+                }
                 return Response(result, string.Empty);
             });
         }
