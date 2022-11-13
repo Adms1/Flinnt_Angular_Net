@@ -86,8 +86,14 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<ParentViewModel, string, HttpStatusCode>> AddParentAsync(ParentViewModel model)
         {
-            var user = await _userService.GetUserByLoginId(model.PrimaryEmailId);
+            var extStudent = await _parentService.ValidateParent(model);
 
+            if (extStudent.Any())
+            {
+                return Response(new ParentViewModel(), "Parent account already exist!", HttpStatusCode.Forbidden);
+            }
+
+            var user = await _userService.GetUserByLoginId(model.PrimaryEmailId);
             if (user != null)
             {
                 // usertype parent or student check

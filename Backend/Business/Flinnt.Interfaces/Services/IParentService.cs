@@ -10,5 +10,6 @@ namespace Flinnt.Interfaces.Services
         Task<List<ParentViewModel>> GetAllAsync();
         Task<ParentViewModel> GetAsync(int id);
         Task<ParentViewModel> AddAsync(ParentViewModel model);
+        Task<List<ParentViewModel>> ValidateParent(ParentViewModel model);
     }
 }
