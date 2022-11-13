@@ -26,7 +26,7 @@ namespace Flinnt.API.Controllers
         private readonly IHtmlLocalizer<UserController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-        public UserController(IUserService userService, 
+        public UserController(IUserService userService,
             IHtmlLocalizer<UserController> htmlLocalizer)
         {
             _userService = userService;
@@ -48,10 +48,7 @@ namespace Flinnt.API.Controllers
 
                 if (result != null)
                 {
-                    if (result.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
-                    {
-                        return Response(result, string.Empty);
-                    }
+                    return Response(result, string.Empty);
                 }
                 return Response(new User(), string.Empty);
             });
@@ -72,10 +69,7 @@ namespace Flinnt.API.Controllers
 
                 if (result != null)
                 {
-                    if (result.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
-                    {
-                        return Response(result, string.Empty);
-                    }
+                    return Response(result, string.Empty);
                 }
                 return Response(new User(), string.Empty);
             });
