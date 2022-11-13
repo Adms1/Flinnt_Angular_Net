@@ -33,7 +33,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("get/{emailId}")]
+        [Route("get/emailid")]
         public async Task<object> GetByPrimaryEmailId(string emailId)
         {
             Logger.Info("Get");
@@ -53,7 +53,7 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("get/{userId}")]
+        [Route("get/userid")]
         public async Task<object> GetByUserId(int userId)
         {
             Logger.Info("Get");
