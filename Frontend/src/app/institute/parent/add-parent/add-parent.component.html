@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <label>Mobile Number</label>
                                 <input type="text" name="mobile_no_1" autofocus="true" id="mobile_no_1" value=""
-                                    formControlName="Parent1MobileNo"
+                                    formControlName="Parent1MobileNo" maxlength="10"
                                     [ngClass]="parentForm.get('Parent1MobileNo')?.invalid && formSubmitted ? 'error' : ''"
                                     class="input-block-level" placeholder="Mobile Number" autocomplete="on" />
                             </div>
@@ -143,7 +143,7 @@
                                     <label>Mobile Number</label>
                                     <input type="text" name="mobile_no_1" autofocus="true" id="mobile_no_1" value=""
                                         class="input-block-level" placeholder="Mobile Number" autocomplete="on"
-                                        formControlName="Parent2MobileNo"
+                                        formControlName="Parent2MobileNo" maxlength="10"
                                         [ngClass]="parentForm.get('Parent2MobileNo')?.invalid && formSubmitted ? 'error' : ''" />
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                             <label>Contact Number</label>
                             <input type="text" name="contact_name" autofocus="true" id="contact_name" value=""
                                 class="input-block-level" placeholder="Contact name" autocomplete="on"
-                                formControlName="PrimaryMobileNo"
+                                formControlName="PrimaryMobileNo" maxlength="10"
                                 [ngClass]="parentForm.get('PrimaryMobileNo')?.invalid && formSubmitted ? 'error' : ''" />
                         </div>
                     </div>
