@@ -69,6 +69,30 @@ namespace Flinnt.Domain
         /// </summary>
         public string PrimaryMobileNo { get; set; }
         /// <summary>
+        /// The address line 1.
+        /// </summary>
+        public string AddressLine1 { get; set; }
+        /// <summary>
+        /// The address line 2.
+        /// </summary>
+        public string AddressLine2 { get; set; }
+        /// <summary>
+        /// The city identifier this parent belongs to.
+        /// </summary>
+        public int? CityId { get; set; }
+        /// <summary>
+        /// The state identifier this parent belongs to.
+        /// </summary>
+        public int? StateId { get; set; }
+        /// <summary>
+        /// The country identifier this parent belongs to.
+        /// </summary>
+        public byte? CountryId { get; set; }
+        /// <summary>
+        /// The pincode of the address.
+        /// </summary>
+        public string Pincode { get; set; }
+        /// <summary>
         /// The date and time when this entry was done.
         /// </summary>
         public DateTime? CreateDateTime { get; set; }

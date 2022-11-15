@@ -83,17 +83,20 @@ namespace Flinnt.API.Controllers
                     if (result.Succeeded)
                     {
                         var loginResponse = new LoginResponseModel();
+                       
                         loginResponse.ApplicationUser = await _userManager.FindByNameAsync(loginViewModel.Email);
-                        var token = ApiTokenHelper.GenerateJSONWebToken(loginResponse.ApplicationUser);
-                        loginResponse.Token = token;
-
-                        // otp
-                        var otpNumber = GenerateRandomNo();
                         var userId = loginResponse.ApplicationUser.UserId;
                         var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userId);
                         var user = await _userService.GetAsync(userId);
                         var userProfile = await _userProfileService.GetByUserIdAsync(userId);
                         var userInstitute = await _userInstituteService.GetByUserIdAsync(userId);
+
+                        var token = ApiTokenHelper.GenerateJSONWebToken(loginResponse.ApplicationUser, userInstitute.InstituteId);
+                        loginResponse.Token = token;
+
+                        // otp
+                        var otpNumber = GenerateRandomNo();
+                        
                         // login history
                         LoginHistory loginHistory = new LoginHistory
                         {

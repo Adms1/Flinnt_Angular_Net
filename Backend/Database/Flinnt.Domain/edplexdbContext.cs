@@ -751,6 +751,20 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.ParentId).HasComment("The unique identifier.");
 
+                entity.Property(e => e.AddressLine1)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The address line 1.");
+
+                entity.Property(e => e.AddressLine2)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The address line 2.");
+
+                entity.Property(e => e.CityId).HasComment("The city identifier this parent belongs to.");
+
+                entity.Property(e => e.CountryId).HasComment("The country identifier this parent belongs to.");
+
                 entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
 
                 entity.Property(e => e.Parent1EmailId)
@@ -800,6 +814,11 @@ namespace Flinnt.Domain
                     .IsUnicode(false)
                     .HasComment("The relationship between the parent 2 and a student.");
 
+                entity.Property(e => e.Pincode)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("The pincode of the address.");
+
                 entity.Property(e => e.PrimaryEmailId)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -814,9 +833,26 @@ namespace Flinnt.Domain
                     .HasDefaultValueSql("((0))")
                     .HasComment("If 1, only parent 1 relationship is there.");
 
+                entity.Property(e => e.StateId).HasComment("The state identifier this parent belongs to.");
+
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this parent belongs to.");
+
+                //entity.HasOne(d => d.City)
+                //    .WithMany(p => p.Parents)
+                //    .HasForeignKey(d => d.CityId)
+                //    .HasConstraintName("fk_parent_city_id");
+
+                //entity.HasOne(d => d.Country)
+                //    .WithMany(p => p.Parents)
+                //    .HasForeignKey(d => d.CountryId)
+                //    .HasConstraintName("fk_parent_country_id");
+
+                //entity.HasOne(d => d.State)
+                //    .WithMany(p => p.Parents)
+                //    .HasForeignKey(d => d.StateId)
+                //    .HasConstraintName("fk_parent_state_id");
 
                 //entity.HasOne(d => d.User)
                 //    .WithMany(p => p.Parents)

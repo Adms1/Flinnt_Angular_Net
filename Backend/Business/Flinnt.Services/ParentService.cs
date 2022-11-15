@@ -37,9 +37,10 @@ namespace Flinnt.Services
                (await Task.FromResult(await unitOfWork.ParentRepository.FindByAsync(x =>
                x.Parent1EmailId == model.Parent1EmailId
            && x.Parent1MobileNo == model.Parent1MobileNo
-           && x.UserId == model.UserId
            && x.Parent1FirstName.ToLower() == model.Parent1FirstName.ToLower()
-           && x.Parent1LastName.ToLower() == model.Parent1LastName.ToLower())));
+           && x.Parent1LastName.ToLower() == model.Parent1LastName.ToLower()
+           && x.PrimaryEmailId.ToLower() == model.PrimaryEmailId.ToLower()
+           && x.PrimaryMobileNo.ToLower() == model.PrimaryMobileNo.ToLower())));
         }
     }
 }

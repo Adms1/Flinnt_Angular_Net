@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Linq.Dynamic;
 using Flinnt.Business.Enums.General;
 using Flinnt.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -27,6 +28,7 @@ namespace Flinnt.API.Controllers.V1
         private readonly IUserInstituteService _userInstituteService;
         private readonly ICityService _cityService;
         private readonly IHtmlLocalizer<ParentController> _localizer;
+        private readonly UserManager<ApplicationUser> _userManager;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public ParentController(IParentService parentService,
@@ -34,7 +36,8 @@ namespace Flinnt.API.Controllers.V1
             IUserInstituteService userInstituteService,
             ICityService cityService, 
             IUserProfileService userProfileService,
-            IHtmlLocalizer<ParentController> htmlLocalizer)
+            IHtmlLocalizer<ParentController> htmlLocalizer,
+            UserManager<ApplicationUser> userManager)
         {
             _parentService = parentService;
             _userService = userService;
@@ -42,6 +45,7 @@ namespace Flinnt.API.Controllers.V1
             _cityService = cityService;
             _userProfileService = userProfileService;
             _localizer = htmlLocalizer;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -86,6 +90,8 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<ParentViewModel, string, HttpStatusCode>> AddParentAsync(ParentViewModel model)
         {
+            var currentInstituteID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "InstituteId")?.Value;
+
             var extStudent = await _parentService.ValidateParent(model);
 
             if (extStudent.Any())
@@ -112,7 +118,7 @@ namespace Flinnt.API.Controllers.V1
                     {
                         CityName = model.CityName,
                         CreateDateTime = DateTime.Now,
-                        StateId = model.StateId,
+                        StateId = model.StateId.Value,
                         IsActive = true
                     };
                     var city = await _cityService.AddAsync(cityViewModel);
@@ -151,7 +157,7 @@ namespace Flinnt.API.Controllers.V1
                         {
                             CityName = model.CityName,
                             CreateDateTime = DateTime.Now,
-                            StateId = model.StateId,
+                            StateId = model.StateId.Value,
                             IsActive = true
                         };
                         var city = await _cityService.AddAsync(cityViewModel);
@@ -187,9 +193,9 @@ namespace Flinnt.API.Controllers.V1
             {
                 await _userInstituteService.AddAsync(new UserInstitute
                 {
-                    InstituteId = user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
+                    InstituteId = Convert.ToInt32(currentInstituteID),
                     RoleId = (int)RolesEnum.PrimaryAccount,
-                    UserId = user.UserId,
+                    UserId = model.UserId,
                     UserTypeId = (int)UserTypes.Parent,
                     IsActive = true,
                     CreateDateTime = DateTime.Now
