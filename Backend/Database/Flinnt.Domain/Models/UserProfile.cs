@@ -112,11 +112,5 @@ namespace Flinnt.Domain
         /// The date and time when this entry was last updated.
         /// </summary>
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual City City { get; set; }
-        public virtual Country Country { get; set; }
-        public virtual Gender Gender { get; set; }
-        public virtual State State { get; set; }
-        public virtual User User { get; set; }
     }
 }

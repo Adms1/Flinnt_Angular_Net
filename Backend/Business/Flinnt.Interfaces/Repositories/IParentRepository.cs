@@ -5,5 +5,6 @@ namespace Flinnt.Interfaces.Repositories
 {
     public interface IParentRepository : IBaseRepository<Parent>
     {
+        Parent CreateParentRecord(Parent parent);
     }
 }

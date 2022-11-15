@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Flinnt.Domain
@@ -15,20 +16,20 @@ namespace Flinnt.Domain
     {
         public User()
         {
-            LoginHistories = new HashSet<LoginHistory>();
-            Parents = new HashSet<Parent>();
-            Students = new HashSet<Student>();
-            UserAccountHistories = new HashSet<UserAccountHistory>();
-            UserAccountVerifications = new HashSet<UserAccountVerification>();
-            UserDevices = new HashSet<UserDevice>();
-            UserInstituteGroups = new HashSet<UserInstituteGroup>();
+            //LoginHistories = new HashSet<LoginHistory>();
+            //Parents = new HashSet<Parent>();
+            //Students = new HashSet<Student>();
+            //UserAccountHistories = new HashSet<UserAccountHistory>();
+            //UserAccountVerifications = new HashSet<UserAccountVerification>();
+            //UserDevices = new HashSet<UserDevice>();
+            //UserInstituteGroups = new HashSet<UserInstituteGroup>();
             UserInstitutes = new HashSet<UserInstitute>();
-            UserParentChildRelationshipChildUsers = new HashSet<UserParentChildRelationship>();
-            UserParentChildRelationshipParentUsers = new HashSet<UserParentChildRelationship>();
-            UserPermissions = new HashSet<UserPermission>();
+            //UserParentChildRelationshipChildUsers = new HashSet<UserParentChildRelationship>();
+            //UserParentChildRelationshipParentUsers = new HashSet<UserParentChildRelationship>();
+            //UserPermissions = new HashSet<UserPermission>();
             UserProfiles = new HashSet<UserProfile>();
-            UserRoles = new HashSet<UserRole>();
-            UserSettings = new HashSet<UserSetting>();
+            //UserRoles = new HashSet<UserRole>();
+            //UserSettings = new HashSet<UserSetting>();
         }
 
         public long UserId { get; set; }
@@ -108,19 +109,8 @@ namespace Flinnt.Domain
 
         public virtual AutheticationType AuthenticationType { get; set; }
         public virtual UserType UserType { get; set; }
-        public virtual ICollection<LoginHistory> LoginHistories { get; set; }
-        public virtual ICollection<Parent> Parents { get; set; }
-        public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<UserAccountHistory> UserAccountHistories { get; set; }
-        public virtual ICollection<UserAccountVerification> UserAccountVerifications { get; set; }
-        public virtual ICollection<UserDevice> UserDevices { get; set; }
-        public virtual ICollection<UserInstituteGroup> UserInstituteGroups { get; set; }
+        //public virtual ICollection<UserInstituteGroup> UserInstituteGroups { get; set; }
         public virtual ICollection<UserInstitute> UserInstitutes { get; set; }
-        public virtual ICollection<UserParentChildRelationship> UserParentChildRelationshipChildUsers { get; set; }
-        public virtual ICollection<UserParentChildRelationship> UserParentChildRelationshipParentUsers { get; set; }
-        public virtual ICollection<UserPermission> UserPermissions { get; set; }
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual ICollection<UserSetting> UserSettings { get; set; }
     }
 }

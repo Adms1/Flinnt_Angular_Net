@@ -8,11 +8,6 @@ namespace Flinnt.Domain
     /// </summary>
     public partial class AutheticationType: BaseEntity
     {
-        public AutheticationType()
-        {
-            Users = new HashSet<User>();
-        }
-
         /// <summary>
         /// Unique Identifier.
         /// </summary>
@@ -29,7 +24,5 @@ namespace Flinnt.Domain
         /// The date and time when entry was last updated.
         /// </summary>
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual ICollection<User> Users { get; set; }
     }
 }

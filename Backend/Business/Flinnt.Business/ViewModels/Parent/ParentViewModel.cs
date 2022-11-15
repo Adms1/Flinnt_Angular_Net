@@ -24,7 +24,7 @@ namespace Flinnt.Business.ViewModels
         //contact info
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
-        public string City { get; set; }
+        public string CityName { get; set; }
         public int CityId { get; set; }
         public int StateId { get; set; }
         public int CountryId { get; set; }

@@ -709,10 +709,10 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this history belongs to. Ref. User.UserId\r\nMigration: login_history.user_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.LoginHistories)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("fk_login_history_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.LoginHistories)
+                //    .HasForeignKey(d => d.UserId)
+                //    .HasConstraintName("fk_login_history_user_id");
             });
 
             modelBuilder.Entity<Medium>(entity =>
@@ -818,11 +818,11 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this parent belongs to.");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Parents)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_parent_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.Parents)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_parent_user_id");
             });
 
             modelBuilder.Entity<Permission>(entity =>
@@ -1056,11 +1056,11 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.GenderId)
                     .HasConstraintName("fk_student_gender_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Students)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_student_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.Students)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_student_user_id");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -1141,17 +1141,17 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserTypeId).HasComment("The type of the user. Ref.: UserType.UserTypeId");
 
-                entity.HasOne(d => d.AuthenticationType)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.AuthenticationTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_users_auth_type_id");
+                //entity.HasOne(d => d.AuthenticationType)
+                //    .WithMany(p => p.Users)
+                //    .HasForeignKey(d => d.AuthenticationTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_users_auth_type_id");
 
-                entity.HasOne(d => d.UserType)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.UserTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_users_user_type_id");
+                //entity.HasOne(d => d.UserType)
+                //    .WithMany(p => p.Users)
+                //    .HasForeignKey(d => d.UserTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_users_user_type_id");
             });
 
             modelBuilder.Entity<UserAccountHistory>(entity =>
@@ -1186,10 +1186,10 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this history belongs to. Ref.: User.UserId");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserAccountHistories)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("fk_user_acc_history_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserAccountHistories)
+                //    .HasForeignKey(d => d.UserId)
+                //    .HasConstraintName("fk_user_acc_history_user_id");
             });
 
             modelBuilder.Entity<UserAccountVerification>(entity =>
@@ -1232,11 +1232,11 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.VerifyDateTime).HasComment("The date and time when the code was verified.");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserAccountVerifications)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_account_verifications_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserAccountVerifications)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_account_verifications_user_id");
             });
 
             modelBuilder.Entity<UserDevice>(entity =>
@@ -1286,11 +1286,11 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this device belongs to. Ref.: User.UserId");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserDevices)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_devices_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserDevices)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_devices_user_id");
             });
 
             modelBuilder.Entity<UserInstitute>(entity =>
@@ -1317,29 +1317,29 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserTypeId).HasComment("The user type identifier this user belongs to the institute. Ref. UserType.UserTypeId");
 
-                entity.HasOne(d => d.Institute)
-                    .WithMany(p => p.UserInstitutes)
-                    .HasForeignKey(d => d.InstituteId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_institute_institute_id");
+                //entity.HasOne(d => d.Institute)
+                //    .WithMany(p => p.UserInstitutes)
+                //    .HasForeignKey(d => d.InstituteId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_institute_institute_id");
 
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserInstitutes)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_institute_role_id");
+                //entity.HasOne(d => d.Role)
+                //    .WithMany(p => p.UserInstitutes)
+                //    .HasForeignKey(d => d.RoleId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_institute_role_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserInstitutes)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_institute_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserInstitutes)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_institute_user_id");
 
-                entity.HasOne(d => d.UserType)
-                    .WithMany(p => p.UserInstitutes)
-                    .HasForeignKey(d => d.UserTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_institute_user_type_id");
+                //entity.HasOne(d => d.UserType)
+                //    .WithMany(p => p.UserInstitutes)
+                //    .HasForeignKey(d => d.UserTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_institute_user_type_id");
             });
 
             modelBuilder.Entity<UserInstituteGroup>(entity =>
@@ -1402,11 +1402,11 @@ namespace Flinnt.Domain
                     .HasForeignKey(d => d.InstituteSessionId)
                     .HasConstraintName("fk_user_institute_group_institute_session_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserInstituteGroups)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_institute_group_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserInstituteGroups)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_institute_group_user_id");
             });
 
             modelBuilder.Entity<UserParentChildRelationship>(entity =>
@@ -1433,17 +1433,17 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
 
-                entity.HasOne(d => d.ChildUser)
-                    .WithMany(p => p.UserParentChildRelationshipChildUsers)
-                    .HasForeignKey(d => d.ChildUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_parent_child_relationship_child_user_id");
+                //entity.HasOne(d => d.ChildUser)
+                //    .WithMany(p => p.UserParentChildRelationshipChildUsers)
+                //    .HasForeignKey(d => d.ChildUserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_parent_child_relationship_child_user_id");
 
-                entity.HasOne(d => d.ChildUserType)
-                    .WithMany(p => p.UserParentChildRelationshipChildUserTypes)
-                    .HasForeignKey(d => d.ChildUserTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_parent_child_relationship_child_user_type_id");
+                //entity.HasOne(d => d.ChildUserType)
+                //    .WithMany(p => p.UserParentChildRelationshipChildUserTypes)
+                //    .HasForeignKey(d => d.ChildUserTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_parent_child_relationship_child_user_type_id");
 
                 entity.HasOne(d => d.Institute)
                     .WithMany(p => p.UserParentChildRelationships)
@@ -1451,17 +1451,17 @@ namespace Flinnt.Domain
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_user_parent_child_relationship_institute_id");
 
-                entity.HasOne(d => d.ParentUser)
-                    .WithMany(p => p.UserParentChildRelationshipParentUsers)
-                    .HasForeignKey(d => d.ParentUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_parent_child_relationship_parent_user_id");
+                //entity.HasOne(d => d.ParentUser)
+                //    .WithMany(p => p.UserParentChildRelationshipParentUsers)
+                //    .HasForeignKey(d => d.ParentUserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_parent_child_relationship_parent_user_id");
 
-                entity.HasOne(d => d.ParentUserType)
-                    .WithMany(p => p.UserParentChildRelationshipParentUserTypes)
-                    .HasForeignKey(d => d.ParentUserTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_parent_child_relationship_parent_user_type_id");
+                //entity.HasOne(d => d.ParentUserType)
+                //    .WithMany(p => p.UserParentChildRelationshipParentUserTypes)
+                //    .HasForeignKey(d => d.ParentUserTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_parent_child_relationship_parent_user_type_id");
             });
 
             modelBuilder.Entity<UserPermission>(entity =>
@@ -1490,11 +1490,11 @@ namespace Flinnt.Domain
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_user_permissions_permission_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserPermissions)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_permissions_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserPermissions)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_permissions_user_id");
             });
 
             modelBuilder.Entity<UserProfile>(entity =>
@@ -1571,31 +1571,31 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier this profile belongs to. Ref.: Users.UserId");
 
-                entity.HasOne(d => d.City)
-                    .WithMany(p => p.UserProfiles)
-                    .HasForeignKey(d => d.CityId)
-                    .HasConstraintName("fk_user_profile_city_id");
+                //entity.HasOne(d => d.City)
+                //    .WithMany(p => p.UserProfiles)
+                //    .HasForeignKey(d => d.CityId)
+                //    .HasConstraintName("fk_user_profile_city_id");
 
-                entity.HasOne(d => d.Country)
-                    .WithMany(p => p.UserProfiles)
-                    .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("fk_user_profile_country_id");
+                //entity.HasOne(d => d.Country)
+                //    .WithMany(p => p.UserProfiles)
+                //    .HasForeignKey(d => d.CountryId)
+                //    .HasConstraintName("fk_user_profile_country_id");
 
-                entity.HasOne(d => d.Gender)
-                    .WithMany(p => p.UserProfiles)
-                    .HasForeignKey(d => d.GenderId)
-                    .HasConstraintName("fk_user_profile_gender_id");
+                //entity.HasOne(d => d.Gender)
+                //    .WithMany(p => p.UserProfiles)
+                //    .HasForeignKey(d => d.GenderId)
+                //    .HasConstraintName("fk_user_profile_gender_id");
 
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.UserProfiles)
-                    .HasForeignKey(d => d.StateId)
-                    .HasConstraintName("fk_user_profile_state_id");
+                //entity.HasOne(d => d.State)
+                //    .WithMany(p => p.UserProfiles)
+                //    .HasForeignKey(d => d.StateId)
+                //    .HasConstraintName("fk_user_profile_state_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserProfiles)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_profile_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserProfiles)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_profile_user_id");
             });
 
             modelBuilder.Entity<UserRole>(entity =>
@@ -1618,11 +1618,11 @@ namespace Flinnt.Domain
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_user_roles_role_id");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserRoles)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_roles_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserRoles)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_roles_user_id");
             });
 
             modelBuilder.Entity<UserSetting>(entity =>
@@ -1655,11 +1655,11 @@ namespace Flinnt.Domain
 
                 entity.Property(e => e.UserId).HasComment("The user identifier these settings belongs to. Ref.: User.UserId");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserSettings)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_user_settings_user_id");
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.UserSettings)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_user_settings_user_id");
             });
 
             modelBuilder.Entity<UserType>(entity =>

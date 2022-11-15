@@ -28,7 +28,7 @@ namespace Flinnt.Services
 
         public async Task<ParentViewModel> AddAsync(ParentViewModel model)
         {
-            return mapper.Map<ParentViewModel>(await Task.FromResult(await unitOfWork.ParentRepository.AddAsync(mapper.Map<ParentViewModel, Parent>(model))));
+            return mapper.Map<ParentViewModel>(await Task.FromResult(unitOfWork.ParentRepository.CreateParentRecord(mapper.Map<ParentViewModel, Parent>(model))));
         }
 
         public async Task<List<ParentViewModel>> ValidateParent(ParentViewModel model)

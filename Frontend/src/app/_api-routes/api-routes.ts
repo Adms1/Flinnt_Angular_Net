@@ -39,4 +39,9 @@ export class API {
     getParents: `/${environment.API_Version}/parent/list`,
     saveParent: `/${environment.API_Version}/parent/create`,
   };
+
+  public static USER_ROUTES = {
+    getUserByEmailId: `/${environment.API_Version}/user/get/emailid`,
+    getUserById: `/${environment.API_Version}/user/get/userid`,
+  };
 }

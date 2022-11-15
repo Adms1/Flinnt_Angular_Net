@@ -102,21 +102,31 @@ namespace Flinnt.API.Controllers.V1
                     // consider dublicate row
                     return Response(new ParentViewModel(), "User account already exist!", HttpStatusCode.Forbidden);
                 }
+                model.UserId = user.UserId;
 
-                await _userInstituteService.AddAsync(new UserInstitute
+                var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
+
+                if (existingCity == null)
                 {
-                    InstituteId = user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
-                    RoleId = (int)RolesEnum.PrimaryAccount,
-                    UserId = user.UserId,
-                    UserTypeId = (int)UserTypes.Parent,
-                    IsActive = true,
-                    CreateDateTime = DateTime.Now
-                });
+                    CityViewModel cityViewModel = new CityViewModel
+                    {
+                        CityName = model.CityName,
+                        CreateDateTime = DateTime.Now,
+                        StateId = model.StateId,
+                        IsActive = true
+                    };
+                    var city = await _cityService.AddAsync(cityViewModel);
+
+                    model.CityId = city.CityId;
+                }
+                else
+                {
+                    model.CityId = existingCity.CityId;
+                }
             }
             else
             {
                 // user not found it will need to create and mapped
-
                 var userRes = await _userService.AddAsync(new User
                 {
                     LoginId = model.PrimaryEmailId,
@@ -133,13 +143,13 @@ namespace Flinnt.API.Controllers.V1
                 if (userRes != null)
                 {
                     //save city
-                    var existingCity = await _cityService.GetByCityNameAsync(model.City);
+                    var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
 
                     if (existingCity == null)
                     {
                         CityViewModel cityViewModel = new CityViewModel
                         {
-                            CityName = model.City,
+                            CityName = model.CityName,
                             CreateDateTime = DateTime.Now,
                             StateId = model.StateId,
                             IsActive = true
@@ -171,9 +181,20 @@ namespace Flinnt.API.Controllers.V1
                     });
                 }
             }
+
             var parent = await _parentService.AddAsync(model);
             if (parent != null)
             {
+                await _userInstituteService.AddAsync(new UserInstitute
+                {
+                    InstituteId = user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
+                    RoleId = (int)RolesEnum.PrimaryAccount,
+                    UserId = user.UserId,
+                    UserTypeId = (int)UserTypes.Parent,
+                    IsActive = true,
+                    CreateDateTime = DateTime.Now
+                });
+
                 return Response(parent, _localizer["RecordAddSuccess"].Value.ToString());
             }
             return Response(parent, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);

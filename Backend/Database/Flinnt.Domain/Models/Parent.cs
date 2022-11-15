@@ -76,7 +76,5 @@ namespace Flinnt.Domain
         /// The date and time when this entry was last updated.
         /// </summary>
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

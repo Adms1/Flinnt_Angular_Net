@@ -23,17 +23,19 @@
                     </div>
                 </div>
                 <fieldset class="scheduler-border">
-                    <legend class="scheduler-border">Parent 1</legend>
+                    <legend class="scheduler-border">Parent 1 ({{parent1Relationship}})</legend>
                     <div class="col_full nobottommargin">
                         <div class="form-group">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="father">
+                                    value="Father" formControlName="Parent1Relationship"
+                                    (change)="getParent1Relationship($event)">
                                 <label class="form-check-label" for="inlineRadio1">Father</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="mother">
+                                    value="Mother" formControlName="Parent1Relationship"
+                                    (change)="getParent1Relationship($event);">
                                 <label class="form-check-label" for="inlineRadio2">Mother</label>
                             </div>
                         </div>
@@ -85,15 +87,19 @@
 
                 <ng-container *ngIf="!isSingleParent">
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">Parent 2</legend>
+                        <legend class="scheduler-border">Parent 2 ({{parent2Relationship}})</legend>
                         <div class="col_full nobottommargin">
                             <div class="form-group">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="parent1_rbt1" value="fater">
+                                    <input class="form-check-input" type="radio" id="parent1_rbt1" value="Father"
+                                        formControlName="Parent2Relationship"
+                                        (change)="getParent2Relationship($event);">
                                     <label class="form-check-label">Father</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="parent2_rbt2" value="mother">
+                                    <input class="form-check-input" type="radio" id="parent2_rbt2" value="Mother"
+                                        formControlName="Parent2Relationship"
+                                        (change)="getParent2Relationship($event);">
                                     <label class="form-check-label">Mother</label>
                                 </div>
                             </div>
@@ -150,11 +156,19 @@
                     <div class="form-group">
                         <label>Copy contact details from:&nbsp;</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="parent1_rbt1" value="fater">
+                            <input class="form-check-input" type="radio" id="parent1_rbt1" value="father"
+                                [disabled]="this.isSingleParent == true 
+                                && (this.parent1Relationship !== 'Father')
+                                || this.isSingleParent == false 
+                                && (this.parent1Relationship == '' && this.parent2Relationship == '')">
                             <label class="form-check-label">Father</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="parent2_rbt2" value="mother">
+                            <input class="form-check-input" type="radio" id="parent2_rbt2" value="mother"
+                                [disabled]="this.isSingleParent == true 
+                                && (this.parent1Relationship !== 'Mother') 
+                                || this.isSingleParent == false 
+                                && (this.parent1Relationship == '' && this.parent2Relationship == '')">
                             <label class="form-check-label">Mother</label>
                         </div>
                     </div>
@@ -167,7 +181,8 @@
                             <input type="text" name="primary_email_name" autofocus="true" id="primary_email_name"
                                 value="" class="input-block-level" placeholder="Primary email name" autocomplete="on"
                                 formControlName="PrimaryEmailId"
-                                [ngClass]="parentForm.get('PrimaryEmailId')?.invalid && formSubmitted ? 'error' : ''" />
+                                [ngClass]="parentForm.get('PrimaryEmailId')?.invalid && formSubmitted ? 'error' : ''"
+                                (blur)="onPrimaryEmailBlur($event)" />
                             <small>The parent user account will be created using this email address</small>
                             <label *ngIf="parentForm.get('PrimaryEmailId')?.invalid && formSubmitted"
                                 class="error">Primary Email address is required.</label>
@@ -189,12 +204,12 @@
                     <div class="form-group">
                         <label>Address Line 1</label>
                         <input type="text" name="address_line_1" autofocus="true" id="address_line_1" value=""
-                            class="input-block-level" placeholder="Address line 1" autocomplete="on" />
+                            class="input-block-level" placeholder="Address line 1" autocomplete="on" formControlName="AddressLine1"/>
                     </div>
                     <div class="form-group">
                         <label>Address Line 2</label>
                         <input type="text" name="address_line_2" autofocus="true" id="address_line_2" value=""
-                            class="input-block-level" placeholder="Address line 2" autocomplete="on" />
+                            class="input-block-level" placeholder="Address line 2" autocomplete="on" formControlName="AddressLine2"/>
                     </div>
                 </div>
 
@@ -203,12 +218,13 @@
                     <div class="col_half nobottommargin">
                         <div class="form-group">
                             <label>City</label>
-                            <input type="text" name="city" autofocus="true" id="city" value=""
-                                class="input-block-level nobottommargin" placeholder="City" autocomplete="on" />
+                            <input type="text" name="cityName" id="cityName" value="" class="input-block-level"
+                                placeholder="City" autocomplete="on" formControlName="CityName" />
                         </div>
                         <div class="form-group">
                             <label>Country</label>
-                            <ng-select2 placeholder="Select country">
+                            <ng-select2 [data]="countryData" formControlName="CountryId"
+                                (valueChanged)="countryValueChanged($event)" placeholder="Select country">
                             </ng-select2>
                         </div>
                     </div>
@@ -216,22 +232,20 @@
                     <div class="col_half">
                         <div class="form-group">
                             <label>State</label>
-                            <ng-select2 [data]="stateData" placeholder="Select state">
+                            <ng-select2 [data]="stateData" formControlName="StateId" placeholder="Select state">
                             </ng-select2>
                         </div>
                         <div class="form-group">
                             <label>Pincode</label>
-                            <input type="text" name="pincode" autofocus="true" id="pincode" value=""
-                                class="input-block-level" placeholder="pincode" autocomplete="on" />
+                            <input type="text" name="pincode" id="pincode" value="" class="input-block-level"
+                                placeholder="Pincode" autocomplete="on" formControlName="Pincode" />
                         </div>
                     </div>
                 </div>
 
                 <div class="col_full nobottommargin text-center">
-                    <a routerLink="add-parent">
-                        <button type="button" class="btn btn-primary btn-embossed m-2">Add new &nbsp;<i
-                                class="fa fa-arrow-right" aria-hidden="true"></i></button>
-                    </a>
+                    <button type="submit" class="btn btn-primary btn-embossed m-2">Add new &nbsp;<i class="fa fa-arrow-right"
+                            aria-hidden="true"></i></button>
                 </div>
                 <div class="clear"></div>
 

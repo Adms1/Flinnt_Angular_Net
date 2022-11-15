@@ -42,10 +42,5 @@ namespace Flinnt.Domain
         /// The date and time when this entry was last updated.
         /// </summary>
         public DateTime? UpdateDateTime { get; set; }
-
-        public virtual Institute Institute { get; set; }
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
-        public virtual UserType UserType { get; set; }
     }
 }

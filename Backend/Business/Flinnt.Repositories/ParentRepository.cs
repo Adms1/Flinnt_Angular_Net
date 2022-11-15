@@ -7,6 +7,14 @@ namespace Flinnt.Repositories
     {
         public ParentRepository(edplexdbContext context) : base(context)
         {
+
+        }
+
+        public Parent CreateParentRecord(Parent record)
+        {
+            Context.Parents.Add(record);
+            Context.SaveChanges();
+            return record;
         }
     }
 }
