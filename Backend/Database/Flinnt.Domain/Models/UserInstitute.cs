@@ -29,7 +29,7 @@ namespace Flinnt.Domain
         /// <summary>
         /// The role identifier this user belongs to the user and institute. Ref.: Role.RoleId
         /// </summary>
-        public byte RoleId { get; set; }
+        public byte? RoleId { get; set; }
         /// <summary>
         /// If 1, the user and institute relation is active.
         /// </summary>

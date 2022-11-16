@@ -28,7 +28,7 @@ namespace Flinnt.API.Controllers.V1
         private readonly IUserInstituteService _userInstituteService;
         private readonly ICityService _cityService;
         private readonly IHtmlLocalizer<ParentController> _localizer;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserAccountHistoryService _userAccountHistoryService;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public ParentController(IParentService parentService,
@@ -36,8 +36,8 @@ namespace Flinnt.API.Controllers.V1
             IUserInstituteService userInstituteService,
             ICityService cityService, 
             IUserProfileService userProfileService,
-            IHtmlLocalizer<ParentController> htmlLocalizer,
-            UserManager<ApplicationUser> userManager)
+            IUserAccountHistoryService userAccountHistoryService,
+            IHtmlLocalizer<ParentController> htmlLocalizer)
         {
             _parentService = parentService;
             _userService = userService;
@@ -45,7 +45,7 @@ namespace Flinnt.API.Controllers.V1
             _cityService = cityService;
             _userProfileService = userProfileService;
             _localizer = htmlLocalizer;
-            _userManager = userManager;
+            _userAccountHistoryService = userAccountHistoryService;
         }
 
         [HttpGet]
@@ -194,12 +194,20 @@ namespace Flinnt.API.Controllers.V1
                 await _userInstituteService.AddAsync(new UserInstitute
                 {
                     InstituteId = Convert.ToInt32(currentInstituteID),
-                    RoleId = (int)RolesEnum.PrimaryAccount,
                     UserId = model.UserId,
                     UserTypeId = (int)UserTypes.Parent,
                     IsActive = true,
                     CreateDateTime = DateTime.Now
                 });
+
+                //save userAccountHistory
+
+                UserAccountHistory userAccountHistory = new UserAccountHistory
+                {
+                    ActionUserId = Convert.ToInt32(model.UserId),
+                    HistoryAction = "UserCreatedForParent"
+                };
+                await _userAccountHistoryService.AddAsync(userAccountHistory);
 
                 return Response(parent, _localizer["RecordAddSuccess"].Value.ToString());
             }

@@ -13,7 +13,7 @@ namespace Flinnt.Business.ViewModels
         public long UserId { get; set; }
         public int InstituteId { get; set; }
         public byte UserTypeId { get; set; }
-        public byte RoleId { get; set; }
+        public byte? RoleId { get; set; }
         public bool? IsActive { get; set; }
     }
 }
