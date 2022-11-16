@@ -157,18 +157,16 @@
                         <label>Copy contact details from:&nbsp;</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="parent1_rbt1" value="father"
-                                [disabled]="this.isSingleParent == true 
-                                && (this.parent1Relationship !== 'Father')
-                                || this.isSingleParent == false 
-                                && (this.parent1Relationship == '' && this.parent2Relationship == '')">
+                                [disabled]="!(this.parent1Relationship === 'Father')
+                                && !(this.parent2Relationship === 'Father')"
+                                (change)="onCopyContactFrom('father')">
                             <label class="form-check-label">Father</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="parent2_rbt2" value="mother"
-                                [disabled]="this.isSingleParent == true 
-                                && (this.parent1Relationship !== 'Mother') 
-                                || this.isSingleParent == false 
-                                && (this.parent1Relationship == '' && this.parent2Relationship == '')">
+                                [disabled]="!(this.parent1Relationship === 'Mother')
+                                && !(this.parent2Relationship === 'Mother')"
+                                (change)="onCopyContactFrom('mother')">
                             <label class="form-check-label">Mother</label>
                         </div>
                     </div>
@@ -194,7 +192,7 @@
                             <label>Contact Number</label>
                             <input type="text" name="contact_name" autofocus="true" id="contact_name" value=""
                                 class="input-block-level" placeholder="Contact name" autocomplete="on"
-                                formControlName="PrimaryMobileNo" maxlength="10"
+                                formControlName="PrimaryMobileNo" maxlength="10" 
                                 [ngClass]="parentForm.get('PrimaryMobileNo')?.invalid && formSubmitted ? 'error' : ''" />
                         </div>
                     </div>

@@ -24,8 +24,8 @@ export class AddParentComponent implements OnInit {
   countryId: string;
   isSingleParent: boolean = false;
   isParentExist = false;
-  parent1Relationship:string='';
-  parent2Relationship:string='';
+  parent1Relationship: string = '';
+  parent2Relationship: string = '';
 
   constructor(
     private countryService: CountryService,
@@ -60,7 +60,7 @@ export class AddParentComponent implements OnInit {
       Parent2EmailId: [''],
       Parent2MobileNo: [''],
       PrimaryEmailId: ['', Validators.required],
-      PrimaryMobileNo: [''],
+      PrimaryMobileNo: ['', Validators.required],
       AddressLine1: [''],
       AddressLine2: [''],
       CityName: [''],
@@ -72,26 +72,36 @@ export class AddParentComponent implements OnInit {
 
   getParent1Relationship(event) {
     this.parent1Relationship = this.parentForm.get("Parent1Relationship").value;
-    if(!!this.parent2Relationship){
-      if(this.parent1Relationship == this.parent2Relationship) {
-        this.parent1Relationship ="";
+    if (!!this.parent2Relationship) {
+      if (this.parent1Relationship == this.parent2Relationship) {
+        this.parent1Relationship = "";
         alert("You already choose the same record");
         event.target.checked = false;
         return;
       }
     }
+
+    this.parentForm.patchValue({
+      PrimaryEmailId: '',
+      PrimaryMobileNo: ''
+    });
   }
 
   getParent2Relationship(event) {
     this.parent2Relationship = this.parentForm.get("Parent2Relationship").value;
-    if(!!this.parent1Relationship){
-      if(this.parent1Relationship == this.parent2Relationship) {
+    if (!!this.parent1Relationship) {
+      if (this.parent1Relationship == this.parent2Relationship) {
         this.parent2Relationship = "";
         alert("You already choose the same record");
         event.target.checked = false;
         return;
       }
-    }    
+    }
+
+    this.parentForm.patchValue({
+      PrimaryEmailId: '',
+      PrimaryMobileNo: ''
+    });
   }
 
   getCountries() {
@@ -154,11 +164,16 @@ export class AddParentComponent implements OnInit {
       this.parentForm.get("SingleParent").setValue(0);
       this.isSingleParent = false;
     }
+
+    this.parentForm.patchValue({
+      PrimaryEmailId: '',
+      PrimaryMobileNo: ''
+    });
   }
 
-  onPrimaryEmailBlur(event) {
+  checkUserExist(emailId){
     this.isParentExist = false;
-    this.userService.getUserByEmail(event.target.value)
+    this.userService.getUserByEmail(emailId)
       .then((res: ApiResponse) => {
         if (res.statusCode == HttpStatusCode.Ok) {
           // check if usertype is parent OR student
@@ -167,30 +182,54 @@ export class AddParentComponent implements OnInit {
             const user = res.data as User;
 
             if (!!user) {
-              this.isParentExist = true;
               const userInstitute = user.userInstitutes;
 
-              if (userInstitute.filter(x => x["UserTypeId"] == 2 || x["UserTypeId"] == 3).length > 0) {
+              if (userInstitute.filter(x => x.userTypeId == 2 || x.userTypeId == 3).length > 0) {
+                this.isParentExist = true;
+
                 this.utilityService.showErrorToast("Record already exist.");
                 return;
               }
-              else{
-                // bind the user contact info
-
-              }
-            }
-            else{
-              // it will create new record in db
             }
           }
         }
       });
+  }
+  onPrimaryEmailBlur(event) {
+    this.checkUserExist(event.target.value);
+  }
+
+  onCopyContactFrom(val) {
+    if (this.parent1Relationship === 'Father' || this.parent1Relationship === 'Mother') {
+
+      const emailId = this.parentForm.get("Parent1EmailId").value;
+      this.parentForm.patchValue({
+        PrimaryEmailId: emailId,
+        PrimaryMobileNo: this.parentForm.get("Parent1MobileNo").value
+      });
+
+      this.checkUserExist(emailId);
+    }
+    else {
+      const emailId = this.parentForm.get("Parent2EmailId").value;
+      this.parentForm.patchValue({
+        PrimaryEmailId: emailId,
+        PrimaryMobileNo: this.parentForm.get("Parent2MobileNo").value
+      });
+
+      this.checkUserExist(emailId);
+    }
   }
 
   onSubmit() {
     this.formSubmitted = true;
     this.formService.markFormGroupTouched(this.parentForm);
     if (this.parentForm.invalid) return;
+
+    if (this.isParentExist) {
+      this.utilityService.showErrorToast("User already exist with same primaryEmailId");
+      return;
+    }
 
     let data = JSON.stringify(this.parentForm.value);
     console.log('-----Add parent JSON Format-----');
