@@ -15,22 +15,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     Footer404Component
   ],
   imports: [
+    NgbModule,
     CommonModule,
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelect2Module,
-    NgbModule
+    NgSelect2Module
   ],
   exports:[
+    NgbModule,
     HeaderComponent,
     FooterComponent,
     Footer404Component,
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelect2Module,
-    NgbModule
+    NgSelect2Module
   ]
 })
 export class SharedModule { }

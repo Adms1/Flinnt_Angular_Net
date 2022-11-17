@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormService } from 'src/app/core/form.service';
+import { ApiResponse } from 'src/app/_models/response';
+import { StudentService } from 'src/app/_services/student.service';
 import { SearchParentComponent } from '../search-parent/search-parent.component';
 
 @Component({
@@ -8,16 +12,60 @@ import { SearchParentComponent } from '../search-parent/search-parent.component'
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-
-  constructor(private modalService: NgbModal) { }
+  formSubmitted = false;
+  studentForm = {} as FormGroup;
+  
+  constructor(
+    private modalService: NgbModal,
+    private studentService: StudentService,
+    private formService: FormService,
+    private formBuilder: FormBuilder,
+    ) { }
 
   ngOnInit(): void {
+   
+  }
+
+  createStudentForm() {
+    this.studentForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      emailId: ['', Validators.required],
+      dob: [null],
+      mobileNo: [''],
+      genderId: [0],
+      rollNo: [''],
+      grno: [''],
+      parentId: ['', Validators.required]
+    });
   }
 
   onSearchAccount() {
-    const modalRef = this.modalService.open(SearchParentComponent,{ windowClass: 'my-class'});
+    const modalRef = this.modalService.open(SearchParentComponent, { windowClass: 'my-class' });
     modalRef.componentInstance.selectedParent.subscribe((receivedEntry) => {
       console.log(receivedEntry);
     });
+  }
+
+  onSubmit() {
+    this.formSubmitted = true;
+    this.formService.markFormGroupTouched(this.studentForm);
+    if (this.studentForm.invalid) return;
+
+    let data = JSON.stringify(this.studentForm.value);
+    console.log('-----Add parent JSON Format-----');
+    console.log(data);
+    // APIs
+    this.studentService.saveStudent(this.studentForm.value)
+      .then((res: ApiResponse) => {
+        if (res.statusCode == 200) {
+          // navigate to verification link if signUp goes well
+          this.resetTeamForm();
+        }
+      });
+  }
+
+  resetTeamForm() {
+    this.studentForm.reset();
   }
 }

@@ -24,22 +24,25 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Board*</label>
-                        <select class="form-select" aria-label="Board Name">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
+                        <select class="form-select" aria-label="Board Name"
+                            [ngClass]="boardId == 0 ? 'error' : ''">
+                            <option *ngFor="let b of boards" value="{{b.boardId}}" (Click)="onBoardSelect(b.boardId)">
+                                {{b.boardName}}</option>
                         </select>
+                        <label *ngIf="boardId == 0" class="error"> This field is
+                            required.</label>
                     </div>
                 </div>
 
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Standard*</label>
-                        <select class="form-select" aria-label="Standard Name">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
+                        <select class="form-select" aria-label="Standard Name" [ngClass]="standardId == 0 ? 'error' : ''">
+                            <option *ngFor="let s of standards" value="{{s.standardId}}" (Click)="onStandardSelect(s.standardId)">
+                                {{s.standardName}}</option>
                         </select>
+                        <label *ngIf="standardId == 0" class="error"> This field is
+                            required.</label>
                     </div>
                 </div>
             </div>
@@ -48,22 +51,24 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Study Medium*</label>
-                        <select class="form-select" aria-label="Medium Name">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
+                        <select class="form-select" aria-label="Medium Name" [ngClass]="mediumId == 0 ? 'error' : ''">
+                            <option *ngFor="let m of mediums" value="{{m.mediumId}}" (Click)="onMediumSelect(m.mediumId)">
+                                {{m.mediumName}}</option>
                         </select>
+                        <label *ngIf="mediumId == 0" class="error"> This field is
+                            required.</label>
                     </div>
                 </div>
 
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Division*</label>
-                        <select class="form-select" aria-label="Division Name">
-                            <option>Option 1</option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
+                        <select class="form-select" aria-label="Division Name" [ngClass]="divisionId == 0 ? 'error' : ''">
+                            <option *ngFor="let d of divisions" value="{{d.instituteDivisionId}}" (Click)="onDivisionSelect(d.instituteDivisionId)">
+                                {{d.divisionName}}</option>
                         </select>
+                        <label *ngIf="divisionId == 0" class="error"> This field is
+                            required.</label>
                     </div>
                 </div>
             </div>

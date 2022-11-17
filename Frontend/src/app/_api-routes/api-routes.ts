@@ -20,7 +20,9 @@ export class API {
     getInstituteMedium: `/${environment.API_Version}/institute/configure/medium/list`,
     getInstituteStandard: `/${environment.API_Version}/institute/configure/standard/list`,
     getInstituteDivision: `/${environment.API_Version}/institute/configure/division`,
+    getDivisionByInstituteGroupId: `/${environment.API_Version}/institute/configure/division`,
     getInstituteGroup: `/${environment.API_Version}/institute/configure/group`,
+    getSpecificInstituteGroup: `/${environment.API_Version}/institute/configure/group/get`,
     saveInstituteGroup:`/${environment.API_Version}/institute/configure/group/create`,
     saveInstituteDivision:`/${environment.API_Version}/institute/configure/division/create`,
     deleteInstituteDivision:`/${environment.API_Version}/institute/configure/division`,
@@ -38,6 +40,10 @@ export class API {
   public static PARENT_ROUTES = {
     getParents: `/${environment.API_Version}/parent/list`,
     saveParent: `/${environment.API_Version}/parent/create`,
+  };
+
+  public static STUDENT_ROUTES = {
+    saveStudent: `/${environment.API_Version}/student/create`,
   };
 
   public static USER_ROUTES = {
