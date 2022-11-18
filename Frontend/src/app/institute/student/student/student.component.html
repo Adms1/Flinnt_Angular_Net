@@ -24,10 +24,12 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Board*</label>
-                        <select class="form-select" aria-label="Board Name"
-                            [ngClass]="boardId == 0 ? 'error' : ''">
-                            <option *ngFor="let b of boards" value="{{b.boardId}}" (Click)="onBoardSelect(b.boardId)">
-                                {{b.boardName}}</option>
+                        <select class="form-select" aria-label="Board Name" [ngClass]="boardId == 0 ? 'error' : ''"
+                            (change)="onBoardSelect($event)">
+                            <ng-container *ngIf="boards.length>0">
+                                <option *ngFor="let b of boards" value="{{b.boardId}}">
+                                    {{b.boardName}}</option>
+                            </ng-container>
                         </select>
                         <label *ngIf="boardId == 0" class="error"> This field is
                             required.</label>
@@ -37,9 +39,12 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Standard*</label>
-                        <select class="form-select" aria-label="Standard Name" [ngClass]="standardId == 0 ? 'error' : ''">
-                            <option *ngFor="let s of standards" value="{{s.standardId}}" (Click)="onStandardSelect(s.standardId)">
-                                {{s.standardName}}</option>
+                        <select class="form-select" aria-label="Standard Name"
+                            [ngClass]="standardId == 0 ? 'error' : ''" (change)="onStandardSelect($event)">
+                            <ng-container *ngIf="standards.length>0">
+                                <option *ngFor="let s of standards" value="{{s.standardId}}">
+                                    {{s.standardName}}</option>
+                            </ng-container>
                         </select>
                         <label *ngIf="standardId == 0" class="error"> This field is
                             required.</label>
@@ -51,9 +56,13 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Study Medium*</label>
-                        <select class="form-select" aria-label="Medium Name" [ngClass]="mediumId == 0 ? 'error' : ''">
-                            <option *ngFor="let m of mediums" value="{{m.mediumId}}" (Click)="onMediumSelect(m.mediumId)">
-                                {{m.mediumName}}</option>
+
+                        <select class="form-select" aria-label="Medium Name" [ngClass]="mediumId == 0 ? 'error' : ''"
+                            (change)="onMediumSelect($event)">
+                            <ng-container *ngIf="mediums.length>0">
+                                <option *ngFor="let m of mediums" value="{{m.mediumId}}">
+                                    {{m.mediumName}}</option>
+                            </ng-container>
                         </select>
                         <label *ngIf="mediumId == 0" class="error"> This field is
                             required.</label>
@@ -63,9 +72,12 @@
                 <div class="col_half">
                     <div class="form-group">
                         <label>Select Division*</label>
-                        <select class="form-select" aria-label="Division Name" [ngClass]="divisionId == 0 ? 'error' : ''">
-                            <option *ngFor="let d of divisions" value="{{d.instituteDivisionId}}" (Click)="onDivisionSelect(d.instituteDivisionId)">
-                                {{d.divisionName}}</option>
+                        <select class="form-select" aria-label="Division Name"
+                            [ngClass]="divisionId == 0 ? 'error' : ''" (change)="onDivisionSelect($event)">
+                            <ng-container *ngIf="divisions.length>0">
+                                <option *ngFor="let d of divisions" value="{{d.instituteDivisionId}}">
+                                    {{d.divisionName}}</option>
+                            </ng-container>
                         </select>
                         <label *ngIf="divisionId == 0" class="error"> This field is
                             required.</label>
@@ -99,7 +111,8 @@
                                     <div class="tab-pane active show" id="faq_tab_1" role="tabpanel"
                                         aria-labelledby="faq_tab_1-tab">
                                         <div class="p-3">
-                                            <app-add-student></app-add-student>
+                                            <app-add-student [boardId]="boardId" [mediumId]="mediumId" [standardId]="standardId" [divisionId]="divisionId">
+                                            </app-add-student>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="faq_tab_2" role="tabpanel"

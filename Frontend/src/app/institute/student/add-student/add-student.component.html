@@ -53,9 +53,10 @@
                 <label>Date of Birth</label>
                 <div class="input-group">
                     <input class="form-control" placeholder="MM-dd-YYYY" name="dp" formControlName="dob" ngbDatepicker
-                        #d="ngbDatepicker"/>
-                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
-                        type="button"></button>
+                        #d="ngbDatepicker" />
+                    <button class="btn" (click)="d.toggle()" type="button">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -107,10 +108,8 @@
     <div class="clear"></div>
 
     <div class="col_full nobottommargin text-center">
-        <a routerLink="add-parent">
-            <button type="submit" class="btn btn-primary btn-embossed m-2">Add new &nbsp;<i class="fa fa-arrow-right"
-                    aria-hidden="true"></i></button>
-        </a>
+        <button type="submit" class="btn btn-primary btn-embossed m-2">Add new &nbsp;<i class="fa fa-arrow-right"
+                aria-hidden="true"></i></button>
     </div>
     <div class="clear"></div>
 

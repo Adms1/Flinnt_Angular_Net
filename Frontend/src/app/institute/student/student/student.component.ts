@@ -26,7 +26,7 @@ export class StudentComponent implements OnInit {
   boardId = 0;
   standardId = 0;
   mediumId = 0;
-  divisionId =0;
+  divisionId = 0;
   constructor(
     private router: Router,
     private instituteConfigService: InstituteConfigureService,
@@ -49,8 +49,7 @@ export class StudentComponent implements OnInit {
 
     const instituteId = localStorage.getItem(Constants.LOGIN_PAGE.INSTITUTE_ID);
 
-    if(instituteId == undefined || instituteId == null)
-    {
+    if (instituteId == undefined || instituteId == null) {
       this.utilityService.showErrorToast("something went wrong. Please login again!");
       localStorage.clear();
       this.router.navigate(['']);
@@ -63,7 +62,13 @@ export class StudentComponent implements OnInit {
     this.instituteConfigService.getBoard()
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
-          this.boards = res.data;
+          this.boards = res.data as Array<Board>;
+
+          if(!!this.boards && this.boards.length > 0){
+            this.boardId = this.boards[0].boardId;
+
+            this.getSpecificInstituteGroup();
+          }
         }
       });
   }
@@ -72,7 +77,12 @@ export class StudentComponent implements OnInit {
     this.instituteConfigService.getMedium()
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
-          this.mediums = res.data;
+          this.mediums = res.data as Array<Medium>;
+
+          if(!!this.mediums && this.mediums.length > 0){
+            this.mediumId = this.mediums[0].mediumId;
+            this.getSpecificInstituteGroup();
+          }
         }
       });
   }
@@ -82,7 +92,7 @@ export class StudentComponent implements OnInit {
     const mediumId = this.mediumId;
     const standardId = this.standardId;
 
-    if(boardId == 0 && mediumId == 0 && standardId == 0) return;
+    if (boardId == 0 || mediumId == 0 || standardId == 0) return;
 
     this.instituteConfigService.getSpecificInstituteGroup(this.instituteId, boardId, mediumId, standardId)
       .then((res: ApiResponse) => {
@@ -102,6 +112,10 @@ export class StudentComponent implements OnInit {
     this.instituteConfigService.getDivisionByInstituteGroupId(this.instituteId, groupId)
       .then((res: ApiResponse) => {
         this.divisions = res.data as Array<Division>;
+
+        if (!!this.divisions && this.divisions.length > 0) {
+          this.divisionId = this.divisions[0].instituteDivisionId;
+        }
       });
   }
 
@@ -109,28 +123,33 @@ export class StudentComponent implements OnInit {
     this.instituteConfigService.getStandard()
       .then((res: ApiResponse) => {
         if (res.statusCode == 200) {
-          this.standards = res.data;
+          this.standards = res.data as Array<Standard>;
+
+          if(!!this.standards && this.standards.length > 0){
+            this.standardId = this.standards[0].standardId;
+            this.getSpecificInstituteGroup();
+          }
         }
       });
   }
 
-  onBoardSelect(boardId) {
-    this.boardId = boardId;
+  onBoardSelect(event) {
+    this.boardId = Number(event.target.value);
     this.getSpecificInstituteGroup();
   }
 
-  onStandardSelect(standardId) {
-    this.standardId = standardId;
+  onStandardSelect(event) {
+    this.standardId = Number(event.target.value);;
     this.getSpecificInstituteGroup();
   }
 
-  onMediumSelect(mediumId) {
-    this.mediumId = mediumId;
+  onMediumSelect(event) {
+    this.mediumId = Number(event.target.value);;
     this.getSpecificInstituteGroup();
   }
 
-  onDivisionSelect(divisionId) {
-    this.divisionId = divisionId;
+  onDivisionSelect(event) {
+    this.divisionId = Number(event.target.value);;
     this.getSpecificInstituteGroup();
   }
 }

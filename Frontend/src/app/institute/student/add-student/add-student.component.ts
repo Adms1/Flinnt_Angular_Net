@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormService } from 'src/app/core/form.service';
@@ -14,6 +14,10 @@ import { SearchParentComponent } from '../search-parent/search-parent.component'
 export class AddStudentComponent implements OnInit {
   formSubmitted = false;
   studentForm = {} as FormGroup;
+  @Input() boardId = 0;
+  @Input() mediumId = 0;
+  @Input() standardId = 0;
+  @Input() divisionId = 0;
   
   constructor(
     private modalService: NgbModal,
@@ -23,9 +27,15 @@ export class AddStudentComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-   
+   this.createStudentForm();
   }
 
+  disableForm(){
+    if(this.boardId > 0 && this.mediumId > 0 && this.standardId > 0 && this.divisionId > 0)
+      return true;
+    else
+      return false;
+  }
   createStudentForm() {
     this.studentForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -51,6 +61,11 @@ export class AddStudentComponent implements OnInit {
     this.formSubmitted = true;
     this.formService.markFormGroupTouched(this.studentForm);
     if (this.studentForm.invalid) return;
+
+    if(!this.disableForm()){
+      alert("Please select an appropriate group");
+      return;
+    }
 
     let data = JSON.stringify(this.studentForm.value);
     console.log('-----Add parent JSON Format-----');
