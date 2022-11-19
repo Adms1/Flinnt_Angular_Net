@@ -14,10 +14,12 @@ import { SearchParentComponent } from '../search-parent/search-parent.component'
 export class AddStudentComponent implements OnInit {
   formSubmitted = false;
   studentForm = {} as FormGroup;
-  @Input() boardId = 0;
-  @Input() mediumId = 0;
-  @Input() standardId = 0;
-  @Input() divisionId = 0;
+  @Input() boardId?;
+  @Input() mediumId?;
+  @Input() standardId?;
+  @Input() divisionId?;
+  @Input() instituteId?;
+  @Input() groupId?;
   
   constructor(
     private modalService: NgbModal,
@@ -31,7 +33,7 @@ export class AddStudentComponent implements OnInit {
   }
 
   disableForm(){
-    if(this.boardId > 0 && this.mediumId > 0 && this.standardId > 0 && this.divisionId > 0)
+    if(this.boardId > 0 && this.mediumId > 0 && this.standardId > 0 && this.divisionId > 0 && this.groupId> 0)
       return true;
     else
       return false;
@@ -46,7 +48,10 @@ export class AddStudentComponent implements OnInit {
       genderId: [0],
       rollNo: [''],
       grno: [''],
-      parentId: ['', Validators.required]
+      parentUserId: [null],
+      instituteId:[null, Validators.required],
+      instituteGroupId:[null, Validators.required],
+      instituteDivisionId:[null, Validators.required],
     });
   }
 
@@ -59,6 +64,13 @@ export class AddStudentComponent implements OnInit {
 
   onSubmit() {
     this.formSubmitted = true;
+
+    this.studentForm.patchValue({
+      instituteId:this.instituteId,
+      instituteGroupId: this.groupId,
+      instituteDivisionId: this.divisionId
+    });
+
     this.formService.markFormGroupTouched(this.studentForm);
     if (this.studentForm.invalid) return;
 

@@ -26,6 +26,7 @@ namespace Flinnt.Repositories
                         && ig.InstituteId == instituteId
                     select new InstituteDivisionViewModel
                     {
+                        InstituteGroupId = ig.InstituteGroupId,
                         DisplayOrder = d.DisplayOrder,
                         DivisionName = d.DivisionName,
                         InstituteDivisionId = d.InstituteDivisionId,

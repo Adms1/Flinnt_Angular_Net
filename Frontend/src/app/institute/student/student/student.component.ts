@@ -22,11 +22,12 @@ export class StudentComponent implements OnInit {
   standards: Standard[] = [];
   mediums: Medium[] = [];
   divisions: Division[] = [];
-  instituteId = 0;
-  boardId = 0;
-  standardId = 0;
-  mediumId = 0;
-  divisionId = 0;
+  instituteId?;
+  boardId?;
+  standardId?;
+  mediumId?;
+  divisionId?;
+  groupId?;
   constructor(
     private router: Router,
     private instituteConfigService: InstituteConfigureService,
@@ -100,8 +101,8 @@ export class StudentComponent implements OnInit {
           const group = res.data[0] as Group;
 
           if (!!group) {
-            const groupId = group.instituteGroupId;
-            this.getDivisionByGroupId(groupId);
+            this.groupId = group.instituteGroupId;
+            this.getDivisionByGroupId(this.groupId);
           }
         }
       });

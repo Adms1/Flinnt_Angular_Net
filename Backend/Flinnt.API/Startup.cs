@@ -157,6 +157,8 @@ namespace Flinnt.API
             services.AddScoped<IInstituteConfigureSessionService, InstituteConfigureSessionService>();
             services.AddScoped<IParentService, ParentService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IUserInstituteGroupService, UserInstituteGroupService>();
+            services.AddScoped<IUserParentChildRelationshipService, UserParentChildRelationshipService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -182,6 +184,8 @@ namespace Flinnt.API
             services.AddScoped<IInstituteConfigureSessionRepository, InstituteConfigureSessionRepository>();
             services.AddScoped<IParentRepository, ParentRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IUserInstituteGroupRepository, UserInstituteGroupRepository>();
+            services.AddScoped<IUserParentChildRelationshipRepository, UserParentChildRelationshipRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

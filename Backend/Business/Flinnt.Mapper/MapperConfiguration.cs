@@ -56,6 +56,12 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<StudentViewModel, Student>();
             CreateMap<Student, StudentViewModel>();
+
+            CreateMap<UserParentChildRelationshipModel, UserParentChildRelationship>();
+            CreateMap<UserParentChildRelationship, UserParentChildRelationshipModel>();
+
+            CreateMap<UserInstituteGroupModel, UserInstituteGroup>();
+            CreateMap<UserInstituteGroup, UserInstituteGroupModel>();
         }
     }
 }

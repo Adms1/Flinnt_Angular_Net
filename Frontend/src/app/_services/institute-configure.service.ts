@@ -41,7 +41,7 @@ export class InstituteConfigureService {
   }
 
   getSpecificInstituteGroup(instituteId, boardId, mediumId, standardId) {
-    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getSpecificInstituteGroup}?${instituteId}&${boardId}&${mediumId}&${standardId}`, true, true);
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getSpecificInstituteGroup}?instituteId=${instituteId}&boardId=${boardId}&mediumId=${mediumId}&standardId=${standardId}`, true, true);
   }
 
   getDivision(instituteId) {
@@ -49,7 +49,7 @@ export class InstituteConfigureService {
   }
 
   getDivisionByInstituteGroupId(instituteId, instituteGroupId) {
-    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getDivisionByInstituteGroupId}?${instituteId}&${instituteGroupId}`, true, true);
+    return this.apiService.get(`${API.INSTITUTE_CONFIG_ROUTE.getDivisionByInstituteGroupId}/${instituteId}/${instituteGroupId}`, true, true);
   }
 
   saveInstituteGroup(params){

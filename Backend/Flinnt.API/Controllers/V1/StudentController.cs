@@ -24,6 +24,7 @@ namespace Flinnt.API.Controllers.V1
         private readonly IUserService _userService;
         private readonly IUserInstituteService _userInstituteService;
         private readonly IUserProfileService _userProfileService;
+        private readonly IUserAccountHistoryService _userAccountHistoryService;
         private readonly IHtmlLocalizer<StudentController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -31,12 +32,14 @@ namespace Flinnt.API.Controllers.V1
             IUserService userService,
             IUserInstituteService userInstituteService,
             IUserProfileService userProfileService,
+            IUserAccountHistoryService userAccountHistoryService, 
             IHtmlLocalizer<StudentController> htmlLocalizer)
         {
             _studentService = studentService;
             _userService = userService;
             _userInstituteService = userInstituteService;
             _userProfileService = userProfileService;
+            _userAccountHistoryService = userAccountHistoryService;
             _localizer = htmlLocalizer;
         }
 
@@ -117,15 +120,21 @@ namespace Flinnt.API.Controllers.V1
 
                 if (userRes != null)
                 {
+                    model.UserId = userRes.UserId;
                     // check relation with parent by passing parentId (userid)
-                    var parentUser = await _userService.GetAsync(model.UserId);
 
-                    if(parentUser == null)
+                    UserProfile prtUsr = new UserProfile();
+                    if (model.parentUserId != null)
                     {
-                        return Response(new StudentViewModel(), "Parent account not exist!", HttpStatusCode.Forbidden);
-                    }
+                        var parentUser = await _userService.GetAsync(model.parentUserId.Value);
 
-                    var prtUsr = parentUser.UserProfiles.FirstOrDefault();
+                        if (parentUser == null)
+                        {
+                            return Response(new StudentViewModel(), "Parent account not exist!", HttpStatusCode.Forbidden);
+                        }
+
+                        prtUsr = parentUser.UserProfiles.FirstOrDefault();
+                    }
 
                     await _userProfileService.AddAsync(new UserProfile
                     {
@@ -145,13 +154,20 @@ namespace Flinnt.API.Controllers.V1
 
                     await _userInstituteService.AddAsync(new UserInstitute
                     {
-                        InstituteId = parentUser.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.InstituteStaff).FirstOrDefault().InstituteId,
-                        RoleId = (int)RolesEnum.PrimaryAccount,
+                        InstituteId = model.instituteId,
                         UserId = userRes.UserId,
                         UserTypeId = (int)UserTypes.Student,
                         IsActive = true,
                         CreateDateTime = DateTime.Now
                     });
+
+                    //save userAccountHistory
+                    UserAccountHistory userAccountHistory = new UserAccountHistory
+                    {
+                        ActionUserId = Convert.ToInt32(model.UserId),
+                        HistoryAction = "UserCreatedForStudent"
+                    };
+                    await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }
             }
 
