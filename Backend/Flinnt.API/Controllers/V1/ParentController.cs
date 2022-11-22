@@ -90,7 +90,9 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<ParentViewModel, string, HttpStatusCode>> AddParentAsync(ParentViewModel model)
         {
+            var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
             var currentInstituteID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "InstituteId")?.Value;
+            var currentUserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
 
             var extStudent = await _parentService.ValidateParent(model);
 
@@ -204,8 +206,10 @@ namespace Flinnt.API.Controllers.V1
 
                 UserAccountHistory userAccountHistory = new UserAccountHistory
                 {
-                    ActionUserId = Convert.ToInt32(model.UserId),
-                    HistoryAction = "UserCreatedForParent"
+                    UserId = Convert.ToInt32(model.UserId),
+                    ActionUserId = Convert.ToInt32(currentUserID),
+                    HistoryAction = "UserCreatedForParent",
+                    ClientIp = ipAddress.ToString()
                 };
                 await _userAccountHistoryService.AddAsync(userAccountHistory);
 
@@ -237,7 +241,7 @@ namespace Flinnt.API.Controllers.V1
 
         [HttpPost]
         [Route("DataFilter")]
-        public object DataFilter(DataTableAjaxPostModel model)
+        public object DataFilter([FromBody]DataTableAjaxPostModel model)
         {
             return _parentService.GetAllAsync().Result.GetFilteredData(model);
         }

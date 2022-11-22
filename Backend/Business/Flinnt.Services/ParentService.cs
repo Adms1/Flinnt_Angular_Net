@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.UoW;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Flinnt.Services
 
         public async Task<ParentViewModel> AddAsync(ParentViewModel model)
         {
+            model.CreateDateTime = DateTime.Now;
             return mapper.Map<ParentViewModel>(await Task.FromResult(unitOfWork.ParentRepository.CreateParentRecord(mapper.Map<ParentViewModel, Parent>(model))));
         }
 

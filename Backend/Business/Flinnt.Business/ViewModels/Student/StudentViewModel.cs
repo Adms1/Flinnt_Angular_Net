@@ -22,5 +22,6 @@ namespace Flinnt.Business.ViewModels
         public int instituteId { get; set; }
         public int instituteGroupId { get; set; }
         public int instituteDivisionId { get; set; }
+        public DateTime? CreateDateTime { get; set; }
     }
 }

@@ -29,5 +29,6 @@ namespace Flinnt.Business.ViewModels
         public int? StateId { get; set; }
         public byte? CountryId { get; set; }
         public string Pincode { get; set; }
+        public DateTime? CreateDateTime { get; set; }
     }
 }

@@ -38,7 +38,7 @@ export class API {
   }
 
   public static PARENT_ROUTES = {
-    getParents: `/${environment.API_Version}/parent/list`,
+    dataFilter: `/${environment.API_Version}/parent/DataFilter`,
     saveParent: `/${environment.API_Version}/parent/create`,
   };
 

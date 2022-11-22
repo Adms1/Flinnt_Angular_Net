@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UtilityService } from './utility.service';
-import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Constants } from '../_helpers/constants';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { UtilityService } from "./utility.service";
+import { Router } from "@angular/router";
+import { map } from "rxjs/operators";
+import { Constants } from "../_helpers/constants";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ApiService {
   URL = environment.APP_URL; // endpoint URL
@@ -15,24 +15,31 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private utility: UtilityService,
-    private router: Router,
+    private router: Router
   ) { }
 
   async getHeaders(tokenRequired, formData?) {
     const token: string = localStorage.getItem(Constants.TOKEN);
     if (tokenRequired) {
       const headers = new HttpHeaders()
-        .set('authorization', 'bearer ' + token)
-        .set('Content-Type', 'application/json');
+        .set("authorization", "bearer " + token)
+        .set("Content-Type", "application/json");
       headers.set("Access-Control-Allow-Origin", "*");
       //headers.set("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-      headers.set("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+      headers.set(
+        "Access-Control-Allow-Headers",
+        "X-Requested-With,content-type"
+      );
       return headers;
     } else if (formData) {
-      const headers = new HttpHeaders().set('authorization', 'bearer ' + token);
+      const headers = new HttpHeaders().set("authorization", "bearer " + token);
       return headers;
     } else {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+      const headers = new HttpHeaders().set(
+        "Content-Type",
+        "application/json"
+      );
       return headers;
     }
   }
@@ -141,8 +148,11 @@ export class ApiService {
 
         if (authorize) {
           this.headers = new HttpHeaders()
-            .set('authorization', 'bearer ' + localStorage.getItem(Constants.TOKEN))
-            .set('Accept', 'application/json');
+            .set(
+              "authorization",
+              "bearer " + localStorage.getItem(Constants.TOKEN)
+            )
+            .set("Accept", "application/json");
         }
         return this.http
           .post<any>(`${this.URL}${path}`, obj, {
@@ -164,7 +174,7 @@ export class ApiService {
       return this.http.post<any>(`${this.URL}${path}`, obj, {
         headers,
         reportProgress: true,
-        observe: 'events',
+        observe: "events",
       });
     } else {
       this.utility.hideLoading();
@@ -212,7 +222,7 @@ export class ApiService {
       this.utility.showLoading();
       const options = {
         headers: await this.getHeaders(false, true),
-        responseType: 'text' as 'json',
+        responseType: "text" as "json",
       };
       return this.http
         .post<any>(this.URL + path, obj, options)
@@ -220,12 +230,14 @@ export class ApiService {
     });
   }
 
-  async delete(path: any, authorize) {
+  async delete(path: any, authorize, isStopLoader = true) {
     return new Promise(async (resolve, _) => {
       const success = (res) => {
         // toaster success message
         this.showToastrMsg(res);
-        this.utility.hideLoading();
+        if (isStopLoader) {
+          this.utility.hideLoading();
+        }
         resolve(res);
       };
       const error = (err) => {
@@ -262,7 +274,7 @@ export class ApiService {
       const netowrkIsConnected = await this.getNetworkConnection();
       if (netowrkIsConnected) {
         return this.http
-          .get(url, { responseType: 'blob' })
+          .get(url, { responseType: "blob" })
           .subscribe(success, error);
       } else {
         this.utility.hideLoading();
@@ -274,13 +286,8 @@ export class ApiService {
   showToastrMsg(res) {
     if (res) {
       const msg = res.message || res.msg || (res.result && res.result.msg);
-      if(res.statusCode == 200){
-        if (msg) {
-          this.utility.showSuccessToast(msg);
-        }
-      }
-      else{
-        this.utility.showErrorToast(msg);
+      if (msg) {
+        this.utility.showSuccessToast(msg);
       }
     }
   }
@@ -298,35 +305,27 @@ export class ApiService {
       const error =
         err.error.error || err.error.message
           ? err.error.error || err.error.message
-          : 'Internal Server Error';
+          : "Internal Server Error";
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
     } else if (err.status === 401) {
-      const error = err.error.error
-        ? err.error.error
-        : 'Session Expired';
+      const error = err.error.error ? err.error.error : "Session Expired";
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
       localStorage.clear();
-      this.router.navigate(['/']);
+      this.router.navigate(["/"]);
     } else if (err.status === 403) {
-      const error = err.error.error
-        ? err.error.error
-        : 'Insufficient Rights';
+      const error = err.error.error ? err.error.error : "Insufficient Rights";
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
       localStorage.clear();
-      this.router.navigate(['/']);
+      this.router.navigate(["/"]);
     } else if (err.status === 404) {
-      const error = err.error.error
-        ? err.error.error
-        : 'Internal Server Error';
+      const error = err.error.error ? err.error.error : "Internal Server Error";
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
     } else if (err.status === 500) {
-      const error = err.error.error
-        ? err.error.error
-        : 'Internal Server Error';
+      const error = err.error.error ? err.error.error : "Internal Server Error";
       this.utility.showErrorToast(error);
       this.utility.hideLoading();
     } else {

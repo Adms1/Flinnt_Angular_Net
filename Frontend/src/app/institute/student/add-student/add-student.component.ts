@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormService } from 'src/app/core/form.service';
 import { ApiResponse } from 'src/app/_models/response';
 import { StudentService } from 'src/app/_services/student.service';
@@ -26,6 +26,7 @@ export class AddStudentComponent implements OnInit {
     private studentService: StudentService,
     private formService: FormService,
     private formBuilder: FormBuilder,
+    private parserFormatter: NgbDateParserFormatter
     ) { }
 
   ngOnInit(): void {
@@ -43,9 +44,10 @@ export class AddStudentComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       emailId: ['', Validators.required],
-      dob: [null],
+      dobObj: [null],
+      dob: [''],
       mobileNo: [''],
-      genderId: [0],
+      genderId: [1],
       rollNo: [''],
       grno: [''],
       parentUserId: [null],
@@ -68,7 +70,8 @@ export class AddStudentComponent implements OnInit {
     this.studentForm.patchValue({
       instituteId:this.instituteId,
       instituteGroupId: this.groupId,
-      instituteDivisionId: this.divisionId
+      instituteDivisionId: this.divisionId,
+      dbo: this.parserFormatter.format( this.studentForm.get("dobObj").value)
     });
 
     this.formService.markFormGroupTouched(this.studentForm);

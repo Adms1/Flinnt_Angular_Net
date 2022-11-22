@@ -25,6 +25,8 @@ namespace Flinnt.API.Controllers.V1
         private readonly IUserInstituteService _userInstituteService;
         private readonly IUserProfileService _userProfileService;
         private readonly IUserAccountHistoryService _userAccountHistoryService;
+        private readonly IUserParentChildRelationshipService _userParentChildRelationshipService;
+        private readonly IUserInstituteGroupService _userInstituteGroupService;
         private readonly IHtmlLocalizer<StudentController> _localizer;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -32,7 +34,9 @@ namespace Flinnt.API.Controllers.V1
             IUserService userService,
             IUserInstituteService userInstituteService,
             IUserProfileService userProfileService,
-            IUserAccountHistoryService userAccountHistoryService, 
+            IUserAccountHistoryService userAccountHistoryService,
+            IUserInstituteGroupService userInstituteGroupService,
+            IUserParentChildRelationshipService userParentChildRelationshipService,
             IHtmlLocalizer<StudentController> htmlLocalizer)
         {
             _studentService = studentService;
@@ -40,6 +44,8 @@ namespace Flinnt.API.Controllers.V1
             _userInstituteService = userInstituteService;
             _userProfileService = userProfileService;
             _userAccountHistoryService = userAccountHistoryService;
+            _userParentChildRelationshipService = userParentChildRelationshipService;
+            _userInstituteGroupService = userInstituteGroupService;
             _localizer = htmlLocalizer;
         }
 
@@ -85,6 +91,10 @@ namespace Flinnt.API.Controllers.V1
 
         private async Task<Tuple<StudentViewModel, string, HttpStatusCode>> AddStudentAsync(StudentViewModel model)
         {
+            var currentInstituteID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "InstituteId")?.Value;
+            var currentUserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+            var ipAddress = Request.HttpContext.Connection.RemoteIpAddress;
+
             var extStudent = await _studentService.ValidateStudent(model);
 
             if(extStudent.Any())
@@ -121,8 +131,8 @@ namespace Flinnt.API.Controllers.V1
                 if (userRes != null)
                 {
                     model.UserId = userRes.UserId;
+                    
                     // check relation with parent by passing parentId (userid)
-
                     UserProfile prtUsr = new UserProfile();
                     if (model.parentUserId != null)
                     {
@@ -134,6 +144,15 @@ namespace Flinnt.API.Controllers.V1
                         }
 
                         prtUsr = parentUser.UserProfiles.FirstOrDefault();
+
+                        await _userParentChildRelationshipService.AddAsync(new UserParentChildRelationshipModel
+                        {
+                            ChildUserId = userRes.UserId,
+                            ChildUserTypeId = (int)UserTypes.Student,
+                            ParentUserId = model.parentUserId.Value,
+                            InstituteId = Convert.ToInt32(currentInstituteID),
+                            ParentUserTypeId = (int)UserTypes.Parent,
+                        });
                     }
 
                     await _userProfileService.AddAsync(new UserProfile
@@ -154,18 +173,28 @@ namespace Flinnt.API.Controllers.V1
 
                     await _userInstituteService.AddAsync(new UserInstitute
                     {
-                        InstituteId = model.instituteId,
+                        InstituteId = Convert.ToInt32(currentInstituteID),
                         UserId = userRes.UserId,
                         UserTypeId = (int)UserTypes.Student,
                         IsActive = true,
                         CreateDateTime = DateTime.Now
                     });
 
+                    await _userInstituteGroupService.AddAsync(new UserInstituteGroupModel
+                    {
+                        UserId = userRes.UserId,
+                        InstituteId = Convert.ToInt32(currentInstituteID),
+                        InstituteGroupId = model.instituteGroupId,
+                        InstituteDivisionId = model.instituteDivisionId
+                    });
+
                     //save userAccountHistory
                     UserAccountHistory userAccountHistory = new UserAccountHistory
                     {
-                        ActionUserId = Convert.ToInt32(model.UserId),
-                        HistoryAction = "UserCreatedForStudent"
+                        UserId = model.UserId,
+                        ActionUserId = Convert.ToInt32(currentUserID),
+                        HistoryAction = "UserCreatedForStudent",
+                        ClientIp = ipAddress.ToString()
                     };
                     await _userAccountHistoryService.AddAsync(userAccountHistory);
                 }

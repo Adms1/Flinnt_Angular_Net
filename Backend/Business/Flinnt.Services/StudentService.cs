@@ -3,6 +3,7 @@ using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.UoW;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Flinnt.Services
 
         public async Task<StudentViewModel> AddAsync(StudentViewModel model)
         {
+            model.CreateDateTime = DateTime.Now;
             return mapper.Map<StudentViewModel>(await Task.FromResult(await unitOfWork.StudentRepository.AddAsync(mapper.Map<StudentViewModel, Student>(model))));
         }
 
