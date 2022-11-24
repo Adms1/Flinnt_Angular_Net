@@ -11,3 +11,11 @@
 .th_shadow--gray{
     background-color: lightgray;
 }
+
+.table_body{
+    cursor: pointer;
+}
+
+table.table td{
+    border: none !important;
+}

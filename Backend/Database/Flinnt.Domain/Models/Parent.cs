@@ -39,7 +39,7 @@ namespace Flinnt.Domain
         /// <summary>
         /// If 1, only parent 1 relationship is there.
         /// </summary>
-        public byte? SingleParent { get; set; }
+        public byte SingleParent { get; set; }
         /// <summary>
         /// The first name of the parent 2.
         /// </summary>

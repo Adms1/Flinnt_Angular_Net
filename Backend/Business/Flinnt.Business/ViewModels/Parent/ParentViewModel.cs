@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flinnt.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace Flinnt.Business.ViewModels
@@ -12,7 +13,7 @@ namespace Flinnt.Business.ViewModels
         public string Parent1Relationship { get; set; }
         public string Parent1EmailId { get; set; }
         public string Parent1MobileNo { get; set; }
-        public byte? SingleParent { get; set; }
+        public byte SingleParent { get; set; }
         public string Parent2FirstName { get; set; }
         public string Parent2LastName { get; set; }
         public string Parent2Relationship { get; set; }
@@ -24,11 +25,15 @@ namespace Flinnt.Business.ViewModels
         //contact info
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
-        public string CityName { get; set; }
+        
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public byte? CountryId { get; set; }
         public string Pincode { get; set; }
         public DateTime? CreateDateTime { get; set; }
+
+        public string CityName { get; set; }
+        public string StateName { get; set; }
+        public string CountryName { get; set; }
     }
 }

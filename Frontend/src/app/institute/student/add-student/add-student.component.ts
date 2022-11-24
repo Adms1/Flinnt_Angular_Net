@@ -20,6 +20,7 @@ export class AddStudentComponent implements OnInit {
   @Input() divisionId?;
   @Input() instituteId?;
   @Input() groupId?;
+  selectedParent: any;
   
   constructor(
     private modalService: NgbModal,
@@ -61,7 +62,13 @@ export class AddStudentComponent implements OnInit {
     const modalRef = this.modalService.open(SearchParentComponent, { windowClass: 'my-class' });
     modalRef.componentInstance.selectedParent.subscribe((receivedEntry) => {
       console.log(receivedEntry);
+      this.selectedParent = receivedEntry;
     });
+    
+  }
+
+  onRemoveParent(){
+    this.selectedParent = undefined;
   }
 
   onSubmit() {
@@ -71,7 +78,8 @@ export class AddStudentComponent implements OnInit {
       instituteId:this.instituteId,
       instituteGroupId: this.groupId,
       instituteDivisionId: this.divisionId,
-      dbo: this.parserFormatter.format( this.studentForm.get("dobObj").value)
+      dbo: this.parserFormatter.format( this.studentForm.get("dobObj").value),
+      parentUserId: !!this.selectedParent ? this.selectedParent.userId : null
     });
 
     this.formService.markFormGroupTouched(this.studentForm);

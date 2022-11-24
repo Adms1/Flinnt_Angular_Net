@@ -203,7 +203,8 @@ namespace Flinnt.Business.Helpers
                         }
                         else
                         if (t.PropertyType.FullName.ToLower().Contains("int") ||
-                                 t.PropertyType.FullName.ToLower().Contains("decimal"))
+                                 t.PropertyType.FullName.ToLower().Contains("decimal") ||
+                                t.PropertyType.Name.ToLower().Contains("byte"))
                         {
                             //if (!isstring) continue;
 
@@ -215,8 +216,10 @@ namespace Flinnt.Business.Helpers
                             {
                                 searchStr.Append(opertatorAnd + tableNotNUll);
                             }
+                            int.TryParse(column.Search.Value, out var parsedValue);
+
                             searchStr.Append(notNUll);
-                            searchStr.Append(" it." + objectSerach + "=" + searchValue + ")");
+                            searchStr.Append(" it." + objectSerach + "=" + parsedValue + ")");
                             if (tableObject.Any())
                             {
                                 searchStr.Append(")");
@@ -263,7 +266,7 @@ namespace Flinnt.Business.Helpers
                             else
                             {
 
-                                searchStr.Append(" it." + objectSerach + ".ToString().ToLower().Contains(\"" + searchValue + "\"))");
+                                searchStr.Append(" it." + objectSerach + ".ToString().ToLower().Contains(\"" + searchValue.ToLower() + "\"))");
                             }
                             if (tableObject.Any())
                             {

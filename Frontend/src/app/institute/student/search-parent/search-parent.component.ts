@@ -27,7 +27,8 @@ export class SearchParentComponent implements OnInit {
     "Parent1LastName",
     "Parent1EmailId",
     "Parent1MobileNo",
-    "Relationship"
+    "SingleParent",
+    "Parent1Relationship"
   ];
   page: any;
   parentList = [];
@@ -44,11 +45,12 @@ export class SearchParentComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10
     };
+    this.filterData();
   }
 
   configureSearchSort() {
     this.filterValue = [];
-    
+
     this.page = {
       pageNumber: 0,
       size: this.rowsOnPage,
@@ -106,11 +108,16 @@ export class SearchParentComponent implements OnInit {
     this.filterData();
   }
 
+  onClearSearch() {
+    this.resetTeamForm();
+    this.filterData();
+  }
+
   filterData() {
     this.filterValue.push(this.searchParentForm.get("firstName").value);
     this.filterValue.push(this.searchParentForm.get("lastName").value);
     this.filterValue.push(this.searchParentForm.get("emailId").value);
-     this.filterValue.push(this.searchParentForm.get("mobileNo").value);
+    this.filterValue.push(this.searchParentForm.get("mobileNo").value);
 
     this.columns.forEach((element, i) => {
       if (i < 4) {
@@ -128,14 +135,58 @@ export class SearchParentComponent implements OnInit {
       }
     });
 
+    if (!!this.searchParentForm.get("singleParent").value
+      && this.searchParentForm.get("singleParent").value != "") {
+      this.filterValue.push();
+
+      const obj = {
+        Data: "bool",
+        Searchable: true,
+        Orderable: true,
+        Name: "SingleParent",
+        Search: {
+          Value: this.searchParentForm.get("singleParent").value,
+          Regex: "string",
+        },
+      };
+      this.searchSort.Columns.push(obj);
+    }
+
+    if (!!this.searchParentForm.get("relationship").value
+      && this.searchParentForm.get("relationship").value != "") {
+
+      const obj = {
+        Data: "string",
+        Searchable: true,
+        Orderable: true,
+        Name: "Parent1Relationship",
+        Search: {
+          Value: this.searchParentForm.get("relationship").value,
+          Regex: "string",
+        },
+      };
+      this.searchSort.Columns.push(obj);
+    }
+
     this.parentSevice.dataFilter(this.searchSort).then(res => {
       this.configureSearchSort();
       if (res['data'] && res['data'].length > 0) {
         this.parentList = res['data'];
       } else { this.parentList = []; }
-    }, err => { 
-      this.parentList = []; 
+      this.rerender();
+    }, err => {
+      this.parentList = [];
       this.configureSearchSort();
     });
   }
+
+  resetTeamForm() {
+    this.searchParentForm.reset();
+  }
+
+  
+  getSingleParent(item) : string {
+    return item.singleParent == 0 ? "NO" : "YES";
+  }
+  
 }

@@ -18,7 +18,7 @@ namespace Flinnt.Services
 
         public async Task<List<ParentViewModel>> GetAllAsync()
         {
-            var result = mapper.Map<List<ParentViewModel>>(await unitOfWork.ParentRepository.GetAllAsync());
+            var result = mapper.Map<List<ParentViewModel>>(unitOfWork.ParentRepository.GetAll());
             return result.ToList();
         }
 

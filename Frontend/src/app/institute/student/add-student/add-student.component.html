@@ -99,9 +99,14 @@
         </div>
     </div>
     <div class="col_full">
-        <a href="javascript:void(0)" (click)="onSearchAccount();">
+        <a href="javascript:void(0)" (click)="onSearchAccount();" *ngIf="selectedParent == undefined">
             Select Parent Account
         </a>
+        <span *ngIf="!!selectedParent">
+            <button type="button" class="btn btn-info" (click)="onRemoveParent()">
+                {{selectedParent.parent1FirstName}} <span class="badge badge-light">X</span>
+            </button>
+        </span>
     </div>
 
     <div class="clear"></div>
