@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using Flinnt.Business.ViewModels;
 using Flinnt.Business.Helpers;
 using System.Data;
-using System.Net.Http.Headers;
-using System.Linq.Dynamic;
 using Flinnt.Business.Enums.General;
-using Flinnt.Services;
-using Microsoft.AspNetCore.Identity;
+using ExcelDataReader;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using System.Web;
+using System.Collections.Generic;
+using Flinnt.Business.ViewModels.General;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -220,23 +222,85 @@ namespace Flinnt.API.Controllers.V1
 
         [Route("import-roster")]
         [HttpPost, DisableRequestSizeLimit]
-        public object ImportParentRoster()
+        public async Task<object> ImportParentRoster()
         {
-            try
+            return await GetDataWithMessage(() =>
             {
-                var file = Request.Form.Files[0];
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                var httpRequest = Request.Form.Files;
+                DataSet dsexcelRecords = new DataSet();
+                IExcelDataReader reader = null;
+                Stream FileStream = null;
+                List<ParentViewModel> parents = new List<ParentViewModel>();
 
-                if (file.Length > 0)
+                try
                 {
-                    return Ok(fileName);
+                    if (httpRequest.Count > 0)
+                    {
+                        var Inputfile = httpRequest[0];
+                        using (var stream = Inputfile.OpenReadStream())
+                        {
+                            FileStream = stream;
+
+                            if (Inputfile != null && FileStream != null)
+                            {
+                                if (Inputfile.FileName.EndsWith(".xls"))
+                                    reader = ExcelReaderFactory.CreateBinaryReader(FileStream);
+                                else if (Inputfile.FileName.EndsWith(".xlsx"))
+                                    reader = ExcelReaderFactory.CreateOpenXmlReader(FileStream);
+                                else
+                                    return Task.FromResult(Response(parents, "The file format is not supported.", HttpStatusCode.InternalServerError));
+
+                                dsexcelRecords = reader.AsDataSet();
+                                reader.Close();
+
+                                if (dsexcelRecords != null && dsexcelRecords.Tables.Count > 0)
+                                {
+                                    var dataSet = dsexcelRecords.Tables[0];
+                                    foreach (DataRow row in dataSet.Rows)
+                                    {
+                                        parents.Add(new ParentViewModel
+                                        {
+                                            Parent1FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - First Name (Mandatory)")).ToString(),
+                                            Parent1LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Last Name (Mandatory)")).ToString(),
+                                            Parent1EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Email Id")).ToString(),
+                                            Parent1MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Mobile No")).ToString(),
+                                            Parent1Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Father (F) OR Mother (M) (Mandatory)")).ToString(),
+                                            Parent2FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - First Name")).ToString(),
+                                            Parent2LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Last Name")).ToString(),
+                                            Parent2EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Email Id")).ToString(),
+                                            Parent2MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Mobile No")).ToString(),
+                                            Parent2Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Single Parent (Y/N)")).ToString(),
+                                            PrimaryEmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Primary Email Address (Mandatory)")).ToString(),
+                                            PrimaryMobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Mobile No")).ToString(),
+                                            AddressLine1 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 1")).ToString(),
+                                            AddressLine2 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 2")).ToString(),
+                                            CityName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "City")).ToString(),
+                                            StateName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "State")).ToString(),
+                                            CountryName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Country")).ToString(),
+                                            Pincode = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Pincode")).ToString(),
+                                        });
+                                    }
+                                    parents.Remove(parents.FirstOrDefault());
+                                    return Task.FromResult(Response(parents, "", HttpStatusCode.OK));
+                                }
+                                else
+                                {
+                                    return Task.FromResult(Response(parents, "Selected file is empty.", HttpStatusCode.InternalServerError));
+                                }
+                            }
+                            else
+                            {
+                                return Task.FromResult(Response(parents, "Invalid File.", HttpStatusCode.InternalServerError));
+                            }
+                        }
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex}");
-            }
-            return Ok();
+                catch (Exception ex)
+                {
+                    return Task.FromResult(Response(parents, $"Internal server error: {ex}", HttpStatusCode.InternalServerError));
+                }
+                return Task.FromResult(Response(parents, "Something went wrong!!", HttpStatusCode.InternalServerError));
+            });
         }
 
         [HttpPost]
