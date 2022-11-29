@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flinnt.Business\Flinnt.Business.csproj" />
+    <ProjectReference Include="..\Flinnt.Interfaces\Flinnt.Interfaces.csproj" />
+    <ProjectReference Include="..\Flinnt.Mapper\Flinnt.Mapper.csproj" />
+    <ProjectReference Include="..\Flinnt.Repositories\Flinnt.Repositories.csproj" />
+    <ProjectReference Include="..\Flinnt.Resources\Flinnt.Resources.csproj" />
+    <ProjectReference Include="..\Flinnt.Services\Flinnt.Services.csproj" />
+  </ItemGroup>
+
+</Project>

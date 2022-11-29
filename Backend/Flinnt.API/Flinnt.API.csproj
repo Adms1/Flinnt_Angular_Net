@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Business\Flinnt.Background\Flinnt.Background.csproj" />
     <ProjectReference Include="..\Business\Flinnt.Business\Flinnt.Business.csproj" />
     <ProjectReference Include="..\Business\Flinnt.Interfaces\Flinnt.Interfaces.csproj" />
     <ProjectReference Include="..\Business\Flinnt.Mapper\Flinnt.Mapper.csproj" />

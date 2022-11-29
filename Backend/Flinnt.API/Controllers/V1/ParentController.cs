@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using System.Web;
 using System.Collections.Generic;
 using Flinnt.Business.ViewModels.General;
+using Flinnt.Interfaces.Background;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -31,6 +32,7 @@ namespace Flinnt.API.Controllers.V1
         private readonly ICityService _cityService;
         private readonly IHtmlLocalizer<ParentController> _localizer;
         private readonly IUserAccountHistoryService _userAccountHistoryService;
+        private readonly IBackgroundService _backgroundService;
         protected static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public ParentController(IParentService parentService,
@@ -39,6 +41,7 @@ namespace Flinnt.API.Controllers.V1
             ICityService cityService, 
             IUserProfileService userProfileService,
             IUserAccountHistoryService userAccountHistoryService,
+            IBackgroundService backgroundService,
             IHtmlLocalizer<ParentController> htmlLocalizer)
         {
             _parentService = parentService;
@@ -48,6 +51,7 @@ namespace Flinnt.API.Controllers.V1
             _userProfileService = userProfileService;
             _localizer = htmlLocalizer;
             _userAccountHistoryService = userAccountHistoryService;
+            _backgroundService = backgroundService;
         }
 
         [HttpGet]
@@ -220,9 +224,9 @@ namespace Flinnt.API.Controllers.V1
             return Response(parent, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
-        [Route("import-roster")]
+        [Route("validate-parent-import")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<object> ImportParentRoster()
+        public async Task<object> ValidateParentImport()
         {
             return await GetDataWithMessage(() =>
             {
@@ -255,32 +259,62 @@ namespace Flinnt.API.Controllers.V1
 
                                 if (dsexcelRecords != null && dsexcelRecords.Tables.Count > 0)
                                 {
+                                    string noData = "<<no-data>>";
                                     var dataSet = dsexcelRecords.Tables[0];
                                     foreach (DataRow row in dataSet.Rows)
                                     {
-                                        parents.Add(new ParentViewModel
+                                        var _parent1FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - First Name (Mandatory)")).ToString();
+                                        var _parent1LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Last Name (Mandatory)")).ToString();
+                                        var _parent1EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Email Id")).ToString();
+                                        var _parent1MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Mobile No")).ToString();
+                                        var _parent1Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Father (F) OR Mother (M) (Mandatory)")).ToString();
+                                        var _parent2FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - First Name")).ToString();
+                                        var _parent2LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Last Name")).ToString();
+                                        var _parent2EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Email Id")).ToString();
+                                        var _parent2MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Mobile No")).ToString();
+                                        var _parent2Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Single Parent (Y/N)")).ToString();
+                                        var _primaryEmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Primary Email Address (Mandatory)")).ToString();
+                                        var _primaryMobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Mobile No")).ToString();
+                                        var _addressLine1 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 1")).ToString();
+                                        var _addressLine2 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 2")).ToString();
+                                        var _cityName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "City")).ToString();
+                                        var _stateName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "State")).ToString();
+                                        var _countryName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Country")).ToString();
+                                        var _pincode = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Pincode")).ToString();
+
+                                        var parent = new ParentViewModel
                                         {
-                                            Parent1FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - First Name (Mandatory)")).ToString(),
-                                            Parent1LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Last Name (Mandatory)")).ToString(),
-                                            Parent1EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Email Id")).ToString(),
-                                            Parent1MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Mobile No")).ToString(),
-                                            Parent1Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 1 - Father (F) OR Mother (M) (Mandatory)")).ToString(),
-                                            Parent2FirstName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - First Name")).ToString(),
-                                            Parent2LastName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Last Name")).ToString(),
-                                            Parent2EmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Email Id")).ToString(),
-                                            Parent2MobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Parent 2 - Mobile No")).ToString(),
-                                            Parent2Relationship = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Single Parent (Y/N)")).ToString(),
-                                            PrimaryEmailId = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Primary Email Address (Mandatory)")).ToString(),
-                                            PrimaryMobileNo = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Mobile No")).ToString(),
-                                            AddressLine1 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 1")).ToString(),
-                                            AddressLine2 = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Address Line 2")).ToString(),
-                                            CityName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "City")).ToString(),
-                                            StateName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "State")).ToString(),
-                                            CountryName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Country")).ToString(),
-                                            Pincode = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Pincode")).ToString(),
-                                        });
+                                            Parent1FirstName = !string.IsNullOrEmpty(_parent1FirstName) ? _parent1FirstName : noData,
+                                            Parent1LastName = !string.IsNullOrEmpty(_parent1LastName) ? _parent1LastName : noData,
+                                            Parent1EmailId = !string.IsNullOrEmpty(_parent1EmailId) ? _parent1EmailId : noData,
+                                            Parent1MobileNo = !string.IsNullOrEmpty(_parent1MobileNo) ? _parent1MobileNo : noData,
+                                            Parent1Relationship = !string.IsNullOrEmpty(_parent1Relationship) ? _parent1Relationship : noData,
+                                            Parent2FirstName = !string.IsNullOrEmpty(_parent2FirstName) ? _parent2FirstName : noData,
+                                            Parent2LastName = !string.IsNullOrEmpty(_parent2LastName) ? _parent2LastName : noData,
+                                            Parent2EmailId = !string.IsNullOrEmpty(_parent2EmailId) ? _parent2EmailId : noData,
+                                            Parent2MobileNo = !string.IsNullOrEmpty(_parent2MobileNo) ? _parent2MobileNo : noData,
+                                            Parent2Relationship = !string.IsNullOrEmpty(_parent2Relationship) ? _parent2Relationship : noData,
+                                            PrimaryEmailId = !string.IsNullOrEmpty(_primaryEmailId) ? _primaryEmailId : noData,
+                                            PrimaryMobileNo = !string.IsNullOrEmpty(_primaryMobileNo) ? _primaryMobileNo : noData,
+                                            AddressLine1 = !string.IsNullOrEmpty(_addressLine1) ? _addressLine1 : noData,
+                                            AddressLine2 = !string.IsNullOrEmpty(_addressLine2) ? _addressLine2 : noData,
+                                            CityName = !string.IsNullOrEmpty(_cityName) ? _cityName : noData,
+                                            StateName = !string.IsNullOrEmpty(_stateName) ? _stateName : noData,
+                                            CountryName = !string.IsNullOrEmpty(_countryName) ? _countryName : noData,
+                                            Pincode = !string.IsNullOrEmpty(_pincode) ? _pincode : noData,
+                                            ImportStatus = "Valid"
+                                        };
+
+                                        var summary = GenerateImportSummaryAsync(parent);
+                                        if (summary.Result.Count > 0)
+                                        {
+                                            parent.ImportStatus = "Invalid";
+                                            parent.ImportSummary.AddRange(summary.Result);
+                                        }
+                                        parents.Add(parent);
                                     }
                                     parents.Remove(parents.FirstOrDefault());
+                                    _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParents(parents));
                                     return Task.FromResult(Response(parents, "", HttpStatusCode.OK));
                                 }
                                 else
@@ -301,6 +335,98 @@ namespace Flinnt.API.Controllers.V1
                 }
                 return Task.FromResult(Response(parents, "Something went wrong!!", HttpStatusCode.InternalServerError));
             });
+        }
+
+        private async Task<List<ParentImportSummary>> GenerateImportSummaryAsync(ParentViewModel parentViewModel)
+        {
+            List<ParentImportSummary> importSummaries = new List<ParentImportSummary>();
+
+            if (string.IsNullOrEmpty(parentViewModel.Parent1FirstName)
+               || parentViewModel.Parent1FirstName.Equals ("<<no-data>>"))
+            {
+                importSummaries.Add(new ParentImportSummary
+                {
+                    FieldName = "Parent 1 - First Name",
+                    Message = "Parent 1 - First Name could not be empty"
+                });
+            }
+
+            if (string.IsNullOrEmpty(parentViewModel.Parent1LastName)
+                || parentViewModel.Parent1LastName.Equals("<<no-data>>"))
+            {
+                importSummaries.Add(new ParentImportSummary
+                {
+                    FieldName = "Parent 1 - Last Name",
+                    Message = "Parent 1 - Last Name could not be empty"
+                });
+            }
+
+            if (string.IsNullOrEmpty(parentViewModel.Parent1Relationship)
+                || parentViewModel.Parent1Relationship.Equals("<<no-data>>"))
+            {
+                importSummaries.Add(new ParentImportSummary
+                {
+                    FieldName = "Parent 1 - Father/Mother",
+                    Message = "Parent 1 - Father/Mother could not be empty and it must be M (for Male) and F (for Female)"
+                });
+            }
+
+            if (string.IsNullOrEmpty(parentViewModel.PrimaryEmailId)
+                || parentViewModel.PrimaryEmailId.Equals("<<no-data>>"))
+            {
+                importSummaries.Add(new ParentImportSummary
+                {
+                    FieldName = "Primary email address",
+                    Message = "Primary email address could not be blank"
+                });
+
+
+                // call APIs to check if user exists in db
+                var user = await _userService.GetUserByLoginId(parentViewModel.PrimaryEmailId);
+                if (user != null)
+                {
+                    // usertype parent or student check
+                    if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                    {
+                        // consider dublicate row
+                        importSummaries.Add(new ParentImportSummary
+                        {
+                            FieldName = "Primary email address",
+                            Message = "A parent account already exists with the provided Primary email address"
+                        });
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(parentViewModel.PrimaryMobileNo)
+                || parentViewModel.PrimaryMobileNo.Equals("<<no-data>>"))
+            {
+                if(parentViewModel.PrimaryMobileNo.Trim().Length > 10)
+                {
+                    importSummaries.Add(new ParentImportSummary
+                    {
+                        FieldName = "Primary mobile no",
+                        Message = "The mobile no must contain 10 digits"
+                    });
+                }
+            }
+
+            return importSummaries;
+        }
+
+        [Route("import-parent-roaster")]
+        [HttpPost]
+        public async Task<object> ImportParentRoster(ParentViewModel parentViewModel)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                return Response(true, string.Empty);
+            });
+        }
+
+        private void ImportParents()
+        {
+
         }
 
         [HttpPost]

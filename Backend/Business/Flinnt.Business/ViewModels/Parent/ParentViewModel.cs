@@ -6,6 +6,10 @@ namespace Flinnt.Business.ViewModels
 {
     public partial class ParentViewModel
     {
+        public ParentViewModel()
+        {
+            ImportSummary = new List<ParentImportSummary>();
+        }
         public int ParentId { get; set; }
         public long UserId { get; set; }
         public string Parent1FirstName { get; set; }
@@ -35,5 +39,13 @@ namespace Flinnt.Business.ViewModels
         public string CityName { get; set; }
         public string StateName { get; set; }
         public string CountryName { get; set; }
+        public List<ParentImportSummary> ImportSummary { get; set; }
+        public string ImportStatus { get; set; }
+    }
+
+    public class ParentImportSummary 
+    {
+        public string FieldName { get; set; }
+        public string Message { get; set; }
     }
 }
