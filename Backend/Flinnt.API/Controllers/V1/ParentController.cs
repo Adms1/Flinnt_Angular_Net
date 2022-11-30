@@ -226,11 +226,11 @@ namespace Flinnt.API.Controllers.V1
 
         [Route("validate-parent-import")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<object> ValidateParentImport()
+        public async Task<object> ValidateParentImport(IFormFile file)
         {
             return await GetDataWithMessage(() =>
             {
-                var httpRequest = Request.Form.Files;
+                var httpRequest = file;
                 DataSet dsexcelRecords = new DataSet();
                 IExcelDataReader reader = null;
                 Stream FileStream = null;
@@ -238,9 +238,9 @@ namespace Flinnt.API.Controllers.V1
 
                 try
                 {
-                    if (httpRequest.Count > 0)
+                    if (httpRequest.Length > 0)
                     {
-                        var Inputfile = httpRequest[0];
+                        var Inputfile = httpRequest;
                         using (var stream = Inputfile.OpenReadStream())
                         {
                             FileStream = stream;
@@ -314,7 +314,7 @@ namespace Flinnt.API.Controllers.V1
                                         parents.Add(parent);
                                     }
                                     parents.Remove(parents.FirstOrDefault());
-                                    _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParents(parents));
+                                    
                                     return Task.FromResult(Response(parents, "", HttpStatusCode.OK));
                                 }
                                 else
@@ -379,8 +379,9 @@ namespace Flinnt.API.Controllers.V1
                     FieldName = "Primary email address",
                     Message = "Primary email address could not be blank"
                 });
-
-
+            }
+            else
+            {
                 // call APIs to check if user exists in db
                 var user = await _userService.GetUserByLoginId(parentViewModel.PrimaryEmailId);
                 if (user != null)
@@ -416,10 +417,11 @@ namespace Flinnt.API.Controllers.V1
 
         [Route("import-parent-roaster")]
         [HttpPost]
-        public async Task<object> ImportParentRoster(ParentViewModel parentViewModel)
+        public async Task<object> ImportParentRoster(List<ParentViewModel> parentViewModel)
         {
             return await GetDataWithMessage(async () =>
             {
+                _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParents(parentViewModel));
                 return Response(true, string.Empty);
             });
         }

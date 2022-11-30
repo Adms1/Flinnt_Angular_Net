@@ -6,6 +6,10 @@ namespace Flinnt.Business.ViewModels
 {
     public partial class StudentViewModel
     {
+        public StudentViewModel()
+        {
+            ImportSummary = new List<StudentImportSummary>();
+        }
         public int StudentId { get; set; }
         public long? UserId { get; set; }
         public string FirstName { get; set; }
@@ -23,5 +27,15 @@ namespace Flinnt.Business.ViewModels
         public int instituteGroupId { get; set; }
         public int instituteDivisionId { get; set; }
         public DateTime? CreateDateTime { get; set; }
+
+        public string ParentPrimaryEmailId { get; set; }
+        public List<StudentImportSummary> ImportSummary { get; set; }
+        public string ImportStatus { get; set; }
+    }
+
+    public class StudentImportSummary
+    {
+        public string FieldName { get; set; }
+        public string Message { get; set; }
     }
 }
