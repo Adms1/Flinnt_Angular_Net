@@ -40,6 +40,7 @@ export class API {
   public static PARENT_ROUTES = {
     dataFilter: `/${environment.API_Version}/parent/DataFilter`,
     saveParent: `/${environment.API_Version}/parent/create`,
+    importParent: `/${environment.API_Version}/parent/validate-parent-import`
   };
 
   public static STUDENT_ROUTES = {

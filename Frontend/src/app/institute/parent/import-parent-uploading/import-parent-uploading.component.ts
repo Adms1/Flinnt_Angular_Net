@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-import-parent-uploading',
@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./import-parent-uploading.component.css']
 })
 export class ImportParentUploadingComponent implements OnInit {
-
+  @Input() progess: 0;
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

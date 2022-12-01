@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-import-parent-upload',
@@ -8,14 +9,21 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ImportParentUploadComponent implements OnInit {
   closeResult: string;
-
-  constructor(private modalService: NgbModal) { }
+  parents: any = [];
+  constructor(private modalService: NgbModal,
+    private route: ActivatedRoute) {
+    const _parentData = sessionStorage.getItem("parent-import");
+    if (_parentData) {
+      this.parents = JSON.parse(_parentData);
+    }
+  }
 
   ngOnInit(): void {
+
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -28,8 +36,7 @@ export class ImportParentUploadComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
-
 }
