@@ -288,12 +288,12 @@ namespace Flinnt.API.Controllers.V1
                                             Parent1LastName = !string.IsNullOrEmpty(_parent1LastName) ? _parent1LastName : noData,
                                             Parent1EmailId = !string.IsNullOrEmpty(_parent1EmailId) ? _parent1EmailId : noData,
                                             Parent1MobileNo = !string.IsNullOrEmpty(_parent1MobileNo) ? _parent1MobileNo : noData,
-                                            Parent1Relationship = !string.IsNullOrEmpty(_parent1Relationship) ? _parent1Relationship : noData,
+                                            Parent1Relationship = !string.IsNullOrEmpty(_parent1Relationship) ? (_parent1Relationship.ToUpper() == "M" || _parent1Relationship.ToUpper() == "F" ? _parent1Relationship : noData) : noData,
                                             Parent2FirstName = !string.IsNullOrEmpty(_parent2FirstName) ? _parent2FirstName : noData,
                                             Parent2LastName = !string.IsNullOrEmpty(_parent2LastName) ? _parent2LastName : noData,
                                             Parent2EmailId = !string.IsNullOrEmpty(_parent2EmailId) ? _parent2EmailId : noData,
                                             Parent2MobileNo = !string.IsNullOrEmpty(_parent2MobileNo) ? _parent2MobileNo : noData,
-                                            Parent2Relationship = !string.IsNullOrEmpty(_parent2Relationship) ? _parent2Relationship : noData,
+                                            Parent2Relationship = !string.IsNullOrEmpty(_parent2Relationship) ? (_parent2Relationship.ToUpper() == "M" || _parent2Relationship.ToUpper() == "F" ? _parent2Relationship : noData) : noData,
                                             PrimaryEmailId = !string.IsNullOrEmpty(_primaryEmailId) ? _primaryEmailId : noData,
                                             PrimaryMobileNo = !string.IsNullOrEmpty(_primaryMobileNo) ? _primaryMobileNo : noData,
                                             AddressLine1 = !string.IsNullOrEmpty(_addressLine1) ? _addressLine1 : noData,
@@ -368,6 +368,16 @@ namespace Flinnt.API.Controllers.V1
                 {
                     FieldName = "Parent 1 - Father/Mother",
                     Message = "Parent 1 - Father/Mother could not be empty and it must be M (for Male) and F (for Female)"
+                });
+            }
+
+            if (string.IsNullOrEmpty(parentViewModel.Parent2Relationship)
+                || parentViewModel.Parent2Relationship.Equals("<<no-data>>"))
+            {
+                importSummaries.Add(new ParentImportSummary
+                {
+                    FieldName = "Parent 2 - Father/Mother",
+                    Message = "Parent 2 - Father/Mother could not be empty and it must be M (for Male) and F (for Female)"
                 });
             }
 

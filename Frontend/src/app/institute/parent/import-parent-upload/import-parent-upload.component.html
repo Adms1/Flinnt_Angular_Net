@@ -39,7 +39,7 @@
            
             <div class="clear"></div>
 
-            <div class="row mt-3 mb-3">
+            <div class="row mt-3 mb-3" *ngIf="!isValidData">
                 <div class="col_full nobottommargin">
                     <div class="card txt_warning--yellow">
                       <div class="card-body">
@@ -70,7 +70,7 @@
                                 Parent 2 - Last Name
                             </th>
                             <th>
-                                Primary Email Address
+                                Primary Email
                             </th>
                             <th>
                                 Contact Number
@@ -83,369 +83,148 @@
                             </th>
                         </tr>
                         <tbody>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">Father</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">Mother</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Line 1</span>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Rakesh
-                                </td>
-                                <td>
-                                    Sharma
-                                </td>
-                                <td>
-                                    Rekha
-                                </td>
-                                <td>
-                                    Sharma
-                                </td>
-                                <td>
-                                    rakesh.sharm@gmail.com
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    3. Madhuban Indl Estate. off Mahakali Caves Road
-                                </td>
-                                <td rowspan="7">
-                                    <span class="valid_mark">Valid</span>&nbsp; <i class="fa fa-user-plus blue" aria-hidden="true"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    rakesh.sharma@gmail.com
-                                </td>
-                                <td colspan="2">
-                                    rakesh.sharma@gmail.com
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">City / State / Country</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    Ahmedabad \ Gujarat \ India
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <span class="th_shadow--gray">Single Parent</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Pincode</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    NO
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    390001
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="8">
-                                    <hr>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">Father</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">Mother</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Monika
-                                </td>
-                                <td>
-                                    Shah
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    monika.shah@gmail.com
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    204-206, 3rd Eye Vision, Opp. Shivalik Plaza
-                                </td>
-                                <td rowspan="7">
-                                    <span class="valid_mark">Valid</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Line 2</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    Monika.shah@gmail.com
-                                </td>
-                                <td colspan="2">
-                                    N/A
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    Ambawadi., near AMA
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">City / State / Country</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    1234567899
-                                </td>
-                                <td colspan="2">
-                                    N/A
-                                </td>
-                                <td>
-                                    Ahmedabad \ &lt;&lt;nodata&gt;&gt; \ India
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <span class="th_shadow--gray">Single Parent</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Pincode</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    NO
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    390001
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="8">
-                                    <hr>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">&lt;&lt;nodata&gt;&gt;</span>
-                                </td >
-                                <td colspan="2">
-                                    <span class="th_shadow--blue">&lt;&lt;nodata&gt;&gt;</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Line 1</span>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="th_text--red">&lt;&lt;nodata&gt;&gt;</span>
-                                </td>
-                                <td>
-                                    <span class="th_text--red">&lt;&lt;nodata&gt;&gt;</span>
-                                </td>
-                                <td>
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td>
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td>
-                                    <span class="th_text--red">maulik.gupta@gmail.com</span>
-                                </td>
-                                <td>
-                                    <span class="th_text--red">12345</span>
-                                </td>
-                                <td>
-                                    B - 202/203, Shilp Aaron Sindhu bhavan road
-                                </td>
-                                <td rowspan="7">
-                                    <span class="invalid_mark">Invalid</span> &nbsp; <a href="javascript:void(0)" (click)="open(mymodal)">See error</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Email</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    Line 2
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    opp. Armieda, Bodakdev
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 1 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                    <span class="th_shadow--gray">Parent 2 - Mobile No</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">City / State / Country</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                    &lt;&lt;nodata&gt;&gt;
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    &lt;&lt;nodata&gt;&gt; \ &lt;&lt;nodata&gt;&gt; \ &lt;&lt;nodata&gt;&gt;
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <span class="th_shadow--gray">Single Parent</span>
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    <span class="th_shadow--gray">Pincode</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    NO
-                                </td>
-                                <td colspan="2">
-                                </td>
-                                <td>
-                                    390001
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="8">
-                                    <hr>
-                                </td>
-                            </tr>
+                            <ng-container *ngFor="let p of parents">
+                                <tr>
+                                    <td colspan="2">
+                                        <span class="th_shadow--blue">{{p.parent1Relationship == 'F' ? "Father" : p.parent1Relationship == 'M' ? "Mother" : p.parent1Relationship}}</span>
+                                    </td>
+                                    <td colspan="2">
+                                        <span class="th_shadow--blue">{{p.parent2Relationship == 'F' ? "Father" : p.parent2Relationship == 'M' ? "Mother" : p.parent2Relationship}}</span>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                    <td>
+                                        <span class="th_shadow--gray">Line 1</span>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{p.parent1FirstName}}
+                                    </td>
+                                    <td>
+                                        {{p.parent1LastName}}
+                                    </td>
+                                    <td>
+                                        {{p.parent2FirstName}}
+                                    </td>
+                                    <td>
+                                        {{p.parent2LastName}}
+                                    </td>
+                                    <td>
+                                        {{p.primaryEmailId}}
+                                    </td>
+                                    <td>
+                                        {{p.primaryMobileNo}}
+                                    </td>
+                                    <td>
+                                        {{p.addressLine1}}
+                                    </td>
+                                    <td rowspan="7">
+                                        <span *ngIf="p.importSummary.length==0">
+                                            <label class="valid_mark">Valid</label>
+                                        </span>
+                                        <span *ngIf="p.importSummary.length>0">
+                                            <label class="valid_mark">Invalid</label>
+                                            &nbsp;<a href="javascript:void(0)" (click)="showError(p)">error</a>
+                                        </span>
+                                        <span *ngIf="checkIsAccountCreated(p);">
+                                            &nbsp;<i class="fa fa-user-plus blue" aria-hidden="true"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <span class="th_shadow--gray">Parent 1 - Email</span>
+                                    </td>
+                                    <td colspan="2">
+                                        <span class="th_shadow--gray">Parent 2 - Email</span>
+                                    </td>
+                                    <td colspan="2">
+                                        
+                                    </td>
+                                    <td>
+                                        <span class="th_shadow--gray">Line 2</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        {{p.parent1EmailId}}
+                                    </td>
+                                    <td colspan="2">
+                                        {{p.parent2EmailId}}
+                                    </td>
+                                    <td colspan="2">
+                                        
+                                    </td>
+                                    <td>
+                                        {{p.addressLine2}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <span class="th_shadow--gray">Parent 1 - Mobile No</span>
+                                    </td>
+                                    <td colspan="2">
+                                        <span class="th_shadow--gray">Parent 2 - Mobile No</span>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                    <td>
+                                        <span class="th_shadow--gray">City / State / Country</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        {{p.parent1MobileNo}}
+                                    </td>
+                                    <td colspan="2">
+                                        {{p.parent2MobileNo}}
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                    <td>
+                                        {{p.cityName}}&nbsp;\&nbsp;{{p.stateName}}&nbsp;\&nbsp;{{p.countryName}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">
+                                        <span class="th_shadow--gray">Single Parent</span>
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                    <td>
+                                        <span class="th_shadow--gray">Pincode</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">
+                                        {{p.singleParent == 1 ? "YES" : "NO"}}
+                                    </td>
+                                    <td colspan="2">
+                                    </td>
+                                    <td>
+                                        {{p.pincode}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <hr>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col_full nobottommargin text-center">
+            <div class="col_full nobottommargin text-center" *ngIf="!isValidData">
                 <a routerLink="add-parent">
                     <button type="button" class="btn btn-danger btn-embossed m-2">Re-upload &nbsp;<i class="fa fa-refresh"
                             aria-hidden="true"></i></button>
                 </a>
             </div>
-            <div class="col_full nobottommargin text-center">
+            <div class="col_full nobottommargin text-center" *ngIf="isValidData">
                 <a routerLink="add-parent">
                     <button type="button" class="btn btn-primary btn-embossed m-2">Import &nbsp;<i class="fa fa-user-plus"
                             aria-hidden="true"></i></button>

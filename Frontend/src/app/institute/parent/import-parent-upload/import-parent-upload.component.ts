@@ -9,12 +9,17 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ImportParentUploadComponent implements OnInit {
   closeResult: string;
+  isValidData: boolean = true;
   parents: any = [];
   constructor(private modalService: NgbModal,
     private route: ActivatedRoute) {
     const _parentData = sessionStorage.getItem("parent-import");
     if (_parentData) {
       this.parents = JSON.parse(_parentData);
+
+      if(this.parents.filter(x=>x.importSummary.length > 0).length > 0){
+        this.isValidData = false;
+      }
     }
   }
 
@@ -37,6 +42,33 @@ export class ImportParentUploadComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  showError(parentItem) {
+    let msgString = "";
+    if (!!parentItem.importSummary
+      && parentItem.importSummary.length > 0) {
+      parentItem.importSummary.forEach(element => {
+        msgString += element.message + "\n\n";
+      });
+    }
+
+    alert(msgString);
+  }
+
+  checkIsAccountCreated(parentItem){
+    if(!!parentItem.importSummary 
+      && parentItem.importSummary.length > 0){
+        let _item = parentItem.importSummary.filter(x=>x.FieldName == "Primary email address");
+
+        if(_item.length > 0){
+          _item.forEach(element => {
+            if(element.message == "A parent account already exists with the provided Primary email address"){
+              return true;
+            }
+          });
+        }
     }
   }
 }
