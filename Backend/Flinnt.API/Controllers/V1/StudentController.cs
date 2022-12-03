@@ -359,7 +359,7 @@ namespace Flinnt.API.Controllers.V1
                 if (user != null)
                 {
                     // usertype parent or student check
-                    if (!user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent).Any())
+                    if (!user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Student).Any())
                     {
                         // consider dublicate row
                         importSummaries.Add(new StudentImportSummary

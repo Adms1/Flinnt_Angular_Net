@@ -10,14 +10,14 @@
                 <div class="col_full nobottommargin">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input class="custom-file-input" id="inputGroupFile04" type="file">
+                            <input class="custom-file-input" id="inputGroupFile04" type="file" #file (change)="onFileChange($event)">
                             <label class="custom-file-label" for="inputGroupFile04">
                                 Allowed file types .XLS, .XLSX. Your file should not contain more than 100 parents.
                             </label>
                         </div>
                         <div class="input-group-append">
                             <button type="button" class="btn btn-primary btn-embossed"
-                                (click)="onUploadBtn();">Upload &nbsp;<i class="fa fa-upload"
+                                (click)="onUploadBtn(file);">Upload &nbsp;<i class="fa fa-upload"
                                     aria-hidden="true"></i></button>
                         </div>
                     </div>
@@ -45,10 +45,10 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="studentDataImporting">
-    <app-import-student-uploading></app-import-student-uploading>
+<ng-container *ngIf="studentDataImporting && !studentDataImported">
+    <app-import-student-uploading [progress]="progress"></app-import-student-uploading>
 </ng-container>
 
-<ng-container *ngIf="studentDataImported">
-    <app-import-student-upload></app-import-student-upload>
+<ng-container *ngIf="studentDataImported && !studentDataImporting">
+    <app-import-student-upload [studentData]="studentData"></app-import-student-upload>
 </ng-container>

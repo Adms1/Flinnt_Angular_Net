@@ -45,6 +45,7 @@ export class API {
 
   public static STUDENT_ROUTES = {
     saveStudent: `/${environment.API_Version}/student/create`,
+    importStudent: `/${environment.API_Version}/student/validate-student-import`
   };
 
   public static USER_ROUTES = {

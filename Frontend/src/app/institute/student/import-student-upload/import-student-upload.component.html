@@ -89,102 +89,49 @@
                             </th>
                         </tr>
                         <tbody>
-                            <tr>
-                                <td>
-                                    Rohit
-                                </td>
-                                <td>
-                                    Verma
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    rohit.verma@gmail.com
-                                </td>
-                                <td>
-                                    01/01/1999
-                                </td>
-                                <td>
-                                    Male
-                                </td>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    9990
-                                </td>
-                                <td>
-                                    sushant.verma@gmail.com
-                                </td>
-                                <td>
-                                    <span class="valid_mark">Valid</span>&nbsp; <i class="fa fa-user-plus blue" aria-hidden="true"></i>
-                                </td>   
-                            </tr>                            
-                            <tr>
-                                <td>
-                                    Aarti
-                                </td>
-                                <td>
-                                    Purohit
-                                </td>
-                                <td>
-                                    1234567891
-                                </td>
-                                <td>
-                                    aarti.purohit@gmail.com
-                                </td>
-                                <td>
-                                    01/01/2005
-                                </td>
-                                <td>
-                                    Female
-                                </td>
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    9991
-                                </td>
-                                <td>
-                                    kamini.purohit@gmail.com
-                                </td>
-                                <td>
-                                    <span class="valid_mark">Valid</span>&nbsp; <i class="fa fa-user-plus blue" aria-hidden="true"></i>
-                                </td>   
-                            </tr>
-                            <tr>
-                                <td class="th_text--red">
-                                    &lt;&lt;no-data&gt;&gt;
-                                </td>
-                                <td>
-                                    Shah
-                                </td>
-                                <td class="th_text--red">
-                                    12345678
-                                </td>
-                                <td class="th_text--red">
-                                    pratik.shah@gmail.com
-                                </td>
-                                <td>
-                                    01/01/2010
-                                </td>
-                                <td class="th_text--red">
-                                    &lt;&lt;no-data&gt;&gt;
-                                </td>
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    9992
-                                </td>
-                                <td class="th_text--red">
-                                    pratik.shah@gmail.com
-                                </td>
-                                <td>
-                                    <span class="invalid_mark">Invalid</span>&nbsp; <a href="javascript:void(0)" (click)="open(mymodal)">See error</a>
-                                </td>   
-                            </tr>
+                            <ng-container *ngFor="let s of studentData">
+                                <tr>
+                                    <td>
+                                        {{s.firstName}}
+                                    </td>
+                                    <td>
+                                        {{s.lastName}}
+                                    </td>
+                                    <td>
+                                        {{s.mobileNo}}
+                                    </td>
+                                    <td>
+                                        {{s.emailId}}
+                                    </td>
+                                    <td>
+                                        {{s.dob}}
+                                    </td>
+                                    <td>
+                                        {{s.genderId == "1" ? "Male" : "Female"}}
+                                    </td>
+                                    <td>
+                                        {{s.rollNo}}
+                                    </td>
+                                    <td>
+                                        {{s.grno}}
+                                    </td>
+                                    <td>
+                                        sushant.verma@gmail.com
+                                    </td>
+                                    <td>
+                                        <span *ngIf="s.importSummary.length==0">
+                                            <label class="valid_mark">Valid</label>
+                                        </span>
+                                        <span *ngIf="s.importSummary.length>0">
+                                            <label class="valid_mark">Invalid</label>
+                                            &nbsp;<a href="javascript:void(0)" (click)="open(mymodal)">error</a>
+                                        </span>
+                                        <span *ngIf="checkIsAccountCreated(p);">
+                                            &nbsp;<i class="fa fa-user-plus blue" aria-hidden="true"></i>
+                                        </span>
+                                    </td>   
+                                </tr>
+                            </ng-container>
                         </tbody>
                     </table>
                 </div>
@@ -195,7 +142,13 @@
                             aria-hidden="true"></i></button>
                 </a>
             </div>
-            <div class="col_full nobottommargin text-center">
+            <div class="col_full nobottommargin text-center" *ngIf="!isValidData">
+                <a routerLink="add-parent">
+                    <button type="button" class="btn btn-danger btn-embossed m-2">Re-upload &nbsp;<i class="fa fa-refresh"
+                            aria-hidden="true"></i></button>
+                </a>
+            </div>
+            <div class="col_full nobottommargin text-center" *ngIf="isValidData">
                 <a routerLink="add-parent">
                     <button type="button" class="btn btn-primary btn-embossed m-2">Import &nbsp;<i class="fa fa-user-plus"
                             aria-hidden="true"></i></button>

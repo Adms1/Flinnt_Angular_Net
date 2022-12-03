@@ -13,6 +13,7 @@ import { UtilityService } from 'src/app/_services/utility.service';
 export class ImportParentComponent implements OnInit {
   parentDataImporting: boolean = false;
   progress: number = 0;
+  
 
   constructor(private route: Router,
     private utilityService: UtilityService,

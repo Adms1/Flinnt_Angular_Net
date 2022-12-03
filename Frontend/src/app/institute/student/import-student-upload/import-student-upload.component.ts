@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,7 +8,8 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ImportStudentUploadComponent implements OnInit {
   closeResult: string;
-
+  @Input() studentData:any = [];
+  isValidData: boolean = true;
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -29,6 +30,21 @@ export class ImportStudentUploadComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return  `with: ${reason}`;
+    }
+  }
+
+  checkIsAccountCreated(studentItem){
+    if(!!studentItem.importSummary 
+      && studentItem.importSummary.length > 0){
+        let _item = studentItem.importSummary.filter(x=>x.FieldName == "Primary email address");
+
+        if(_item.length > 0){
+          _item.forEach(element => {
+            if(element.message == "A parent account already exists with the provided Primary email address"){
+              return true;
+            }
+          });
+        }
     }
   }
 }
