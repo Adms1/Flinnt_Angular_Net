@@ -281,7 +281,7 @@ namespace Flinnt.API.Controllers.V1
                                         var _stateName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "State")).ToString();
                                         var _countryName = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Country")).ToString();
                                         var _pincode = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Pincode")).ToString();
-
+                                        var _singleParent = row.ItemArray.GetValue(Array.IndexOf(dataSet.Rows[0].ItemArray, "Single Parent (Y/N)")).ToString();
                                         var parent = new ParentViewModel
                                         {
                                             Parent1FirstName = !string.IsNullOrEmpty(_parent1FirstName) ? _parent1FirstName : noData,
@@ -302,7 +302,8 @@ namespace Flinnt.API.Controllers.V1
                                             StateName = !string.IsNullOrEmpty(_stateName) ? _stateName : noData,
                                             CountryName = !string.IsNullOrEmpty(_countryName) ? _countryName : noData,
                                             Pincode = !string.IsNullOrEmpty(_pincode) ? _pincode : noData,
-                                            ImportStatus = "Valid"
+                                            ImportStatus = "Valid",
+                                            SingleParent = !string.IsNullOrEmpty(_singleParent) ? (_singleParent == "Y" ? (byte)1 : (byte)0) : (byte)1,
                                         };
 
                                         var summary = GenerateImportSummaryAsync(parent);
@@ -361,8 +362,9 @@ namespace Flinnt.API.Controllers.V1
                 });
             }
 
+
             if (string.IsNullOrEmpty(parentViewModel.Parent1Relationship)
-                || parentViewModel.Parent1Relationship.Equals("<<no-data>>"))
+            || parentViewModel.Parent1Relationship.Equals("<<no-data>>"))
             {
                 importSummaries.Add(new ParentImportSummary
                 {
@@ -371,14 +373,17 @@ namespace Flinnt.API.Controllers.V1
                 });
             }
 
-            if (string.IsNullOrEmpty(parentViewModel.Parent2Relationship)
-                || parentViewModel.Parent2Relationship.Equals("<<no-data>>"))
+            if (parentViewModel.SingleParent == 0)
             {
-                importSummaries.Add(new ParentImportSummary
+                if (string.IsNullOrEmpty(parentViewModel.Parent2Relationship)
+                    || parentViewModel.Parent2Relationship.Equals("<<no-data>>"))
                 {
-                    FieldName = "Parent 2 - Father/Mother",
-                    Message = "Parent 2 - Father/Mother could not be empty and it must be M (for Male) and F (for Female)"
-                });
+                    importSummaries.Add(new ParentImportSummary
+                    {
+                        FieldName = "Parent 2 - Father/Mother",
+                        Message = "Parent 2 - Father/Mother could not be empty and it must be M (for Male) and F (for Female)"
+                    });
+                }
             }
 
             if (string.IsNullOrEmpty(parentViewModel.PrimaryEmailId)
@@ -427,11 +432,14 @@ namespace Flinnt.API.Controllers.V1
 
         [Route("import-parent-roaster")]
         [HttpPost]
-        public async Task<object> ImportParentRoster(List<ParentViewModel> parentViewModel)
+        public async Task<object> ImportParentRoster([FromQuery]IEnumerable<ParentViewModel> parentViewModel)
         {
             return await GetDataWithMessage(async () =>
             {
-                _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParentsAsync(parentViewModel));
+                if(parentViewModel.ToList().Count > 0)
+                {
+                    _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParentsAsync(parentViewModel.ToList()));
+                }
                 return Response(true, string.Empty);
             });
         }

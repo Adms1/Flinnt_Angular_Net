@@ -22,6 +22,10 @@ export class ParentService {
     return this.apiService.post(`${API.PARENT_ROUTES.saveParent}`, params, true);
   }
 
+  importFinalData(params) {
+    return this.apiService.post(`${API.PARENT_ROUTES.importFinalData}`, params, true);
+  }
+
   importParent(params): Observable<any> {
     return this.http.post
       (environment.APP_URL + `${API.PARENT_ROUTES.importParent}`, params, {

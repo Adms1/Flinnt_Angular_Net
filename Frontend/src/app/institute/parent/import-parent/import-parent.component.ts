@@ -1,6 +1,7 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { ApiResponse } from 'src/app/_models/response';
 import { ParentService } from 'src/app/_services/parent.service';
 import { UtilityService } from 'src/app/_services/utility.service';
@@ -12,8 +13,10 @@ import { UtilityService } from 'src/app/_services/utility.service';
 })
 export class ImportParentComponent implements OnInit {
   parentDataImporting: boolean = false;
+  parentDataImported: boolean = false;
   progress: number = 0;
-  
+  parentData:any=[];
+  resetProgressSubject$: Subject<number> = new Subject<number>();
 
   constructor(private route: Router,
     private utilityService: UtilityService,
@@ -38,6 +41,7 @@ export class ImportParentComponent implements OnInit {
   }
 
   onUploadBtn(files) {
+    var that = this;
     const file = files.files;
     if (file.length === 0) {
       return;
@@ -51,26 +55,31 @@ export class ImportParentComponent implements OnInit {
     this.parentService.importParent(formData).subscribe((event: HttpEvent<any>) => {
       switch (event.type) {
         case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
+          that.progress = Math.round(event.loaded / event.total * 100);
+          that.resetProgressSubject$.next(that.progress);
           console.log(`Uploaded! ${this.progress}%`);
           break;
         case HttpEventType.Response:
           const body = event.body as ApiResponse;
           sessionStorage.setItem("parent-import", JSON.stringify(body.data));
+          that.progress = 100;
+          that.resetProgressSubject$.next(that.progress);
+          that.parentData = body.data;
           if (body.statusCode == 200) {
             setTimeout(() => {
-              this.progress = 0;
-              this.route.navigate(["/institute/parent/import-parent-upload"]);
+              that.parentDataImporting = false;
+              that.parentDataImported = true;
+              that.progress = 0;
             }, 1000);
           }
           else {
-            this.utilityService.showErrorToast(body.message);
+            that.utilityService.showErrorToast(body.message);
           }
       }
     },
       err => {
-        this.progress = 0;
-        this.utilityService.showErrorToast('Unable to upload');
-      });
+        that.progress = 0;
+        that.utilityService.showErrorToast('Unable to upload');
+    });
   }
 }

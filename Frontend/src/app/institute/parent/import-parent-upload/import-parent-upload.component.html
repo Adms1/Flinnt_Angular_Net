@@ -83,7 +83,7 @@
                             </th>
                         </tr>
                         <tbody>
-                            <ng-container *ngFor="let p of parents">
+                            <ng-container *ngFor="let p of parentData">
                                 <tr>
                                     <td colspan="2">
                                         <span class="th_shadow--blue">{{p.parent1Relationship == 'F' ? "Father" : p.parent1Relationship == 'M' ? "Mother" : p.parent1Relationship}}</span>
@@ -226,7 +226,7 @@
             </div>
             <div class="col_full nobottommargin text-center" *ngIf="isValidData">
                 <a routerLink="add-parent">
-                    <button type="button" class="btn btn-primary btn-embossed m-2">Import &nbsp;<i class="fa fa-user-plus"
+                    <button type="button" class="btn btn-primary btn-embossed m-2" (click)="importData()">Import &nbsp;<i class="fa fa-user-plus"
                             aria-hidden="true"></i></button>
                 </a>
             </div>

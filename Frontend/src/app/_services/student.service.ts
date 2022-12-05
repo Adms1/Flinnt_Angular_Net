@@ -18,6 +18,10 @@ export class StudentService {
     return this.apiService.post(`${API.STUDENT_ROUTES.saveStudent}`, params, true);
   }
 
+  importFinalStudentData(params) {
+    return this.apiService.post(`${API.STUDENT_ROUTES.importFinalData}`, params, true);
+  }
+
   importStudent(params): Observable<any> {
     return this.http.post
       (environment.APP_URL + `${API.STUDENT_ROUTES.importStudent}`, params, {

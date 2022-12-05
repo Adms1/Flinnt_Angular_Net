@@ -1,4 +1,4 @@
-<ng-container *ngIf="!parentDataImporting">
+<ng-container *ngIf="!parentDataImporting && !parentDataImported">
     <div class="content-wrap">
         <div class="container clearfix">
             <div id="backdropbox" class="col_full col_last">
@@ -44,6 +44,10 @@
     </div>
 </ng-container>
 
-<ng-container *ngIf="parentDataImporting">
-    <app-import-parent-uploading [progess] = "progress"></app-import-parent-uploading>
+<ng-container *ngIf="parentDataImporting && !parentDataImported">
+    <app-import-parent-uploading [progress$]="resetProgressSubject$.asObservable()"></app-import-parent-uploading>
+</ng-container>
+
+<ng-container *ngIf="parentDataImported && !parentDataImporting">
+    <app-import-parent-upload [parentData]="parentData"></app-import-parent-upload>
 </ng-container>

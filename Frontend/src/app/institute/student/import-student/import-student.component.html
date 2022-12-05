@@ -46,7 +46,7 @@
 </ng-container>
 
 <ng-container *ngIf="studentDataImporting && !studentDataImported">
-    <app-import-student-uploading [progress]="progress"></app-import-student-uploading>
+    <app-import-student-uploading [progress$]="resetProgressSubject$.asObservable()"></app-import-student-uploading>
 </ng-container>
 
 <ng-container *ngIf="studentDataImported && !studentDataImporting">

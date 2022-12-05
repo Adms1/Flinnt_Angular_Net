@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ApiResponse } from 'src/app/_models/response';
+import { ParentService } from 'src/app/_services/parent.service';
 
 @Component({
   selector: 'app-import-parent-upload',
@@ -8,16 +10,17 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./import-parent-upload.component.css']
 })
 export class ImportParentUploadComponent implements OnInit {
+  @Input() parentData: any = [];
   closeResult: string;
   isValidData: boolean = true;
-  parents: any = [];
   constructor(private modalService: NgbModal,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private parentService:ParentService) {
     const _parentData = sessionStorage.getItem("parent-import");
     if (_parentData) {
-      this.parents = JSON.parse(_parentData);
+      const _parents = JSON.parse(_parentData);
 
-      if(this.parents.filter(x=>x.importSummary.length > 0).length > 0){
+      if(_parents.filter(x=>x.importSummary.length > 0).length > 0){
         this.isValidData = false;
       }
     }
@@ -70,5 +73,12 @@ export class ImportParentUploadComponent implements OnInit {
           });
         }
     }
+  }
+
+  importData(){
+    this.parentService.importFinalData(JSON.stringify(this.parentData)).then((res : ApiResponse) =>{
+      if(res.statusCode == 200){
+      }
+    });
   }
 }

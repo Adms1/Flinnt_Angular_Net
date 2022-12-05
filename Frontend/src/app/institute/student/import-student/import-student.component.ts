@@ -1,5 +1,6 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ApiResponse } from 'src/app/_models/response';
 import { StudentService } from 'src/app/_services/student.service';
 import { UtilityService } from 'src/app/_services/utility.service';
@@ -14,6 +15,7 @@ export class ImportStudentComponent implements OnInit {
   studentDataImporting: boolean = false;
   studentData:any=[];
   progress: number = 0;
+  resetProgressSubject$: Subject<number> = new Subject<number>();
   
   constructor(private utilityService: UtilityService,
     private studentService: StudentService) { 
@@ -39,6 +41,7 @@ export class ImportStudentComponent implements OnInit {
   }
 
   onUploadBtn(files) {
+    var that = this;
     const file = files.files;
     if (file.length === 0) {
       return;
@@ -52,22 +55,26 @@ export class ImportStudentComponent implements OnInit {
     this.studentService.importStudent(formData).subscribe((event: HttpEvent<any>) => {
       switch (event.type) {
         case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          console.log(`Uploaded! ${this.progress}%`);
+          that.progress = Math.round(event.loaded / event.total * 100);
+          that.resetProgressSubject$.next(that.progress);
+          
+          console.log(`Uploaded! ${that.progress}%`);
           break;
         case HttpEventType.Response:
           const body = event.body as ApiResponse;
           sessionStorage.setItem("student-import", JSON.stringify(body.data));
           if (body.statusCode == 200) {
-            this.studentData = body.data;
+            that.progress = 100;
+            that.resetProgressSubject$.next(that.progress);
+            that.studentData = body.data;
             setTimeout(() => {
-              this.studentDataImporting = false;
-              this.studentDataImported = true;
-              this.progress = 0;
+              that.studentDataImporting = false;
+              that.studentDataImported = true;
+              that.progress = 0;
             }, 1000);
           }
           else {
-            this.utilityService.showErrorToast(body.message);
+            that.utilityService.showErrorToast(body.message);
           }
       }
     },
