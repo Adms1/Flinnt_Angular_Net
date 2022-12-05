@@ -33,6 +33,18 @@ export class ImportStudentUploadComponent implements OnInit {
     }
   }
 
+  showError(studentItem) {
+    let msgString = "";
+    if (!!studentItem.importSummary
+      && studentItem.importSummary.length > 0) {
+        studentItem.importSummary.forEach(element => {
+        msgString += element.message + "\n\n";
+      });
+    }
+
+    alert(msgString);
+  }
+
   checkIsAccountCreated(studentItem){
     if(!!studentItem.importSummary 
       && studentItem.importSummary.length > 0){

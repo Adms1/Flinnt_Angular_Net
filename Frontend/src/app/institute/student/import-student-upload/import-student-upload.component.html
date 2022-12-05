@@ -116,7 +116,7 @@
                                         {{s.grno}}
                                     </td>
                                     <td>
-                                        sushant.verma@gmail.com
+                                        {{s.parentPrimaryEmailId}}
                                     </td>
                                     <td>
                                         <span *ngIf="s.importSummary.length==0">
@@ -124,7 +124,7 @@
                                         </span>
                                         <span *ngIf="s.importSummary.length>0">
                                             <label class="valid_mark">Invalid</label>
-                                            &nbsp;<a href="javascript:void(0)" (click)="open(mymodal)">error</a>
+                                            &nbsp;<a href="javascript:void(0)" (click)="showError(s)">error</a>
                                         </span>
                                         <span *ngIf="checkIsAccountCreated(p);">
                                             &nbsp;<i class="fa fa-user-plus blue" aria-hidden="true"></i>

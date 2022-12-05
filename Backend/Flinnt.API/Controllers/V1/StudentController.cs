@@ -275,6 +275,7 @@ namespace Flinnt.API.Controllers.V1
                                             GenderId = !string.IsNullOrEmpty(_gendar) ? (_gendar == "M" ? (byte)1 : (byte)2) : (byte)0,
                                             RollNo = !string.IsNullOrEmpty(_rollNo) ? _rollNo : noData,
                                             Grno = !string.IsNullOrEmpty(_grNo) ? _grNo : noData,
+                                            ParentPrimaryEmailId = !string.IsNullOrEmpty(_parentEmailAddress) ? _parentEmailAddress : noData,
                                             ImportStatus = "Valid"
                                         };
 
@@ -359,7 +360,7 @@ namespace Flinnt.API.Controllers.V1
                 if (user != null)
                 {
                     // usertype parent or student check
-                    if (!user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Student).Any())
+                    if (!user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent).Any())
                     {
                         // consider dublicate row
                         importSummaries.Add(new StudentImportSummary
