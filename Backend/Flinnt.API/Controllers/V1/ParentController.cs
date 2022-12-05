@@ -100,9 +100,9 @@ namespace Flinnt.API.Controllers.V1
             var currentInstituteID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "InstituteId")?.Value;
             var currentUserID = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
 
-            var extStudent = await _parentService.ValidateParent(model);
+            var extParent = await _parentService.ValidateParent(model);
 
-            if (extStudent.Any())
+            if (extParent.Any())
             {
                 return Response(new ParentViewModel(), "Parent account already exist!", HttpStatusCode.Forbidden);
             }
@@ -431,7 +431,7 @@ namespace Flinnt.API.Controllers.V1
         {
             return await GetDataWithMessage(async () =>
             {
-                _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParents(parentViewModel));
+                _backgroundService.EnqueueJob<IBackgroundParentJobs>(m => m.ImportParentsAsync(parentViewModel));
                 return Response(true, string.Empty);
             });
         }

@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using Flinnt.Background;
 using Flinnt.Business.Enums.General;
 using Flinnt.Business.Helpers;
 using Flinnt.Business.ViewModels;
@@ -415,7 +416,7 @@ namespace Flinnt.API.Controllers.V1
         {
             return await GetDataWithMessage(async () =>
             {
-                _backgroundService.EnqueueJob<IBackgroundStudentJobs>(m => m.ImportStudents(studentViewModels));
+                _backgroundService.EnqueueJob<IBackgroundStudentJobs>(m => m.ImportStudentsAsync(studentViewModels));
                 return Response(true, string.Empty);
             });
         }

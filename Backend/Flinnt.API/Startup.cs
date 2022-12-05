@@ -1,3 +1,4 @@
+using Flinnt.Background;
 using Flinnt.Business.Helpers;
 using Flinnt.Business.ViewModels;
 using Flinnt.Domain;
@@ -55,6 +56,7 @@ namespace Flinnt.API
             });
 
             services.AddMvc();
+            services.AddHttpContextAccessor();
             services.AddDbContext<edplexdbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<edplexdbContext>().AddDefaultTokenProviders();
             services.AddDistributedMemoryCache();
@@ -192,6 +194,8 @@ namespace Flinnt.API
         {
             services.AddScoped<IBackgroundService, Services.BackgroundService>();
             services.AddScoped<IBackgroundMailerJobs, BackgroundMailerJobs>();
+            services.AddScoped<IBackgroundStudentJobs, BackgroundStudentJobs>();
+            services.AddScoped<IBackgroundParentJobs, BackgroundParentJobs>();
         }
 
         private static void RegisterSwagger(IServiceCollection services)

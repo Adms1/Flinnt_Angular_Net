@@ -1,10 +1,11 @@
 using Flinnt.Business.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Flinnt.Interfaces.Background
 {
     public interface IBackgroundParentJobs : IBackgroundJobs
     {
-        void ImportParents(List<ParentViewModel> parentViewModels);
+        Task ImportParentsAsync(List<ParentViewModel> parentViewModels);
     }
 }
