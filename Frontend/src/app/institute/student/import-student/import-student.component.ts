@@ -16,7 +16,7 @@ export class ImportStudentComponent implements OnInit {
   studentData:any=[];
   progress: number = 0;
   resetProgressSubject$: Subject<number> = new Subject<number>();
-  
+  fileName: string="";
   constructor(private utilityService: UtilityService,
     private studentService: StudentService) { 
 
@@ -33,6 +33,7 @@ export class ImportStudentComponent implements OnInit {
     switch (fileType.toLocaleLowerCase()) {
       case ".xls":
       case ".xlsx":
+        this.fileName = file.name;
         break;
       default:
         this.utilityService.showErrorToast('This file extension not supported!');

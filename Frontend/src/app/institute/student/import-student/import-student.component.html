@@ -11,8 +11,11 @@
                     <div class="input-group">
                         <div class="custom-file">
                             <input class="custom-file-input" id="inputGroupFile04" type="file" #file (change)="onFileChange($event)">
-                            <label class="custom-file-label" for="inputGroupFile04">
+                            <label class="custom-file-label" for="inputGroupFile04" *ngIf="fileName == ''">
                                 Allowed file types .XLS, .XLSX. Your file should not contain more than 100 parents.
+                            </label>
+                            <label class="custom-file-label" for="inputGroupFile04" *ngIf="fileName != ''">
+                                {{fileName}}
                             </label>
                         </div>
                         <div class="input-group-append">
@@ -25,7 +28,7 @@
                 <div class="clear"></div>
 
                 <div class="col_full nobottommargin">
-                    <a href="javascript:void(0)">Download</a>
+                    <a href="./assets/templates/download/Student-Import-Template.xlsx" target="_blank">Download</a>
                     <small>
                         sample file format. You must upload file in this format only.
                         Fill vaules in all columns which are marked as mandatory (prefixed with label Mandatory)

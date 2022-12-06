@@ -17,7 +17,7 @@ export class ImportParentComponent implements OnInit {
   progress: number = 0;
   parentData:any=[];
   resetProgressSubject$: Subject<number> = new Subject<number>();
-
+  fileName: string = "";
   constructor(private route: Router,
     private utilityService: UtilityService,
     private parentService: ParentService) { }
@@ -33,6 +33,7 @@ export class ImportParentComponent implements OnInit {
     switch (fileType.toLocaleLowerCase()) {
       case ".xls":
       case ".xlsx":
+        this.fileName = file.name;
         break;
       default:
         this.utilityService.showErrorToast('This file extension not supported!');
