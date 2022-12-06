@@ -41,6 +41,8 @@ namespace Flinnt.Business.ViewModels
         public string CountryName { get; set; }
         public List<ParentImportSummary> ImportSummary { get; set; }
         public string ImportStatus { get; set; }
+        public int InstituteId { get; set; }
+        public int LoggedUserId { get; set; }
     }
 
     public class ParentImportSummary 

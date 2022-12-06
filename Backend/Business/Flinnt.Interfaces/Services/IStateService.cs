@@ -10,5 +10,6 @@ namespace Flinnt.Interfaces.Services
         Task<List<StateViewModel>> GetAllAsync();
         Task<StateViewModel> GetAsync(int id);
         Task<List<StateViewModel>> GetByCountryIdAsync(int CountryId);
+        Task<StateViewModel> GetByStateNameAsync(string stateName);
     }
 }

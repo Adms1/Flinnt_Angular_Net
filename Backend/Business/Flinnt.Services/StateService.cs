@@ -30,5 +30,10 @@ namespace Flinnt.Services
         {
             return mapper.Map<List<StateViewModel>>(await unitOfWork.StateRepository.FindByAsync(x=>x.CountryId == CountryId));
         }
+
+        public async Task<StateViewModel> GetByStateNameAsync(string stateName)
+        {
+            return mapper.Map<StateViewModel>(await Task.FromResult(await unitOfWork.StateRepository.FindByFirstOrDefaultAsync(x => x.StateName.ToLower() == stateName.ToLower())));
+        }
     }
 }

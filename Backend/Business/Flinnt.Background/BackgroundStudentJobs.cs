@@ -16,8 +16,6 @@ namespace Flinnt.Background
     // TODO: Refactor Code to re-used everyware
     public class BackgroundStudentJobs : IBackgroundStudentJobs
     {
-        public static IUnitOfWork unitOfWork { get; set; }
-        public static IMapper mapper { get; set; }
         public static IStudentService _studentService;
         public static IUserService _userService;
         public static IUserProfileService _userProfileService;
@@ -29,144 +27,153 @@ namespace Flinnt.Background
 
         #region Constructor
 
-        public BackgroundStudentJobs()
+        public BackgroundStudentJobs(
+           IStudentService studentService,
+           IUserService userService,
+           IUserProfileService userProfileService,
+           IUserInstituteService userInstituteService,
+           ICityService cityService,
+           IUserAccountHistoryService userAccountHistoryService,
+           IUserParentChildRelationshipService userParentChildRelationshipService,
+           IUserInstituteGroupService userInstituteGroupService
+            )
         {
+            _studentService = studentService;
+            _userService = userService;
+            _userProfileService = userProfileService;
+            _userInstituteService = userInstituteService;
+            _cityService = cityService;
+            _userAccountHistoryService = userAccountHistoryService;
+            _userInstituteGroupService = userInstituteGroupService;
+            _userParentChildRelationshipService = userParentChildRelationshipService;
         }
         #endregion Constructor
 
         public async Task ImportStudentsAsync(List<StudentViewModel> studentViewModels)
         {
-            bool isDispose = false;
-            if (unitOfWork != null)
+            try
             {
-                isDispose = true;
-            }
-            unitOfWork = new UnitOfWork(new edplexdbContext());
-
-            _studentService = new StudentService(unitOfWork, mapper);
-            _userService = new UserService(unitOfWork, mapper);
-            _userProfileService = new UserProfileService(unitOfWork, mapper);
-            _userInstituteService = new UserInstituteService(unitOfWork, mapper);
-            _cityService = new CityService(unitOfWork, mapper);
-            _userAccountHistoryService = new UserAccountHistoryService(unitOfWork, mapper);
-            _userParentChildRelationshipService = new UserParentChildRelationshipService(unitOfWork, mapper);
-            _userInstituteGroupService = new UserInstituteGroupService(unitOfWork, mapper);
-
-            // TODO: To get current claim values
-            var currentInstituteID = 14;
-            var currentUserID = 12;
-
-            foreach (StudentViewModel _student in studentViewModels)
-            {
-                var extStudent = await _studentService.ValidateStudent(_student);
-
-                if (extStudent.Any())
+                foreach (StudentViewModel _student in studentViewModels)
                 {
-                    continue;
-                }
+                    var currentInstituteID = _student.InstituteId;
+                    var currentUserID = _student.LoggedUserId;
 
-                var user = await _userService.GetUserByLoginId(_student.EmailId);
-                if (user != null)
-                {
-                    // usertype parent or student check
-                    if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                    var extStudent = await _studentService.ValidateStudent(_student);
+
+                    if (extStudent.Any())
                     {
-                        // consider dublicate row
-                        // Student account already exist!
                         continue;
                     }
-                }
-                else
-                {
-                    // user not found it will need to create and mapped
-                    var userRes = await _userService.AddAsync(new User
-                    {
-                        LoginId = _student.EmailId,
-                        AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
-                        IsActive = true,
-                        IsDeleted = false,
-                        Password = "flinnt@123",
-                        OneTimePassword = "flinnt@123",
-                        UserTypeId = (int)UserTypes.Student,
-                        RegistrationDateTime = DateTime.Now,
-                        LastLoginDateTime = DateTime.Now
-                    });
 
-                    if (userRes != null)
+                    var user = await _userService.GetUserByLoginId(_student.EmailId);
+                    if (user != null)
                     {
-                        _student.UserId = userRes.UserId;
-
-                        // check relation with parent by passing parentId (userid)
-                        UserProfile prtUsr = new UserProfile();
-                        if (_student.parentUserId != null)
+                        // usertype parent or student check
+                        if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
                         {
-                            var parentUser = await _userService.GetAsync(_student.parentUserId.Value);
+                            // consider dublicate row
+                            // Student account already exist!
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        // user not found it will need to create and mapped
+                        var userRes = await _userService.AddAsync(new User
+                        {
+                            LoginId = _student.EmailId,
+                            AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                            IsActive = true,
+                            IsDeleted = false,
+                            Password = "flinnt@123",
+                            OneTimePassword = "flinnt@123",
+                            UserTypeId = (int)UserTypes.Student,
+                            RegistrationDateTime = DateTime.Now,
+                            LastLoginDateTime = DateTime.Now
+                        });
 
-                            if (parentUser == null)
+                        if (userRes != null)
+                        {
+                            _student.UserId = userRes.UserId;
+
+                            // check relation with parent by passing parentId (userid)
+                            UserProfile prtUsr = new UserProfile();
+                            if (_student.parentUserId != null)
                             {
-                                //"Parent account not exist!"
-                                continue;
+                                var parentUser = await _userService.GetAsync(_student.parentUserId.Value);
+
+                                if (parentUser == null)
+                                {
+                                    //"Parent account not exist!"
+                                    continue;
+                                }
+
+                                prtUsr = parentUser.UserProfiles.FirstOrDefault();
+
+                                await _userParentChildRelationshipService.AddAsync(new UserParentChildRelationshipModel
+                                {
+                                    ChildUserId = userRes.UserId,
+                                    ChildUserTypeId = (int)UserTypes.Student,
+                                    ParentUserId = _student.parentUserId.Value,
+                                    InstituteId = Convert.ToInt32(currentInstituteID),
+                                    ParentUserTypeId = (int)UserTypes.Parent,
+                                });
                             }
 
-                            prtUsr = parentUser.UserProfiles.FirstOrDefault();
-
-                            await _userParentChildRelationshipService.AddAsync(new UserParentChildRelationshipModel
+                            await _userProfileService.AddAsync(new UserProfile
                             {
-                                ChildUserId = userRes.UserId,
-                                ChildUserTypeId = (int)UserTypes.Student,
-                                ParentUserId = _student.parentUserId.Value,
-                                InstituteId = Convert.ToInt32(currentInstituteID),
-                                ParentUserTypeId = (int)UserTypes.Parent,
+                                FirstName = _student.FirstName,
+                                LastName = _student.LastName,
+                                EmailId = _student.EmailId,
+                                UserId = userRes.UserId,
+                                MobileNo = _student.MobileNo,
+                                GenderId = _student.GenderId,
+                                CreateDateTime = DateTime.Now,
+                                CityId = prtUsr?.CityId,
+                                Address = prtUsr?.Address,
+                                CountryId = prtUsr?.CountryId,
+                                StateId = prtUsr?.StateId,
+                                Pincode = prtUsr?.Pincode
                             });
+
+                            await _userInstituteService.AddAsync(new UserInstitute
+                            {
+                                InstituteId = Convert.ToInt32(currentInstituteID),
+                                UserId = userRes.UserId,
+                                UserTypeId = (int)UserTypes.Student,
+                                IsActive = true,
+                                CreateDateTime = DateTime.Now
+                            });
+
+                            await _userInstituteGroupService.AddAsync(new UserInstituteGroupModel
+                            {
+                                UserId = userRes.UserId,
+                                InstituteId = Convert.ToInt32(currentInstituteID),
+                                InstituteGroupId = _student.instituteGroupId,
+                                InstituteDivisionId = _student.instituteDivisionId
+                            });
+
+                            //save userAccountHistory
+                            UserAccountHistory userAccountHistory = new UserAccountHistory
+                            {
+                                UserId = _student.UserId,
+                                ActionUserId = Convert.ToInt32(currentUserID),
+                                HistoryAction = "UserCreatedForStudent",
+                                ClientIp = "BackgroundJob"
+                            };
+                            await _userAccountHistoryService.AddAsync(userAccountHistory);
                         }
-
-                        await _userProfileService.AddAsync(new UserProfile
-                        {
-                            FirstName = _student.FirstName,
-                            LastName = _student.LastName,
-                            EmailId = _student.EmailId,
-                            UserId = userRes.UserId,
-                            MobileNo = _student.MobileNo,
-                            GenderId = _student.GenderId,
-                            CreateDateTime = DateTime.Now,
-                            CityId = prtUsr?.CityId,
-                            Address = prtUsr?.Address,
-                            CountryId = prtUsr?.CountryId,
-                            StateId = prtUsr?.StateId,
-                            Pincode = prtUsr?.Pincode
-                        });
-
-                        await _userInstituteService.AddAsync(new UserInstitute
-                        {
-                            InstituteId = Convert.ToInt32(currentInstituteID),
-                            UserId = userRes.UserId,
-                            UserTypeId = (int)UserTypes.Student,
-                            IsActive = true,
-                            CreateDateTime = DateTime.Now
-                        });
-
-                        await _userInstituteGroupService.AddAsync(new UserInstituteGroupModel
-                        {
-                            UserId = userRes.UserId,
-                            InstituteId = Convert.ToInt32(currentInstituteID),
-                            InstituteGroupId = _student.instituteGroupId,
-                            InstituteDivisionId = _student.instituteDivisionId
-                        });
-
-                        //save userAccountHistory
-                        UserAccountHistory userAccountHistory = new UserAccountHistory
-                        {
-                            UserId = _student.UserId,
-                            ActionUserId = Convert.ToInt32(currentUserID),
-                            HistoryAction = "UserCreatedForStudent",
-                            ClientIp = "BackgroundJob"
-                        };
-                        await _userAccountHistoryService.AddAsync(userAccountHistory);
                     }
-                }
 
-                var student = await _studentService.AddAsync(_student);
+                    var student = await _studentService.AddAsync(_student);
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
         }
 
         private static long GetInstituteId()

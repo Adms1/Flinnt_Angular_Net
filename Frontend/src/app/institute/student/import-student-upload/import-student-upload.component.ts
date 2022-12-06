@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Constants } from 'src/app/_helpers/constants';
 import { ApiResponse } from 'src/app/_models/response';
+import { UserProfile } from 'src/app/_models/user-profile';
 import { StudentService } from 'src/app/_services/student.service';
 
 @Component({
@@ -12,10 +14,15 @@ export class ImportStudentUploadComponent implements OnInit {
   closeResult: string;
   @Input() studentData: any = [];
   isValidData: boolean = true;
+  userProfile = {} as UserProfile;
+  instituteId = 0;
+  
   constructor(private modalService: NgbModal,
     private studentService: StudentService) { }
 
   ngOnInit(): void {
+    this.getUser();
+
     const _studentData = sessionStorage.getItem("student-import");
     if (_studentData) {
       const _students = JSON.parse(_studentData);
@@ -24,6 +31,18 @@ export class ImportStudentUploadComponent implements OnInit {
         this.isValidData = false;
       }
     }
+  }
+  
+  getUser() {
+    const userObj = localStorage.getItem(Constants.LOGIN_PAGE.USER_OBJ);
+
+    if (!!userObj) {
+      this.userProfile = JSON.parse(userObj) as UserProfile;
+    }
+
+    const instituteId = localStorage.getItem(Constants.LOGIN_PAGE.INSTITUTE_ID);
+
+    this.instituteId = Number(instituteId);
   }
 
   open(content) {
@@ -72,7 +91,14 @@ export class ImportStudentUploadComponent implements OnInit {
   }
 
   importData() {
-    this.studentService.importFinalStudentData(JSON.stringify(this.studentData)).then((res: ApiResponse) => {
+    var that = this;
+    this.studentData.forEach(element => {
+      element.InstituteId = that.instituteId;
+      element.LoggedUserId = that.userProfile.userId;
+    });
+
+    this.studentService.importFinalStudentData(JSON.stringify(this.studentData))
+    .then((res: ApiResponse) => {
       if (res.statusCode == 200) {
       }
     });

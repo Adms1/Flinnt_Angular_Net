@@ -432,7 +432,7 @@ namespace Flinnt.API.Controllers.V1
 
         [Route("import-parent-roaster")]
         [HttpPost]
-        public async Task<object> ImportParentRoster([FromQuery]IEnumerable<ParentViewModel> parentViewModel)
+        public async Task<object> ImportParentRoster([FromBody] ParentViewModel[] parentViewModel)
         {
             return await GetDataWithMessage(async () =>
             {

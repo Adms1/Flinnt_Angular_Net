@@ -31,6 +31,8 @@ namespace Flinnt.Business.ViewModels
         public string ParentPrimaryEmailId { get; set; }
         public List<StudentImportSummary> ImportSummary { get; set; }
         public string ImportStatus { get; set; }
+        public int InstituteId { get; set; }
+        public int LoggedUserId { get; set; }
     }
 
     public class StudentImportSummary

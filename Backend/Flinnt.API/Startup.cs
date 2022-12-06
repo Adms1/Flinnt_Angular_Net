@@ -1,3 +1,4 @@
+using Flinnt.API.Helpers;
 using Flinnt.Background;
 using Flinnt.Business.Helpers;
 using Flinnt.Business.ViewModels;
@@ -35,6 +36,8 @@ namespace Flinnt.API
 {
     public class Startup
     {
+        private IServiceCollection serviceCollection;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -61,7 +64,7 @@ namespace Flinnt.API
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<edplexdbContext>().AddDefaultTokenProviders();
             services.AddDistributedMemoryCache();
             services.AddAutoMapper(c => c.AddProfile<MapperConfiguration>(), typeof(Startup));
-
+                
             RegisterRequestLocalizationOptions(services);
             RegisterNewtonsoftJson(services);
             RegisterJwt(services);
@@ -70,6 +73,8 @@ namespace Flinnt.API
             RegisterSwagger(services);
             RegisterCors(services);
             RegisterIdentity(services);
+
+            serviceCollection = services;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +86,10 @@ namespace Flinnt.API
             }
 
             // Map Dashboard to the `http://<your-app>/hangfire` URL.
+            // hangfire implementation
+            GlobalConfiguration.Configuration.UseActivator(new HangfireJobActivator(serviceCollection));
+
+            app.UseHangfireServer();
             app.UseHangfireDashboard();
 
             app.UseSwagger();
