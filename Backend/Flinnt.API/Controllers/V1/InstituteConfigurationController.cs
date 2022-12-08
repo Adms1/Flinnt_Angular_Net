@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Flinnt.API.Controllers
 {
@@ -182,20 +183,31 @@ namespace Flinnt.API.Controllers
 
         private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteGroupAsync(InstituteGroupViewModel model)
         {
-            var instituteGroup = await _instituteGroupService.AddAsync(model);
-            if (instituteGroup)
+            using(var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                return Response(instituteGroup, _localizer["RecordAddSuccess"].Value.ToString());
+                var flag = await _instituteGroupService.AddAsync(model);
+                scope.Complete();
+
+                if (flag)
+                {
+                    return Response(flag, _localizer["RecordAddSuccess"].Value.ToString());
+                }
             }
-            return Response(instituteGroup, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+            
+            return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteGroupAsync(InstituteGroupViewModel model)
         {
-            var flag = await _instituteGroupService.UpdateAsync(model);
-            if (flag)
-                return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            return Response(flag, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var flag = await _instituteGroupService.UpdateAsync(model);
+                scope.Complete();
+
+                if (flag)
+                    return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            }
+            return Response(false, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
         #endregion
 
@@ -263,20 +275,30 @@ namespace Flinnt.API.Controllers
 
         private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteDivisionAsync(InstituteDivisionViewModel model)
         {
-            var instituteDivision = await _instituteDivisionService.AddAsync(model);
-            if (instituteDivision)
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                return Response(instituteDivision, _localizer["RecordAddSuccess"].Value.ToString());
+                var flag = await _instituteDivisionService.AddAsync(model);
+                scope.Complete();
+
+                if (flag)
+                {
+                    return Response(flag, _localizer["RecordAddSuccess"].Value.ToString());
+                }
             }
-            return Response(instituteDivision, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+            return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteDivisionAsync(InstituteDivisionViewModel model)
         {
-            var flag = await _instituteDivisionService.UpdateAsync(model);
-            if (flag)
-                return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            return Response(flag, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var flag = await _instituteDivisionService.UpdateAsync(model);
+                scope.Complete();
+
+                if (flag)
+                    return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            }
+            return Response(false, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
         [HttpDelete]
@@ -285,10 +307,15 @@ namespace Flinnt.API.Controllers
         {
             return await GetDataWithMessage(async () =>
             {
-                var flag = await _instituteDivisionService.DeleteAsync(instituteDivisionId);
-                if (flag)
-                    return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
-                return Response(new BooleanResponseModel { Value = flag }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    var flag = await _instituteDivisionService.DeleteAsync(instituteDivisionId);
+                    scope.Complete();
+
+                    if (flag)
+                        return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
+                }
+                return Response(new BooleanResponseModel { Value = false }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
 
@@ -325,12 +352,17 @@ namespace Flinnt.API.Controllers
 
         private async Task<Tuple<bool, string, HttpStatusCode>> AddInstituteConfigureSessionAsync(InstituteConfigureSessionViewModel model)
         {
-            var instituteConfigureSession = await _instituteConfigureSessionService.AddAsync(model);
-            if (instituteConfigureSession)
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                return Response(instituteConfigureSession, _localizer["RecordAddSuccess"].Value.ToString());
+                var flag = await _instituteConfigureSessionService.AddAsync(model);
+                scope.Complete();
+
+                if (flag)
+                {
+                    return Response(flag, _localizer["RecordAddSuccess"].Value.ToString());
+                }
             }
-            return Response(instituteConfigureSession, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+            return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
     }
 }

@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Flinnt.API.Controllers
 {
@@ -100,7 +101,6 @@ namespace Flinnt.API.Controllers
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
-
         }
 
         [AllowAnonymous]
@@ -133,16 +133,18 @@ namespace Flinnt.API.Controllers
                     userOtpRes.IsVerified = true;
                     userOtpRes.VerifyDateTime = DateTime.Now;
                     userOtpRes.VerifyClientIp = ipAddress.ToString();
-
-                    await _userAccountVerificationService.UpdateAsync(userOtpRes);
-
+                    
+                    using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        await _userAccountVerificationService.UpdateAsync(userOtpRes);
+                        scope.Complete();
+                    }
                     return Response(new BooleanResponseModel { Value = true }, string.Empty);
                 }
                 
                 return Response(new BooleanResponseModel { Value = false }, _localizer["RecordNotFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
-
 
         [HttpPut]
         [Route("update")]
@@ -158,147 +160,154 @@ namespace Flinnt.API.Controllers
                 return Response(model, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
+
         private async Task<Tuple<InstituteModel, string, HttpStatusCode>> AddAsync(InstituteModel model)
         {
-            if(await _userProfileService.GetByEmailAsync(model.EmailId) != null)
+            if (await _userProfileService.GetByEmailAsync(model.EmailId) != null)
             {
                 return Response(model, _localizer["fmEmailIdFound"].Value.ToString(), HttpStatusCode.InternalServerError);
             }
 
-            //save city
-            var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
-
-            if(existingCity == null)
+            var extInstitute = new InstituteModel();
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                CityViewModel cityViewModel = new CityViewModel
+                //save city
+                var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
+
+                if (existingCity == null)
                 {
-                    CityName = model.CityName,
-                    CreateDateTime = DateTime.Now,
-                    StateId = model.StateId.Value,
-                    IsActive = true
-                };
-                var city = await _cityService.AddAsync(cityViewModel);
+                    CityViewModel cityViewModel = new CityViewModel
+                    {
+                        CityName = model.CityName,
+                        CreateDateTime = DateTime.Now,
+                        StateId = model.StateId.Value,
+                        IsActive = true
+                    };
+                    var city = await _cityService.AddAsync(cityViewModel);
 
-                model.CityId = city.CityId;
-            }
-            else
-            {
-                model.CityId = existingCity.CityId;
-            }
-            
-            var otpNumber = GenerateRandomNo();
-
-            var extInstitute = await _instituteService.AddAsync(model);
-            if (extInstitute != null)
-            {
-                // save userObj
-                User user = new User
+                    model.CityId = city.CityId;
+                }
+                else
                 {
-                    LoginId = model.EmailId,
-                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
-                    IsActive = true,
-                    IsDeleted = false,
-                    Password = model.Password,
-                    OneTimePassword = model.Password,
-                    UserTypeId = (int)UserTypes.InstituteStaff,
-                    RegistrationDateTime = DateTime.Now,
-                    LastLoginDateTime = DateTime.Now
-                };
-
-                var userRes = await _userService.AddAsync(user);
-                if(userRes != null)
-                {
-                    UserProfile userProfile = new UserProfile
-                    {
-                        UserId = userRes.UserId,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        EmailId = model.EmailId,
-                        MobileNo = model.MobileNo,
-                        CreateDateTime = DateTime.Now
-                    };
-
-                    await _userProfileService.AddAsync(userProfile);
-
-                    //save userInstitute
-
-                    UserInstitute userInstitute = new UserInstitute
-                    {
-                        InstituteId = extInstitute.InstituteId,
-                        RoleId = (int)RolesEnum.PrimaryAccount,
-                        UserId = userRes.UserId,
-                        UserTypeId = (int)UserTypes.InstituteStaff,
-                        IsActive = true,
-                        CreateDateTime = DateTime.Now
-                    };
-
-                    await _userInstituteService.AddAsync(userInstitute);
-                    //save userRole
-
-                    UserRole userRole = new UserRole
-                    {
-                        RoleId = (int)RolesEnum.PrimaryAccount,
-                        UserId = userRes.UserId,
-                        CreateDateTime = DateTime.Now
-                    };
-                    await _userRoleService.AddAsync(userRole);
-
-                    //save identity
-                    var identityObj = new ApplicationUser
-                    {
-                        UserName = model.EmailId,
-                        Email = model.EmailId,
-                        UserId = userRes.UserId,
-                        PhoneNumber = model.MobileNo
-                    };
-                    await _userManager.CreateAsync(identityObj, model.Password);
-
-                    // save userSetting
-
-                    var userSetting = new UserSetting
-                    {
-                        UserId = userRes.UserId
-                    };
-
-                    await _userSettingService.AddAsync(userSetting);
-
-                    //save userAccountVerification
-
-                    var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userRes.UserId);
-                    if (userOtpRes != null)
-                    {
-                        if (!userOtpRes.IsVerified.Value)
-                        {
-                            userOtpRes.ExpireDateTime = DateTime.Now;
-                            userOtpRes.VerificationCode = otpNumber;
-                        }
-                        await _userAccountVerificationService.UpdateAsync(userOtpRes);
-                    }
-                    else
-                    {
-                        UserAccountVerification userAccountVerification = new UserAccountVerification
-                        {
-                            UserId = userRes.UserId,
-                            VerificationCode = otpNumber,
-                            ExpireDateTime = DateTime.Now.AddMinutes(30),
-                            CreateDateTime = DateTime.Now
-                        };
-                        await _userAccountVerificationService.AddAsync(userAccountVerification);
-                    }
-
-                    //save userAccountHistory
-
-                    UserAccountHistory userAccountHistory = new UserAccountHistory
-                    {
-                        UserId = userRes.UserId,
-                        HistoryAction = "User created"
-                    };
-                    await _userAccountHistoryService.AddAsync(userAccountHistory);
+                    model.CityId = existingCity.CityId;
                 }
 
-                _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpNumber, model.EmailId));
-                return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
+                var otpNumber = GenerateRandomNo();
+
+                extInstitute = await _instituteService.AddAsync(model);
+                if (extInstitute != null)
+                {
+                    // save userObj
+                    User user = new User
+                    {
+                        LoginId = model.EmailId,
+                        AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                        IsActive = true,
+                        IsDeleted = false,
+                        Password = model.Password,
+                        OneTimePassword = model.Password,
+                        UserTypeId = (int)UserTypes.InstituteStaff,
+                        RegistrationDateTime = DateTime.Now,
+                        LastLoginDateTime = DateTime.Now
+                    };
+
+                    var userRes = await _userService.AddAsync(user);
+                    if (userRes != null)
+                    {
+                        UserProfile userProfile = new UserProfile
+                        {
+                            UserId = userRes.UserId,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            EmailId = model.EmailId,
+                            MobileNo = model.MobileNo,
+                            CreateDateTime = DateTime.Now
+                        };
+
+                        await _userProfileService.AddAsync(userProfile);
+
+                        //save userInstitute
+
+                        UserInstitute userInstitute = new UserInstitute
+                        {
+                            InstituteId = extInstitute.InstituteId,
+                            RoleId = (int)RolesEnum.PrimaryAccount,
+                            UserId = userRes.UserId,
+                            UserTypeId = (int)UserTypes.InstituteStaff,
+                            IsActive = true,
+                            CreateDateTime = DateTime.Now
+                        };
+
+                        await _userInstituteService.AddAsync(userInstitute);
+                        //save userRole
+
+                        UserRole userRole = new UserRole
+                        {
+                            RoleId = (int)RolesEnum.PrimaryAccount,
+                            UserId = userRes.UserId,
+                            CreateDateTime = DateTime.Now
+                        };
+                        await _userRoleService.AddAsync(userRole);
+
+                        //save identity
+                        var identityObj = new ApplicationUser
+                        {
+                            UserName = model.EmailId,
+                            Email = model.EmailId,
+                            UserId = userRes.UserId,
+                            PhoneNumber = model.MobileNo
+                        };
+                        await _userManager.CreateAsync(identityObj, model.Password);
+
+                        // save userSetting
+
+                        var userSetting = new UserSetting
+                        {
+                            UserId = userRes.UserId
+                        };
+
+                        await _userSettingService.AddAsync(userSetting);
+
+                        //save userAccountVerification
+
+                        var userOtpRes = await _userAccountVerificationService.GetByUserIdAsync(userRes.UserId);
+                        if (userOtpRes != null)
+                        {
+                            if (!userOtpRes.IsVerified.Value)
+                            {
+                                userOtpRes.ExpireDateTime = DateTime.Now;
+                                userOtpRes.VerificationCode = otpNumber;
+                            }
+                            await _userAccountVerificationService.UpdateAsync(userOtpRes);
+                        }
+                        else
+                        {
+                            UserAccountVerification userAccountVerification = new UserAccountVerification
+                            {
+                                UserId = userRes.UserId,
+                                VerificationCode = otpNumber,
+                                ExpireDateTime = DateTime.Now.AddMinutes(30),
+                                CreateDateTime = DateTime.Now
+                            };
+                            await _userAccountVerificationService.AddAsync(userAccountVerification);
+                        }
+
+                        //save userAccountHistory
+
+                        UserAccountHistory userAccountHistory = new UserAccountHistory
+                        {
+                            UserId = userRes.UserId,
+                            HistoryAction = "User created"
+                        };
+                        await _userAccountHistoryService.AddAsync(userAccountHistory);
+                    }
+
+                    _backgroundService.EnqueueJob<IBackgroundMailerJobs>(m => m.SendOtpEmail(otpNumber, model.EmailId));
+                    return Response(extInstitute, _localizer["RecordAddSuccess"].Value.ToString());
+                }
+                scope.Complete();
             }
+            
             return Response(extInstitute, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
@@ -313,9 +322,15 @@ namespace Flinnt.API.Controllers
 
         private async Task<Tuple<InstituteViewModel, string, HttpStatusCode>> UpdateAsync(InstituteViewModel model)
         {
-            var flag = await _instituteService.UpdateAsync(model);
-            if (flag)
-                return Response(model, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            using(var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var flag = await _instituteService.UpdateAsync(model);
+                scope.Complete();
+
+                if (flag)
+                    return Response(model, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            }
+            
             return Response(model, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
@@ -326,10 +341,14 @@ namespace Flinnt.API.Controllers
         {
             return await GetDataWithMessage(async () =>
             {
-                var flag = await _instituteService.DeleteAsync(id);
-                if (flag)
-                    return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
-                return Response(new BooleanResponseModel { Value = flag }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
+                using(var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    var flag = await _instituteService.DeleteAsync(id);
+                    scope.Complete();
+                    if (flag)
+                        return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
+                }
+                return Response(new BooleanResponseModel { Value = false }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
             });
         }
     }

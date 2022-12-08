@@ -18,6 +18,7 @@ using System.Web;
 using System.Collections.Generic;
 using Flinnt.Business.ViewModels.General;
 using Flinnt.Interfaces.Background;
+using System.Transactions;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -107,56 +108,20 @@ namespace Flinnt.API.Controllers.V1
                 return Response(new ParentViewModel(), "Parent account already exist!", HttpStatusCode.Forbidden);
             }
 
-            var user = await _userService.GetUserByLoginId(model.PrimaryEmailId);
-            if (user != null)
+            var parent = new ParentViewModel();
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                // usertype parent or student check
-                if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                var user = await _userService.GetUserByLoginId(model.PrimaryEmailId);
+                if (user != null)
                 {
-                    // consider dublicate row
-                    return Response(new ParentViewModel(), "User account already exist!", HttpStatusCode.Forbidden);
-                }
-                model.UserId = user.UserId;
-
-                var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
-
-                if (existingCity == null)
-                {
-                    CityViewModel cityViewModel = new CityViewModel
+                    // usertype parent or student check
+                    if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
                     {
-                        CityName = model.CityName,
-                        CreateDateTime = DateTime.Now,
-                        StateId = model.StateId.Value,
-                        IsActive = true
-                    };
-                    var city = await _cityService.AddAsync(cityViewModel);
+                        // consider dublicate row
+                        return Response(new ParentViewModel(), "User account already exist!", HttpStatusCode.Forbidden);
+                    }
+                    model.UserId = user.UserId;
 
-                    model.CityId = city.CityId;
-                }
-                else
-                {
-                    model.CityId = existingCity.CityId;
-                }
-            }
-            else
-            {
-                // user not found it will need to create and mapped
-                var userRes = await _userService.AddAsync(new User
-                {
-                    LoginId = model.PrimaryEmailId,
-                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
-                    IsActive = true,
-                    IsDeleted = false,
-                    Password = "flinnt@123",
-                    OneTimePassword = "flinnt@123",
-                    UserTypeId = (int)UserTypes.Parent,
-                    RegistrationDateTime = DateTime.Now,
-                    LastLoginDateTime = DateTime.Now
-                });
-
-                if (userRes != null)
-                {
-                    //save city
                     var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
 
                     if (existingCity == null)
@@ -176,50 +141,91 @@ namespace Flinnt.API.Controllers.V1
                     {
                         model.CityId = existingCity.CityId;
                     }
-
-                    model.UserId = userRes.UserId;
-                    await _userProfileService.AddAsync(new UserProfile
-                    {
-                        FirstName = model.Parent1FirstName,
-                        LastName = model.Parent1LastName,
-                        EmailId = model.PrimaryEmailId,
-                        UserId = model.UserId,
-                        MobileNo = model.PrimaryMobileNo,
-                        GenderId = model.Parent1Relationship == "Male" ? (byte)GenderEnum.Male : (byte)GenderEnum.Female,
-                        CreateDateTime = DateTime.Now,
-                        CityId = model.CityId,
-                        Address = model.AddressLine1 +", "+ model.AddressLine2,
-                        CountryId = (byte)model.CountryId,
-                        StateId = (byte)model.StateId,
-                        Pincode = model.Pincode
-                    });
                 }
-            }
-
-            var parent = await _parentService.AddAsync(model);
-            if (parent != null)
-            {
-                await _userInstituteService.AddAsync(new UserInstitute
+                else
                 {
-                    InstituteId = Convert.ToInt32(currentInstituteID),
-                    UserId = model.UserId,
-                    UserTypeId = (int)UserTypes.Parent,
-                    IsActive = true,
-                    CreateDateTime = DateTime.Now
-                });
+                    // user not found it will need to create and mapped
+                    var userRes = await _userService.AddAsync(new User
+                    {
+                        LoginId = model.PrimaryEmailId,
+                        AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                        IsActive = true,
+                        IsDeleted = false,
+                        Password = "flinnt@123",
+                        OneTimePassword = "flinnt@123",
+                        UserTypeId = (int)UserTypes.Parent,
+                        RegistrationDateTime = DateTime.Now,
+                        LastLoginDateTime = DateTime.Now
+                    });
 
-                //save userAccountHistory
+                    if (userRes != null)
+                    {
+                        //save city
+                        var existingCity = await _cityService.GetByCityNameAsync(model.CityName);
 
-                UserAccountHistory userAccountHistory = new UserAccountHistory
+                        if (existingCity == null)
+                        {
+                            CityViewModel cityViewModel = new CityViewModel
+                            {
+                                CityName = model.CityName,
+                                CreateDateTime = DateTime.Now,
+                                StateId = model.StateId.Value,
+                                IsActive = true
+                            };
+                            var city = await _cityService.AddAsync(cityViewModel);
+
+                            model.CityId = city.CityId;
+                        }
+                        else
+                        {
+                            model.CityId = existingCity.CityId;
+                        }
+
+                        model.UserId = userRes.UserId;
+                        await _userProfileService.AddAsync(new UserProfile
+                        {
+                            FirstName = model.Parent1FirstName,
+                            LastName = model.Parent1LastName,
+                            EmailId = model.PrimaryEmailId,
+                            UserId = model.UserId,
+                            MobileNo = model.PrimaryMobileNo,
+                            GenderId = model.Parent1Relationship == "Male" ? (byte)GenderEnum.Male : (byte)GenderEnum.Female,
+                            CreateDateTime = DateTime.Now,
+                            CityId = model.CityId,
+                            Address = model.AddressLine1 + ", " + model.AddressLine2,
+                            CountryId = (byte)model.CountryId,
+                            StateId = (byte)model.StateId,
+                            Pincode = model.Pincode
+                        });
+                    }
+                }
+
+                parent = await _parentService.AddAsync(model);
+                if (parent != null)
                 {
-                    UserId = Convert.ToInt32(model.UserId),
-                    ActionUserId = Convert.ToInt32(currentUserID),
-                    HistoryAction = "UserCreatedForParent",
-                    ClientIp = ipAddress.ToString()
-                };
-                await _userAccountHistoryService.AddAsync(userAccountHistory);
+                    await _userInstituteService.AddAsync(new UserInstitute
+                    {
+                        InstituteId = Convert.ToInt32(currentInstituteID),
+                        UserId = model.UserId,
+                        UserTypeId = (int)UserTypes.Parent,
+                        IsActive = true,
+                        CreateDateTime = DateTime.Now
+                    });
 
-                return Response(parent, _localizer["RecordAddSuccess"].Value.ToString());
+                    //save userAccountHistory
+
+                    UserAccountHistory userAccountHistory = new UserAccountHistory
+                    {
+                        UserId = Convert.ToInt32(model.UserId),
+                        ActionUserId = Convert.ToInt32(currentUserID),
+                        HistoryAction = "UserCreatedForParent",
+                        ClientIp = ipAddress.ToString()
+                    };
+                    await _userAccountHistoryService.AddAsync(userAccountHistory);
+
+                    return Response(parent, _localizer["RecordAddSuccess"].Value.ToString());
+                }
+                scope.Complete();
             }
             return Response(parent, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
@@ -442,11 +448,6 @@ namespace Flinnt.API.Controllers.V1
                 }
                 return Response(true, string.Empty);
             });
-        }
-
-        private void ImportParents()
-        {
-
         }
 
         [HttpPost]

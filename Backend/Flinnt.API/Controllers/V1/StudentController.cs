@@ -19,6 +19,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Flinnt.API.Controllers.V1
 {
@@ -111,109 +112,116 @@ namespace Flinnt.API.Controllers.V1
                 return Response(new StudentViewModel(), "Student account already exist!", HttpStatusCode.Forbidden);
             }
 
-            var user = await _userService.GetUserByLoginId(model.EmailId);
-            if (user != null)
+            var student = new StudentViewModel();
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                // usertype parent or student check
-                if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
+                var user = await _userService.GetUserByLoginId(model.EmailId);
+                if (user != null)
                 {
-                    // consider dublicate row
-                    return Response(new StudentViewModel(), "Student account already exist!", HttpStatusCode.Forbidden);
-                }
-            }
-            else
-            {
-                // user not found it will need to create and mapped
-                var userRes = await _userService.AddAsync(new User
-                {
-                    LoginId = model.EmailId,
-                    AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
-                    IsActive = true,
-                    IsDeleted = false,
-                    Password = "flinnt@123",
-                    OneTimePassword = "flinnt@123",
-                    UserTypeId = (int)UserTypes.Student,
-                    RegistrationDateTime = DateTime.Now,
-                    LastLoginDateTime = DateTime.Now
-                });
-
-                if (userRes != null)
-                {
-                    model.UserId = userRes.UserId;
-                    
-                    // check relation with parent by passing parentId (userid)
-                    UserProfile prtUsr = new UserProfile();
-                    if (model.parentUserId != null)
+                    // usertype parent or student check
+                    if (user.UserInstitutes.Where(x => x.UserTypeId == (int)UserTypes.Parent || x.UserTypeId == (int)UserTypes.Student).Any())
                     {
-                        var parentUser = await _userService.GetAsync(model.parentUserId.Value);
+                        // consider dublicate row
+                        return Response(new StudentViewModel(), "Student account already exist!", HttpStatusCode.Forbidden);
+                    }
+                }
+                else
+                {
+                    // user not found it will need to create and mapped
+                    var userRes = await _userService.AddAsync(new User
+                    {
+                        LoginId = model.EmailId,
+                        AuthenticationTypeId = (int)AutheticationTypeEnum.Edplex,
+                        IsActive = true,
+                        IsDeleted = false,
+                        Password = "flinnt@123",
+                        OneTimePassword = "flinnt@123",
+                        UserTypeId = (int)UserTypes.Student,
+                        RegistrationDateTime = DateTime.Now,
+                        LastLoginDateTime = DateTime.Now
+                    });
 
-                        if (parentUser == null)
+                    if (userRes != null)
+                    {
+                        model.UserId = userRes.UserId;
+
+                        // check relation with parent by passing parentId (userid)
+                        UserProfile prtUsr = new UserProfile();
+                        if (model.parentUserId != null)
                         {
-                            return Response(new StudentViewModel(), "Parent account not exist!", HttpStatusCode.Forbidden);
+                            var parentUser = await _userService.GetAsync(model.parentUserId.Value);
+
+                            if (parentUser == null)
+                            {
+                                return Response(new StudentViewModel(), "Parent account not exist!", HttpStatusCode.Forbidden);
+                            }
+
+                            prtUsr = parentUser.UserProfiles.FirstOrDefault();
+
+                            await _userParentChildRelationshipService.AddAsync(new UserParentChildRelationshipModel
+                            {
+                                ChildUserId = userRes.UserId,
+                                ChildUserTypeId = (int)UserTypes.Student,
+                                ParentUserId = model.parentUserId.Value,
+                                InstituteId = Convert.ToInt32(currentInstituteID),
+                                ParentUserTypeId = (int)UserTypes.Parent,
+                            });
                         }
 
-                        prtUsr = parentUser.UserProfiles.FirstOrDefault();
-
-                        await _userParentChildRelationshipService.AddAsync(new UserParentChildRelationshipModel
+                        await _userProfileService.AddAsync(new UserProfile
                         {
-                            ChildUserId = userRes.UserId,
-                            ChildUserTypeId = (int)UserTypes.Student,
-                            ParentUserId = model.parentUserId.Value,
-                            InstituteId = Convert.ToInt32(currentInstituteID),
-                            ParentUserTypeId = (int)UserTypes.Parent,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            EmailId = model.EmailId,
+                            UserId = userRes.UserId,
+                            MobileNo = model.MobileNo,
+                            GenderId = model.GenderId,
+                            CreateDateTime = DateTime.Now,
+                            CityId = prtUsr?.CityId,
+                            Address = prtUsr?.Address,
+                            CountryId = prtUsr?.CountryId,
+                            StateId = prtUsr?.StateId,
+                            Pincode = prtUsr?.Pincode
                         });
+
+                        await _userInstituteService.AddAsync(new UserInstitute
+                        {
+                            InstituteId = Convert.ToInt32(currentInstituteID),
+                            UserId = userRes.UserId,
+                            UserTypeId = (int)UserTypes.Student,
+                            IsActive = true,
+                            CreateDateTime = DateTime.Now
+                        });
+
+                        await _userInstituteGroupService.AddAsync(new UserInstituteGroupModel
+                        {
+                            UserId = userRes.UserId,
+                            InstituteId = Convert.ToInt32(currentInstituteID),
+                            InstituteGroupId = model.instituteGroupId,
+                            InstituteDivisionId = model.instituteDivisionId
+                        });
+
+                        //save userAccountHistory
+                        UserAccountHistory userAccountHistory = new UserAccountHistory
+                        {
+                            UserId = model.UserId,
+                            ActionUserId = Convert.ToInt32(currentUserID),
+                            HistoryAction = "UserCreatedForStudent",
+                            ClientIp = ipAddress.ToString()
+                        };
+                        await _userAccountHistoryService.AddAsync(userAccountHistory);
                     }
+                }
 
-                    await _userProfileService.AddAsync(new UserProfile
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        EmailId = model.EmailId,
-                        UserId = userRes.UserId,
-                        MobileNo = model.MobileNo,
-                        GenderId = model.GenderId,
-                        CreateDateTime = DateTime.Now,
-                        CityId = prtUsr?.CityId,
-                        Address = prtUsr?.Address,
-                        CountryId = prtUsr?.CountryId,
-                        StateId = prtUsr?.StateId,
-                        Pincode = prtUsr?.Pincode
-                    });
+                student = await _studentService.AddAsync(model);
+                scope.Complete();
 
-                    await _userInstituteService.AddAsync(new UserInstitute
-                    {
-                        InstituteId = Convert.ToInt32(currentInstituteID),
-                        UserId = userRes.UserId,
-                        UserTypeId = (int)UserTypes.Student,
-                        IsActive = true,
-                        CreateDateTime = DateTime.Now
-                    });
-
-                    await _userInstituteGroupService.AddAsync(new UserInstituteGroupModel
-                    {
-                        UserId = userRes.UserId,
-                        InstituteId = Convert.ToInt32(currentInstituteID),
-                        InstituteGroupId = model.instituteGroupId,
-                        InstituteDivisionId = model.instituteDivisionId
-                    });
-
-                    //save userAccountHistory
-                    UserAccountHistory userAccountHistory = new UserAccountHistory
-                    {
-                        UserId = model.UserId,
-                        ActionUserId = Convert.ToInt32(currentUserID),
-                        HistoryAction = "UserCreatedForStudent",
-                        ClientIp = ipAddress.ToString()
-                    };
-                    await _userAccountHistoryService.AddAsync(userAccountHistory);
+                if (student != null)
+                {
+                    return Response(student, _localizer["RecordAddSuccess"].Value.ToString());
                 }
             }
-
-            var student = await _studentService.AddAsync(model);
-            if (student != null)    
-            {
-                return Response(student, _localizer["RecordAddSuccess"].Value.ToString());
-            }
+            
             return Response(student, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
