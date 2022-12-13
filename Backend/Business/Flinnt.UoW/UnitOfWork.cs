@@ -2,6 +2,7 @@ using Flinnt.Domain;
 using Flinnt.Interfaces.Repositories;
 using Flinnt.Repositories;
 using System;
+using System.Linq.Expressions;
 
 namespace Flinnt.UoW
 {
@@ -36,6 +37,21 @@ namespace Flinnt.UoW
             StudentRepository = new StudentRepository(context);
             UserInstituteGroupRepository = new UserInstituteGroupRepository(context);
             UserParentChildRelationshipRepository = new UserParentChildRelationshipRepository(context);
+            PostRepository = new PostRepository(context);
+            PostCommentRepository = new PostCommentRepository(context);
+            PostAudienceGroupRepository = new PostAudienceGroupRepository(context);
+            PostLogRepository = new PostLogRepository(context);
+            PostMediaRepository = new PostMediaRepository(context);
+            PostPollOptionRepository = new PostPollOptionRepository(context);
+            PostPollRepository = new PostPollRepository(context);
+            PostPollVoteRepository = new PostPollVoteRepository(context);
+            PostPollVoteSummaryRepository = new PostPollVoteSummaryRepository(context);
+            PostTemplateRepository = new PostTemplateRepository(context);
+            PostTemplateCategoryRepository = new PostTemplateCategoryRepository(context);
+            PostTypeRepository = new PostTypeRepository(context);
+            PostUserRepository = new PostUserRepository(context);
+            MediaEmbedRepository = new MediaEmbedRepository(context);
+            MediaTypeRepository = new MediaTypeRepository(context);
         }
 
         public IInstituteRepository InstituteRepository { get; }
@@ -62,6 +78,21 @@ namespace Flinnt.UoW
         public IStudentRepository StudentRepository { get; }
         public IUserInstituteGroupRepository UserInstituteGroupRepository { get; }
         public IUserParentChildRelationshipRepository UserParentChildRelationshipRepository { get; }
+        public IPostRepository PostRepository { get; }
+        public IPostCommentRepository PostCommentRepository { get; }
+        public IPostAudienceGroupRepository PostAudienceGroupRepository { get; }
+        public IPostLogRepository PostLogRepository { get; }
+        public IPostMediaRepository PostMediaRepository { get; }
+        public IPostPollOptionRepository PostPollOptionRepository { get; }
+        public IPostPollRepository PostPollRepository { get; }
+        public IPostPollVoteRepository PostPollVoteRepository { get; }
+        public IPostPollVoteSummaryRepository PostPollVoteSummaryRepository { get; }
+        public IPostTemplateRepository PostTemplateRepository { get; }
+        public IPostTemplateCategoryRepository PostTemplateCategoryRepository { get; }
+        public IPostTypeRepository PostTypeRepository { get; }
+        public IPostUserRepository PostUserRepository { get; }
+        public IMediaEmbedServiceRepository MediaEmbedRepository { get; }
+        public IMediaTypeRepository MediaTypeRepository { get; }
 
         private bool disposed;
 

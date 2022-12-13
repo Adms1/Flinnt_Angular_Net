@@ -170,6 +170,21 @@ namespace Flinnt.API
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IUserInstituteGroupService, UserInstituteGroupService>();
             services.AddScoped<IUserParentChildRelationshipService, UserParentChildRelationshipService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IPostCommentService, PostCommentService>();
+            services.AddScoped<IPostAudienceGroupService, PostAudienceGroupService>();
+            services.AddScoped<IPostLogService, PostLogService>();
+            services.AddScoped<IPostMediaService, PostMediaService>();
+            services.AddScoped<IPostPollService, PostPollService>();
+            services.AddScoped<IPostPollOptionService, PostPollOptionService>();
+            services.AddScoped<IPostPollVoteService, PostPollVoteService>();
+            services.AddScoped<IPostPollVoteSummaryService, PostPollVoteSummaryService>();
+            services.AddScoped<IPostTemplateService, PostTemplateService>();
+            services.AddScoped<IPostTemplateCategoryService, PostTemplateCategoryService>();
+            services.AddScoped<IPostTypeService, PostTypeService>();
+            services.AddScoped<IPostUserService, PostUserService>();
+            services.AddScoped<IMediaEmbedService, MediaEmbedServiceService>();
+            services.AddScoped<IMediaTypeService, MediaTypeService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
@@ -197,6 +212,21 @@ namespace Flinnt.API
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IUserInstituteGroupRepository, UserInstituteGroupRepository>();
             services.AddScoped<IUserParentChildRelationshipRepository, UserParentChildRelationshipRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostAudienceGroupRepository, PostAudienceGroupRepository>();
+            services.AddScoped<IPostCommentRepository, PostCommentRepository>();
+            services.AddScoped<IPostLogRepository, PostLogRepository>();
+            services.AddScoped<IPostMediaRepository, PostMediaRepository>();
+            services.AddScoped<IPostPollRepository, PostPollRepository>();
+            services.AddScoped<IPostPollOptionRepository, PostPollOptionRepository>();
+            services.AddScoped<IPostPollVoteRepository, PostPollVoteRepository>();
+            services.AddScoped<IPostPollVoteSummaryRepository, PostPollVoteSummaryRepository>();
+            services.AddScoped<IPostTemplateRepository, PostTemplateRepository>();
+            services.AddScoped<IPostTemplateCategoryRepository, PostTemplateCategoryRepository>();
+            services.AddScoped<IPostTypeRepository, PostTypeRepository>();
+            services.AddScoped<IPostUserRepository, PostUserRepository>();
+            services.AddScoped<IMediaEmbedServiceRepository, MediaEmbedRepository>();
+            services.AddScoped<IMediaTypeRepository, MediaTypeRepository>();
         }
 
         private static void BackgroundServices(IServiceCollection services)

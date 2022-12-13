@@ -33,9 +33,25 @@ namespace Flinnt.Domain
         public virtual DbSet<InstituteSession> InstituteSessions { get; set; }
         public virtual DbSet<InstituteType> InstituteTypes { get; set; }
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
+        public virtual DbSet<MediaEmbedService> MediaEmbedServices { get; set; }
+        public virtual DbSet<MediaType> MediaTypes { get; set; }
+        public virtual DbSet<Medium> Media { get; set; }
         public virtual DbSet<Medium> Medium { get; set; }
         public virtual DbSet<Parent> Parents { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<PostAudienceGroup> PostAudienceGroups { get; set; }
+        public virtual DbSet<PostComment> PostComments { get; set; }
+        public virtual DbSet<PostLog> PostLogs { get; set; }
+        public virtual DbSet<PostMedium> PostMedia { get; set; }
+        public virtual DbSet<PostPoll> PostPolls { get; set; }
+        public virtual DbSet<PostPollOption> PostPollOptions { get; set; }
+        public virtual DbSet<PostPollVote> PostPollVotes { get; set; }
+        public virtual DbSet<PostPollVoteSummary> PostPollVoteSummaries { get; set; }
+        public virtual DbSet<PostTemplate> PostTemplates { get; set; }
+        public virtual DbSet<PostTemplateCategory> PostTemplateCategories { get; set; }
+        public virtual DbSet<PostType> PostTypes { get; set; }
+        public virtual DbSet<PostUser> PostUsers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
         public virtual DbSet<Semester> Semesters { get; set; }
@@ -715,6 +731,60 @@ namespace Flinnt.Domain
                 //    .HasConstraintName("fk_login_history_user_id");
             });
 
+            modelBuilder.Entity<MediaEmbedService>(entity =>
+            {
+                entity.ToTable("MediaEmbedService");
+
+                entity.HasComment("This entity stores a list of service which provides embedded media.");
+
+                entity.Property(e => e.MediaEmbedServiceId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the service.");
+
+                entity.Property(e => e.IsActive).HasComment("If 1, the service is ready to use.");
+
+                entity.Property(e => e.Properties)
+                    .IsUnicode(false)
+                    .HasComment("The properties of the service. Store data in JSON format.");
+
+                entity.Property(e => e.ServiceName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("The name of the service which allows embeding media.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<MediaType>(entity =>
+            {
+                entity.ToTable("MediaType");
+
+                entity.Property(e => e.MediaTypeId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the media type.");
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the media type is ready to use.");
+
+                entity.Property(e => e.MediaType1)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("MediaType")
+                    .HasComment("The media type name. Migrations: post_type_master.post_type");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
             modelBuilder.Entity<Medium>(entity =>
             {
                 entity.ToTable("Medium");
@@ -891,6 +961,536 @@ namespace Flinnt.Domain
                     .HasComment("The descriptive name for the permission.");
 
                 entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<Post>(entity =>
+            {
+                entity.ToTable("Post");
+
+                entity.HasComment("This entity stores a list of communications done inside an institution.\r\nMigration:\r\nTitle < posts.title\r\nDescription < posts.description\r\nPostTypeId < posts.post_type\r\nPublishDateTime < posts.publish_date\r\nUserId < posts.user_id\r\nInstituteId < posts.module.course_owner (connected through User -> Institute)\r\nPostTemplateId < posts.template_id\r\nIsApprove < posts.approved\r\nApproveByUserId < posts.approvedby\r\n");
+
+                entity.Property(e => e.PostId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.ApprovalRequire)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the approval is required before making this post public.");
+
+                entity.Property(e => e.ApproveByUserId).HasComment("The identifier of the user who has approved this post. Ref. User.UserId. Migrations: posts.approvedby");
+
+                entity.Property(e => e.ApproveDateTime).HasComment("The date and time when the post has been approved.");
+
+                entity.Property(e => e.Broadcast)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the post will be visible to all the users of the institution.");
+
+                entity.Property(e => e.ClientDevice)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The Client Device from where the request was initiated.");
+
+                entity.Property(e => e.ClientIp)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ClientIP")
+                    .HasComment("The Client IP address from where the request was initiated.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DeleteDateTime).HasComment("The date and time when the post has been deleted. Do not display posts, if the value is not null.");
+
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this post belongs to. Ref. Institute.InstituteId. Migartions: posts.module(course.course_owner)");
+
+                entity.Property(e => e.IsApprove)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the post is approved and can be displayed to the audience. Migrations: posts.approved");
+
+                entity.Property(e => e.MessageBody)
+                    .IsRequired()
+                    .HasComment("The post body. Migrations: posts.description");
+
+                entity.Property(e => e.PostTemplateId).HasComment("The template identifier this post belongs to. Ref. PostTemplate.PostTemplateId. Migrations: posts.template_id");
+
+                entity.Property(e => e.PostTypeId).HasComment("The type identifier this post belongs to. Ref. PostType.PostTypeId. Migrations: posts.post_type");
+
+                entity.Property(e => e.PublishDateTime).HasComment("The date and time when this post should be visible to audience. Migrations: posts.publish_date");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .HasComment("The post title. Migrations: posts.title");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier who has make this post. Ref. User.UserId. Migrations: posts.user_id");
+
+                //entity.HasOne(d => d.ApproveByUser)
+                //    .WithMany(p => p.PostApproveByUsers)
+                //    .HasForeignKey(d => d.ApproveByUserId)
+                //    .HasConstraintName("fk_post_approve_by_user_id");
+
+                entity.HasOne(d => d.AudienceGroup)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.AudienceGroupId)
+                    .HasConstraintName("fk_post_audience_group_id");
+
+                //entity.HasOne(d => d.Institute)
+                //    .WithMany(p => p.Posts)
+                //    .HasForeignKey(d => d.InstituteId)
+                //    .HasConstraintName("fk_post_institute_id");
+
+                entity.HasOne(d => d.PostTemplate)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.PostTemplateId)
+                    .HasConstraintName("fk_post_post_template_id");
+
+                entity.HasOne(d => d.PostType)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.PostTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_post_type_id");
+
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.PostUsers)
+                //    .HasForeignKey(d => d.UserId)
+                //    .HasConstraintName("fk_post_user_id");
+            });
+
+            modelBuilder.Entity<PostAudienceGroup>(entity =>
+            {
+                entity.HasKey(e => e.AudienceGroupId)
+                    .HasName("PK_AudienceGroup");
+
+                entity.ToTable("PostAudienceGroup");
+
+                entity.HasComment("This entity stores a list of audience groups.");
+
+                entity.Property(e => e.AudienceGroupId)
+                    .ValueGeneratedNever()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.FilterData)
+                    .IsUnicode(false)
+                    .HasComment("The filter data selected while creating this group. Store the data in the JSON format. {\r\n \"version\": \"1.0\",\r\n \"board\": 1,\r\n \"medium\": 2,\r\n \"standards\": [1, 2, 3, 4],\r\n \"divisions\": [2,3,4],\r\n \"roles\": [\"student\", \"teacher\"]\r\n}");
+
+                entity.Property(e => e.GroupLogo)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The group logo file path.");
+
+                entity.Property(e => e.GroupName)
+                    .HasMaxLength(150)
+                    .HasComment("The group name.");
+
+                entity.Property(e => e.InstituteId).HasComment("The institute identifier this group belongs to. Ref. Institute.InstituteId");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier who has created this group. Ref. User.UserId");
+
+                //entity.HasOne(d => d.Institute)
+                //    .WithMany(p => p.PostAudienceGroups)
+                //    .HasForeignKey(d => d.InstituteId)
+                //    .HasConstraintName("fk_audience_group_institute_id");
+
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.PostAudienceGroups)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_audience_group_user_id");
+            });
+
+            modelBuilder.Entity<PostComment>(entity =>
+            {
+                entity.ToTable("PostComment");
+
+                entity.HasComment("This entitity stores a list of comments posted by users on a post.\r\nMigration:\r\nPostId < post_comments.post_id\r\nCommentText < post_comments.comment_text\r\nUserID < post_comments.comment_user_id\r\nApprove < post_comments.comment_approve\r\nApproveUserId < post_comments.comment_approve_by\r\nApproveDateTime < post_comments.comment_approve_date\r\nCreateDateTime < post_comments.comment_date");
+
+                entity.Property(e => e.PostCommentId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.Approve)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the comment can be displayed. Migrations: post_comments.comment_approve");
+
+                entity.Property(e => e.ApproveDateTime).HasComment("The date and time when the comment was approved. This will be null if not approval required. Migrations: post_comments.comment_approve_date");
+
+                entity.Property(e => e.ApproveUserId).HasComment("The user identifier who has approved this comment. This will be null if no approval required. Ref. User.UserId. Migrations: post_comments.comment_approve_by");
+
+                entity.Property(e => e.CommentText)
+                    .IsRequired()
+                    .HasComment("The comment text. Migrations: post_comments.comment_text");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done. Migrations: post_comments.comment_date");
+
+                entity.Property(e => e.PostId).HasComment("The post identifier this comment belongs to. Ref. Post.PostId. Migrations: post_comments.post_id");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier who has posted this comment. Ref. User.UserId. Migrations: post_comments.comment_user_id");
+
+                //entity.HasOne(d => d.ApproveUser)
+                //    .WithMany(p => p.PostCommentApproveUsers)
+                //    .HasForeignKey(d => d.ApproveUserId)
+                //    .HasConstraintName("fk_post_comment_approve_user_id");
+
+                //entity.HasOne(d => d.Post)
+                //    .WithMany(p => p.PostComments)
+                //    .HasForeignKey(d => d.PostId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_post_comment_post_id");
+
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.PostCommentUsers)
+                //    .HasForeignKey(d => d.UserId)
+                //    .HasConstraintName("fk_post_comment_user_id");
+            });
+
+            modelBuilder.Entity<PostLog>(entity =>
+            {
+                entity.ToTable("PostLog");
+
+                entity.HasComment("This entity stores log of actions performed on a post.");
+
+                entity.Property(e => e.PostLogId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.ActionDateTime).HasComment("The date and time when this action was performed.");
+
+                entity.Property(e => e.ActionType)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasComment("The type of action performed.");
+
+                entity.Property(e => e.ClientDevice)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The Client Device from where the request was initiated.");
+
+                entity.Property(e => e.ClientIp)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ClientIP")
+                    .HasComment("The Client IP address from where the request was initiated.");
+
+                entity.Property(e => e.ExtraInformation)
+                    .IsUnicode(false)
+                    .HasComment("Any additional information to store for the action performed. Store data in the JSON format.");
+
+                entity.Property(e => e.PostId).HasComment("The post identifier this log belongs to. Ref. Post.PostId");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this log belongs to. Ref. User.UserId");
+            });
+
+            modelBuilder.Entity<PostMedium>(entity =>
+            {
+                entity.HasKey(e => e.PostMediaId);
+
+                entity.HasComment("This entity stores a list of media attached with a post.\r\nMigration:\r\nPostId < post_detail.post_id\r\nMediaTypeId < post_detail.post_type_id, poll.add_content_type\r\nMediaFile < post_detail.intro, poll.add_content\r\nMediaProperties < to_json(post_detail.image_width, post_detail.image_height, post_detail.video_thumbnail, post_detail.aud_vid_size, post_detail.aud_vid_duration, poll.image_width, poll.image_height)\r\nDisplayOrder < post_detail.post_order\r\n\r\n");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the media. Migrations: post_detail.post_order");
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasComment("The file path of the attached media. Migrations: post_detail.intro, poll.add_content\r\n");
+
+                entity.Property(e => e.MediaEmbedServiceId).HasComment("The service identifier which provided embedded media. Ref. MediaEmbedService.MediaEmbedServiceId");
+
+                entity.Property(e => e.MediaTypeId).HasComment("The identifier of the type of media. Ref. MediaType.MediaTypeId. Migartions: post_detail.post_type_id, poll.add_content_type");
+
+                entity.Property(e => e.MimeType)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasComment("The mime type of the media file.");
+
+                entity.Property(e => e.PostId).HasComment("The post identifier this media belongs to. Ref. Post.PostId. Migrations: post_detail.post_id");
+
+                entity.Property(e => e.Properties)
+                    .IsUnicode(false)
+                    .HasComment("The media properties in JSON format.\r\nfor image = {\"width\": 100, \"height\": 80}, video = {\"duration\": 10}, audio = {\"duration\": 10}\r\n\r\nMigrations: to_json(post_detail.image_width, post_detail.image_height, post_detail.video_thumbnail, post_detail.aud_vid_size, post_detail.aud_vid_duration, poll.image_width, poll.image_height)");
+
+                entity.Property(e => e.SizeBytes).HasComment("The size of media file in bytes.");
+
+                entity.HasOne(d => d.MediaEmbedService)
+                    .WithMany(p => p.PostMedia)
+                    .HasForeignKey(d => d.MediaEmbedServiceId)
+                    .HasConstraintName("fk_post_media_media_embed_service_id");
+
+                entity.HasOne(d => d.MediaType)
+                    .WithMany(p => p.PostMedia)
+                    .HasForeignKey(d => d.MediaTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_media_media_type_id");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostMedia)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_media_post_id");
+            });
+
+            modelBuilder.Entity<PostPoll>(entity =>
+            {
+                entity.ToTable("PostPoll");
+
+                entity.HasComment("This entity stores poll information along with the mapped post.\r\nMigration:\r\nPostId < poll.post_id\r\nEndDateTime < poll.result_hours\r\nTotalVotesReceived < poll.total_votes_received");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.EndDateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("The date and time when the poll voting ends. Migration: poll.result_hours");
+
+                entity.Property(e => e.PostId).HasComment("The post identifier this poll belongs to. Ref. Post.PostId. Migrations: poll.post_id");
+
+                entity.Property(e => e.TotalVotesReceived).HasComment("The total no. of votes received for the poll. Migrations: poll.total_votes_received");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostPolls)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_post_id");
+            });
+
+            modelBuilder.Entity<PostPollOption>(entity =>
+            {
+                entity.ToTable("PostPollOption");
+
+                entity.HasComment("This entity stores a list of poll options.\r\nMigration:\r\nPostPollId < poll_options.poll_id\r\nOptionText < poll_options.option_text");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the poll option.");
+
+                entity.Property(e => e.OptionText)
+                    .HasMaxLength(500)
+                    .HasComment("The poll option text. Migrations: poll_options.option_text");
+
+                entity.Property(e => e.PostPollId).HasComment("The poll identifier this option belongs to. Ref. PostPoll.PostPollId. Migrations: poll_options.poll_id");
+
+                entity.HasOne(d => d.PostPoll)
+                    .WithMany(p => p.PostPollOptions)
+                    .HasForeignKey(d => d.PostPollId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_option_post_poll_id");
+            });
+
+            modelBuilder.Entity<PostPollVote>(entity =>
+            {
+                entity.HasKey(e => e.PostPollVote1);
+
+                entity.ToTable("PostPollVote");
+
+                entity.HasComment("This entity stores a list of votes received for a poll.\r\nMigration:\r\nPostPollId < poll_result.poll_id\r\nPostPollOptionId < poll_result.option_id\r\nUserId < poll_result.user_id");
+
+                entity.Property(e => e.PostPollVote1)
+                    .HasColumnName("PostPollVote")
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.ClientDevice)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The Client Device from where the request was initiated.");
+
+                entity.Property(e => e.ClientIp)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ClientIP")
+                    .HasComment("The Client IP address from where the request was initiated.");
+
+                entity.Property(e => e.PostPollId).HasComment("The poll identifier this vote belongs to. Ref. PostPoll.PostPollId. Migrations: poll_result.poll_id");
+
+                entity.Property(e => e.PostPollOptionId).HasComment("The option identifier for which the user has given his vote. Ref. PostPollOption.PostPollOptionId. Migrations: poll_result.option_id");
+
+                entity.Property(e => e.UserId).HasComment("The identifier of the user this vote belongs tol. Ref. User.UserId. Migrations: poll_result.user_id");
+
+                entity.Property(e => e.VoteDateTime).HasComment("The date and time when the user has given the vote.");
+
+                entity.HasOne(d => d.PostPoll)
+                    .WithMany(p => p.PostPollVotes)
+                    .HasForeignKey(d => d.PostPollId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_vote_post_poll_id");
+
+                entity.HasOne(d => d.PostPollOption)
+                    .WithMany(p => p.PostPollVotes)
+                    .HasForeignKey(d => d.PostPollOptionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_vote_post_poll_option_id");
+
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.PostPollVotes)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_post_poll_vote_user_id");
+            });
+
+            modelBuilder.Entity<PostPollVoteSummary>(entity =>
+            {
+                entity.ToTable("PostPollVoteSummary");
+
+                entity.HasComment("This entity stores the poll summary details.\r\nMigration:\r\nPostPollId < poll_result_summary.poll_id\r\nPostPollOptionId < poll_result_summary.option_id\r\nVotesReceive < poll_result_summary.votes_received\r\nVotePercentage < poll_result_summary.votes_percent");
+
+                entity.Property(e => e.PostPollId).HasComment("The poll identifier this summary belongs to. Ref. PostPoll.PostPollId. Migrations: poll_result_summary.poll_id");
+
+                entity.Property(e => e.PostPollOptionId).HasComment("The poll option identifier this summary belongs to. Ref. PostPollOption.PostPollOptionId. Migrations: poll_result_summary.option_id");
+
+                entity.Property(e => e.VotePercentage)
+                    .HasColumnType("decimal(5, 2)")
+                    .HasComment("The percentage value of total votes received. Migrations: poll_result_summary.votes_percent");
+
+                entity.Property(e => e.VotesReceive).HasComment("The total no. of votes received. Migrations: poll_result_summary.votes_received");
+
+                entity.HasOne(d => d.PostPoll)
+                    .WithMany(p => p.PostPollVoteSummaries)
+                    .HasForeignKey(d => d.PostPollId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_vote_summary_post_poll_id");
+
+                entity.HasOne(d => d.PostPollOption)
+                    .WithMany(p => p.PostPollVoteSummaries)
+                    .HasForeignKey(d => d.PostPollOptionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_poll_vote_summary_post_poll_option_id");
+            });
+
+            modelBuilder.Entity<PostTemplate>(entity =>
+            {
+                entity.ToTable("PostTemplate");
+
+                entity.HasComment("This entity stores a list of post templates.\r\nMigration:\r\nTemplateName < post_templates.template_name\r\nTemplateTitle < post_templates.template_title\r\nDescription < post_templates.post_template_description\r\nIsActive < post_templates.post_template_active\r\nDisplayOrder < post_templates.post_template_srno\r\nCreateDateTime < post_templates.post_template_inserted\r\nUpdateDateTime < post_templates.post_template_updated");
+
+                entity.Property(e => e.PostTemplateId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order of the template. Migartions: post_templates.post_template_srno");
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the template is ready to use. Migrations: post_templates.post_template_active");
+
+                entity.Property(e => e.PostTemplateCategoryId).HasComment("The category identifier this template belongs to. Ref. PostTemplateCategory.PostTemplateCategoryId");
+
+                entity.Property(e => e.TemplateBody)
+                    .IsRequired()
+                    .HasComment("The template body. Migrations: post_templates.post_template_description");
+
+                entity.Property(e => e.TemplateName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("The template name. Migrations: post_templates.template_name");
+
+                entity.Property(e => e.TemplateTitle).HasMaxLength(255);
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+
+                entity.HasOne(d => d.PostTemplateCategory)
+                    .WithMany(p => p.PostTemplates)
+                    .HasForeignKey(d => d.PostTemplateCategoryId)
+                    .HasConstraintName("fk_post_template_post_template_category_id");
+            });
+
+            modelBuilder.Entity<PostTemplateCategory>(entity =>
+            {
+                entity.ToTable("PostTemplateCategory");
+
+                entity.HasComment("This entity stores a list of post template categories.\r\nMigration:\r\nCategoryName < post_templates.post_template_category");
+
+                entity.Property(e => e.PostTemplateCategoryId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasComment("The category name. Migartions: post_templates.post_template_category");
+
+                entity.Property(e => e.CategoryPicture)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasComment("The category picture file path.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.IsActive).HasComment("If 1, the category is ready to use.");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<PostType>(entity =>
+            {
+                entity.ToTable("PostType");
+
+                entity.HasComment("This entity stores a list of post types.\r\nMigrations:\r\nPostTypeId < post_type_master.post_type_id\r\nTypeName < post_type_master.post_type\r\nIsActive < post_type_master.is_active\r\nDisplayOrder < post_type_master.srno");
+
+                entity.Property(e => e.PostTypeId)
+                    .ValueGeneratedOnAdd()
+                    .HasComment("The unique identifier.");
+
+                entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");
+
+                entity.Property(e => e.DisplayOrder).HasComment("The display order. Migrations: post_type_master.srno");
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))")
+                    .HasComment("If 1, the post type is ready to use. Migrations: post_type_master.is_active");
+
+                entity.Property(e => e.TypeName)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasComment("The post type name. Migrations: post_type_master.post_type");
+
+                entity.Property(e => e.UpdateDateTime).HasComment("The date and time when this entry was last updated.");
+            });
+
+            modelBuilder.Entity<PostUser>(entity =>
+            {
+                entity.ToTable("PostUser");
+
+                entity.HasComment("This entity stores post and user mapping details.\r\nMigration:\r\nPostId < post_user_detail.post_id\r\nUserId < post_user_detail.user_id\r\nIsView < post_user_detail.is_view\r\nViewDateTime < post_user_detail.view_date\r\nLikes < post_user_detail.is_agree\r\nLikeDateTime < post_user_detail.aggree_date\r\nBookmark < post_user_detail.is_bookmark\r\nBookmarkDateTime < post_user_detail.bookmark_date");
+
+                entity.HasIndex(e => e.PostId, "ix_post_user_post_id");
+
+                entity.HasIndex(e => e.UserId, "ix_post_user_user_id");
+
+                entity.Property(e => e.PostUserId).HasComment("The unique identifier.");
+
+                entity.Property(e => e.Bookmark)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the post has been added to the bookmark list by the user. Migrations: post_user_detail.is_bookmark");
+
+                entity.Property(e => e.BookmarkDateTime).HasComment("The date and time when user added this post to the bookmark list. Migrations: post_user_detail.bookmark_date");
+
+                entity.Property(e => e.IsView)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the post has been viewed by the user. Migrations: post_user_detail.is_view");
+
+                entity.Property(e => e.LikeDateTime).HasComment("The date and time when user liked this post. Migrations: post_user_detail.agree_date");
+
+                entity.Property(e => e.Likes)
+                    .HasDefaultValueSql("((0))")
+                    .HasComment("If 1, the user has liked this post. Migrations: post_user_detail.is_agree");
+
+                entity.Property(e => e.PostId).HasComment("The post identifier this user belongs to. Ref. Post.PostId. Migrations: post_user_detail.post_id");
+
+                entity.Property(e => e.UserId).HasComment("The user identifier this post belongs to. Ref. User.UserId. Migrations: post_user_detail.user_id");
+
+                entity.Property(e => e.ViewDateTime).HasComment("The date and time when the user has read this post. Migrations: post_user_detail.view_date");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.PostUsers)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_post_user_post_id");
+
+                //entity.HasOne(d => d.User)
+                //    .WithMany(p => p.PostUsersNavigation)
+                //    .HasForeignKey(d => d.UserId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("fk_post_user_user_id");
             });
 
             modelBuilder.Entity<Role>(entity =>

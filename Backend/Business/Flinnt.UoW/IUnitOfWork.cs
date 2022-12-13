@@ -29,5 +29,20 @@ namespace Flinnt.UoW
         IStudentRepository StudentRepository { get; }
         IUserInstituteGroupRepository UserInstituteGroupRepository { get; }
         IUserParentChildRelationshipRepository UserParentChildRelationshipRepository { get; }
+        IPostRepository PostRepository { get; }
+        IPostCommentRepository PostCommentRepository { get; }
+        IPostAudienceGroupRepository PostAudienceGroupRepository { get; }
+        IPostLogRepository PostLogRepository { get; }
+        IPostMediaRepository PostMediaRepository { get; }
+        IPostPollOptionRepository PostPollOptionRepository { get; }
+        IPostPollRepository PostPollRepository { get; }
+        IPostPollVoteRepository PostPollVoteRepository { get; }
+        IPostPollVoteSummaryRepository PostPollVoteSummaryRepository { get; }
+        IPostTemplateRepository PostTemplateRepository { get; }
+        IPostTemplateCategoryRepository PostTemplateCategoryRepository { get; }
+        IPostTypeRepository PostTypeRepository { get; }
+        IPostUserRepository PostUserRepository { get; }
+        IMediaEmbedServiceRepository MediaEmbedRepository { get; }
+        IMediaTypeRepository MediaTypeRepository { get; }
     }
 }
