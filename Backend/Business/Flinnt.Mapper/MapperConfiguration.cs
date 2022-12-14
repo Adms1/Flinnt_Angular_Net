@@ -62,6 +62,12 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<UserInstituteGroupModel, UserInstituteGroup>();
             CreateMap<UserInstituteGroup, UserInstituteGroupModel>();
+
+            CreateMap<PostTemplate, PostTemplateViewModel>();
+            CreateMap<PostTemplateViewModel, PostTemplate>();
+
+            CreateMap<PostTemplateCategory, PostTemplateCategoryViewModel>();
+            CreateMap<PostTemplateCategoryViewModel, PostTemplateCategory>();
         }
     }
 }

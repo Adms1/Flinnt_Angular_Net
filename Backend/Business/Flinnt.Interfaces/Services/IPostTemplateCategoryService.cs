@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Flinnt.Interfaces.Services
 {
-    public interface IPostTemplateCategoryService : IBaseService<PostTemplateCategory>
+    public interface IPostTemplateCategoryService : IBaseService<PostTemplateCategoryViewModel>
     {
+        Task<List<PostTemplateCategoryViewModel>> GetAllAsync();
     }
 }

@@ -15,5 +15,17 @@ namespace Flinnt.Services
         public PostTemplateService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<List<PostTemplateViewModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<PostTemplateViewModel>>(await unitOfWork.PostTemplateRepository.GetAllAsync());
+            return result.ToList();
+        }
+
+        public async Task<List<PostTemplateViewModel>> GetByCategoryIdAsync(int postTemplateCategoryId)
+        {
+            var result = mapper.Map<List<PostTemplateViewModel>>(await unitOfWork.PostTemplateRepository.FindByAsync(x=>x.PostTemplateCategoryId == postTemplateCategoryId));
+            return result.ToList();
+        }
     }
 }
