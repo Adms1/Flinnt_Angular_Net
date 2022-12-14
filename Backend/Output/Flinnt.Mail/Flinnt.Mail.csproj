@@ -7,10 +7,14 @@
   <ItemGroup>
     <None Remove="Templates\OtpEmail.cshtml" />
     <None Remove="Templates\otpEmailTemp.cshtml" />
+    <None Remove="Templates\ParentImportEmail.cshtml" />
+    <None Remove="Templates\StudentImportEmail.cshtml" />
     <None Remove="Templates\_Layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Templates\StudentImportEmail.cshtml" />
+    <EmbeddedResource Include="Templates\ParentImportEmail.cshtml" />
     <EmbeddedResource Include="Templates\OtpEmail.cshtml" />
     <EmbeddedResource Include="Templates\_Layout.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>

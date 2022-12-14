@@ -46,7 +46,7 @@ namespace Flinnt.Mail
                 Message = "Parent import successfully!",
                 RecipientMail = emailTo
             };
-            var mail = new Mail<ImportParentSummary>("ParentImport", parentSummary);
+            var mail = new Mail<ImportParentSummary>("ParentImportEmail", parentSummary);
             lock (MailServiceLock)
             {
                 var sentMailData = mail.SendAsync(parentSummary.RecipientMail, "Parent Import Summary");
@@ -61,7 +61,7 @@ namespace Flinnt.Mail
                 Message = "Student import successfully!",
                 RecipientMail = emailTo
             };
-            var mail = new Mail<ImportStudentSummary>("StudentImport", studentSummary);
+            var mail = new Mail<ImportStudentSummary>("StudentImportEmail", studentSummary);
             lock (MailServiceLock)
             {
                 var sentMailData = mail.SendAsync(studentSummary.RecipientMail, "Student Import Summary");
