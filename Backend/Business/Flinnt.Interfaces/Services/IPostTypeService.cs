@@ -7,5 +7,6 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IPostTypeService : IBaseService<PostType>
     {
+        Task<List<PostTypeViewModel>> GetAllAsync();
     }
 }

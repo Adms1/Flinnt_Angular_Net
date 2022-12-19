@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Flinnt.Domain
+namespace Flinnt.Business.ViewModels
 {
     public partial class PostTemplateViewModel
     {

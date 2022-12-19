@@ -15,5 +15,11 @@ namespace Flinnt.Services
         public PostTypeService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<List<PostTypeViewModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<PostTypeViewModel>>(await unitOfWork.PostTypeRepository.GetAllAsync());
+            return result.ToList();
+        }
     }
 }
