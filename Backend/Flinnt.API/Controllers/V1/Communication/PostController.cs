@@ -1,4 +1,5 @@
 ﻿using Flinnt.Business.ViewModels;
+using Flinnt.Business.ViewModels.General;
 using Flinnt.Interfaces.Services;
 using Flinnt.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -113,8 +114,8 @@ namespace Flinnt.API.Controllers
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
-
         }
+        
         private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteGroupAsync(PostViewModel model)
         {
             using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -126,6 +127,24 @@ namespace Flinnt.API.Controllers
                     return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
             }
             return Response(false, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
+
+        [HttpDelete]
+        [Route("delete/{postId}")]
+        public async Task<object> Delete(int postId)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    var flag = await _postService.DeleteAsync(postId);
+                    scope.Complete();
+
+                    if (flag)
+                        return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
+                }
+                return Response(new BooleanResponseModel { Value = false }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
+            });
         }
     }
 }
