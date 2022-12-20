@@ -68,6 +68,21 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<PostTemplateCategory, PostTemplateCategoryViewModel>();
             CreateMap<PostTemplateCategoryViewModel, PostTemplateCategory>();
+
+            CreateMap<PostAudienceGroup, PostAudienceGroupViewModel>();
+            CreateMap<PostAudienceGroupViewModel, PostAudienceGroup>();
+
+            CreateMap<Post, PostViewModel>();
+            CreateMap<PostViewModel, Post>();
+
+            CreateMap<PostComment, PostCommentViewModel>();
+            CreateMap<PostCommentViewModel, PostComment>();
+
+            CreateMap<PostLog, PostLogViewModel>();
+            CreateMap<PostLogViewModel, PostLog>();
+
+            CreateMap<PostMedium, PostMediumViewModel>();
+            CreateMap<PostMediumViewModel, PostMedium>();
         }
     }
 }

@@ -25,5 +25,8 @@ namespace Flinnt.Business.ViewModels
         public int? AudienceGroupId { get; set; }
         public string ClientIp { get; set; }
         public string ClientDevice { get; set; }
+        public DateTime? DeleteDateTime { get; set; }
+        public DateTime? CreateDateTime { get; set; }
+        public DateTime? UpdateDateTime { get; set; }
     }
 }
