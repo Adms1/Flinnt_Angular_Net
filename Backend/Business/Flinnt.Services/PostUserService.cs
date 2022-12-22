@@ -15,5 +15,48 @@ namespace Flinnt.Services
         public PostUserService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<List<PostUserViewModel>> GetAllAsync(int postId)
+        {
+            var result = mapper.Map<List<PostUserViewModel>>(await unitOfWork.PostUserRepository.GetAllAsync());
+            return result.Where(x => x.PostId == postId).ToList();
+        }
+
+        public async Task<PostUserViewModel> GetAsync(int id)
+        {
+            return mapper.Map<PostUserViewModel>(await unitOfWork.PostUserRepository.GetAsync(id));
+        }
+
+        public async Task<bool> AddAsync(PostUserViewModel model)
+        {
+            var data = await Task.FromResult(await unitOfWork.PostUserRepository.AddAsync(mapper.Map<PostUserViewModel, PostUser>(model)));
+
+            if (data.PostId > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task<bool> UpdateAsync(PostUserViewModel model)
+        {
+            var postUser = await unitOfWork.PostUserRepository.GetAsync(model.PostId);
+            if (postUser != null)
+            {
+                await unitOfWork.PostUserRepository.UpdateAsync(postUser);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var postUser = unitOfWork.PostUserRepository.GetAsync(id).Result;
+            if (postUser != null)
+            {
+                await unitOfWork.PostUserRepository.DeleteAsync(postUser);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
     }
 }

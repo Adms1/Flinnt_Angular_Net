@@ -17,10 +17,10 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<List<PostViewModel>> GetAllAsync()
+        public async Task<List<PostViewModel>> GetAllAsync(int instituteId)
         {
             var result = mapper.Map<List<PostViewModel>>(await unitOfWork.PostRepository.GetAllAsync());
-            return result.ToList();
+            return result.Where(x=>x.InstituteId == instituteId).ToList();
         }
 
         public async Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId)

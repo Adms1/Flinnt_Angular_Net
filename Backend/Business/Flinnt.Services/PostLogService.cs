@@ -15,5 +15,10 @@ namespace Flinnt.Services
         public PostLogService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+        public async Task<List<PostLogViewModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<PostLogViewModel>>(await unitOfWork.PostLogRepository.GetAllAsync());
+            return result.ToList();
+        }
     }
 }

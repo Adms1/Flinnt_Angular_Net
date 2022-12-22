@@ -32,13 +32,13 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
-        [Route("list")]
-        public async Task<object> GetByInstituteId()
+        [Route("{instituteId}/list")]
+        public async Task<object> GetByInstituteId(int instituteId)
         {
             Logger.Info("post list");
             return await GetDataWithMessage(async () =>
             {
-                var result = await _postService.GetAllAsync();
+                var result = await _postService.GetAllAsync(instituteId);
                 return Response(result, string.Empty);
             });
         }
@@ -109,14 +109,14 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    await UpdateInstituteGroupAsync(model);
+                    await UpdatePostAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
             });
         }
         
-        private async Task<Tuple<bool, string, HttpStatusCode>> UpdateInstituteGroupAsync(PostViewModel model)
+        private async Task<Tuple<bool, string, HttpStatusCode>> UpdatePostAsync(PostViewModel model)
         {
             using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {

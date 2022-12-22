@@ -83,6 +83,24 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<PostMedium, PostMediumViewModel>();
             CreateMap<PostMediumViewModel, PostMedium>();
+
+            CreateMap<PostPoll, PostPollViewModel>();
+            CreateMap<PostPollViewModel, PostPoll>();
+
+            CreateMap<PostPollVote, PostPollVoteViewModel>();
+            CreateMap<PostPollVoteViewModel, PostPollVote>();
+
+            CreateMap<PostPollVoteSummary, PostPollVoteSummaryViewModel>();
+            CreateMap<PostPollVoteSummaryViewModel, PostPollVoteSummary>();
+
+            CreateMap<PostPollOption, PostPollOptionViewModel>();
+            CreateMap<PostPollOptionViewModel, PostPollOption>();
+
+            CreateMap<PostUser, PostUserViewModel>();
+            CreateMap<PostUserViewModel, PostUser>();
+
+            CreateMap<PostType, PostTypeViewModel>();
+            CreateMap<PostTypeViewModel, PostType>();
         }
     }
 }

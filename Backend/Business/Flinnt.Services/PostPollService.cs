@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Flinnt.Business.ViewModels;
-using Flinnt.Business.ViewModels.Institute;
 using Flinnt.Domain;
 using Flinnt.Interfaces.Services;
 using Flinnt.UoW;
@@ -14,6 +12,49 @@ namespace Flinnt.Services
     {
         public PostPollService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
+        }
+
+        public async Task<List<PostPollViewModel>> GetAllAsync(int postId)
+        {
+            var result = mapper.Map<List<PostPollViewModel>>(await unitOfWork.PostPollRepository.GetAllAsync());
+            return result.Where(x => x.PostId == postId).ToList();
+        }
+
+        public async Task<PostPollViewModel> GetAsync(int id)
+        {
+            return mapper.Map<PostPollViewModel>(await unitOfWork.PostPollRepository.GetAsync(id));
+        }
+
+        public async Task<bool> AddAsync(PostPollViewModel model)
+        {
+            var data = await Task.FromResult(await unitOfWork.PostPollRepository.AddAsync(mapper.Map<PostPollViewModel, PostPoll>(model)));
+
+            if (data.PostId > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task<bool> UpdateAsync(PostPollViewModel model)
+        {
+            var postPoll = await unitOfWork.PostPollRepository.GetAsync(model.PostId);
+            if (postPoll != null)
+            {
+                await unitOfWork.PostPollRepository.UpdateAsync(postPoll);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var postPoll = unitOfWork.PostPollRepository.GetAsync(id).Result;
+            if (postPoll != null)
+            {
+                await unitOfWork.PostPollRepository.DeleteAsync(postPoll);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
         }
     }
 }
