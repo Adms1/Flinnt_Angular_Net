@@ -101,6 +101,12 @@ namespace Flinnt.Business.Helpers
 
             CreateMap<PostType, PostTypeViewModel>();
             CreateMap<PostTypeViewModel, PostType>();
+
+            CreateMap<MediaEmbedService, MediaEmbedServiceViewModel>();
+            CreateMap<MediaEmbedServiceViewModel, MediaEmbedService>();
+
+            CreateMap<MediaType, MediaTypeViewModel>();
+            CreateMap<MediaTypeViewModel, MediaType>();
         }
     }
 }

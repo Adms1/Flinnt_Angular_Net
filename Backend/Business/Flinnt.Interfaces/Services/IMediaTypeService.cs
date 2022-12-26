@@ -7,5 +7,6 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IMediaTypeService : IBaseService<MediaType>
     {
+        Task<List<MediaTypeViewModel>> GetAllAsync();
     }
 }

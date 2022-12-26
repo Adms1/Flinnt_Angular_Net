@@ -15,5 +15,11 @@ namespace Flinnt.Services
         public MediaEmbedServiceService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<List<MediaEmbedServiceViewModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<MediaEmbedServiceViewModel>>(await unitOfWork.MediaEmbedRepository.GetAllAsync());
+            return result.ToList();
+        }
     }
 }

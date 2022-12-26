@@ -7,5 +7,6 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IMediaEmbedService : IBaseService<MediaEmbedService>
     {
+        Task<List<MediaEmbedServiceViewModel>> GetAllAsync();
     }
 }

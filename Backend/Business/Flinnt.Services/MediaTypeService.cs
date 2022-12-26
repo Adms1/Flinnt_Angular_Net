@@ -15,5 +15,11 @@ namespace Flinnt.Services
         public MediaTypeService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<List<MediaTypeViewModel>> GetAllAsync()
+        {
+            var result = mapper.Map<List<MediaTypeViewModel>>(await unitOfWork.MediaTypeRepository.GetAllAsync());
+            return result.ToList();
+        }
     }
 }

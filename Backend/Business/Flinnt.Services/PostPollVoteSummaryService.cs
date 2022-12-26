@@ -15,5 +15,42 @@ namespace Flinnt.Services
         public PostPollVoteSummaryService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public async Task<PostPollVoteSummaryViewModel> GetAsync(int id)
+        {
+            return mapper.Map<PostPollVoteSummaryViewModel>(await unitOfWork.PostPollVoteSummaryRepository.GetAsync(id));
+        }
+
+        public async Task<bool> AddAsync(PostPollVoteSummaryViewModel model)
+        {
+            var data = await Task.FromResult(await unitOfWork.PostPollVoteSummaryRepository.AddAsync(mapper.Map<PostPollVoteSummaryViewModel, PostPollVoteSummary>(model)));
+
+            if (data.PostPollId > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public async Task<bool> UpdateAsync(PostPollVoteSummaryViewModel model)
+        {
+            var data = await unitOfWork.PostPollVoteSummaryRepository.GetAsync(model.PostPollId);
+            if (data != null)
+            {
+                await unitOfWork.PostPollVoteSummaryRepository.UpdateAsync(data);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var postPoll = unitOfWork.PostPollVoteSummaryRepository.GetAsync(id).Result;
+            if (postPoll != null)
+            {
+                await unitOfWork.PostPollVoteSummaryRepository.DeleteAsync(postPoll);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
     }
 }
