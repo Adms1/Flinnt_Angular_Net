@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace Flinnt.Business.ViewModels
@@ -19,5 +20,6 @@ namespace Flinnt.Business.ViewModels
         public string Properties { get; set; }
         public int? DisplayOrder { get; set; }
         public DateTime? CreateDateTime { get; set; }
+        public List<IFormFile> Files { get; set; }
     }
 }

@@ -44,5 +44,9 @@
     <ProjectReference Include="..\Output\Flinnt.Mail\Flinnt.Mail.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Files\" />
+  </ItemGroup>
+
 
 </Project>

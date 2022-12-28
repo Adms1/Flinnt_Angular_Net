@@ -15,5 +15,10 @@ namespace Flinnt.Services
         public PostMediaService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
+
+        public Task<bool> AddAsync(PostMediumViewModel model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
