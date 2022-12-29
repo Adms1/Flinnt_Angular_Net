@@ -1064,7 +1064,7 @@ namespace Flinnt.Domain
                 entity.HasComment("This entity stores a list of audience groups.");
 
                 entity.Property(e => e.AudienceGroupId)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasComment("The unique identifier.");
 
                 entity.Property(e => e.CreateDateTime).HasComment("The date and time when this entry was done.");

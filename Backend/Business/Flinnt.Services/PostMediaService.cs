@@ -16,9 +16,14 @@ namespace Flinnt.Services
         {
         }
 
-        public Task<bool> AddAsync(PostMediumViewModel model)
+        public async Task<bool> AddAsync(PostMediumViewModel model)
         {
-            throw new System.NotImplementedException();
+            var data = await Task.FromResult(await unitOfWork.PostMediaRepository.AddAsync(mapper.Map<PostMediumViewModel, PostMedium>(model)));
+
+            if (data.PostMediaId > 0)
+                return true;
+            else
+                return false;
         }
     }
 }
