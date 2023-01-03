@@ -20,5 +20,15 @@ namespace Flinnt.Services
             var result = mapper.Map<List<PostLogViewModel>>(await unitOfWork.PostLogRepository.GetAllAsync());
             return result.ToList();
         }
+
+        public async Task<bool> AddAsync(PostLogViewModel model)
+        {
+            var data = await Task.FromResult(await unitOfWork.PostLogRepository.AddAsync(mapper.Map<PostLogViewModel, PostLog>(model)));
+
+            if (data.PostId > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

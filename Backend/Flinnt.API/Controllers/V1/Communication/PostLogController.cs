@@ -1,10 +1,15 @@
-﻿using Flinnt.Interfaces.Services;
+﻿using Flinnt.Business.ViewModels;
+using Flinnt.Interfaces.Services;
 using Flinnt.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using NLog;
+using System.Linq;
+using System.Net;
+using System;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Flinnt.API.Controllers
 {
@@ -34,6 +39,38 @@ namespace Flinnt.API.Controllers
                 var result = await _postLogService.GetAllAsync();
                 return Response(result, string.Empty);
             });
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<object> CreatePostLog([FromBody] PostLogViewModel model)
+        {
+            Logger.Info("Post");
+            return await GetMessage(async () =>
+            {
+                if (ModelState.IsValid && model != null)
+                {
+                    return await AddPostLogAsync(model);
+                }
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
+                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
+            });
+        }
+
+        private async Task<Tuple<bool, string, HttpStatusCode>> AddPostLogAsync(PostLogViewModel model)
+        {
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var flag = await _postLogService.AddAsync(model);
+                scope.Complete();
+
+                if (flag)
+                {
+                    return Response(flag, _localizer["RecordAddSuccess"].Value.ToString());
+                }
+            }
+
+            return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
     }
 }
