@@ -44,7 +44,7 @@ namespace Flinnt.API.Controllers
 
         [HttpGet]
         [Route("get/{postUserId}")]
-        public async Task<object> GetById(int postUserId)
+        public async Task<object> GetById(long postUserId)
         {
             Logger.Info("post");
             return await GetDataWithMessage(async () =>
@@ -96,7 +96,7 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    await UpdatePostUserAsync(model);
+                    return await UpdatePostUserAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
@@ -118,7 +118,7 @@ namespace Flinnt.API.Controllers
 
         [HttpDelete]
         [Route("delete/{postUserId}")]
-        public async Task<object> Delete(int postUserId)
+        public async Task<object> Delete(long postUserId)
         {
             return await GetDataWithMessage(async () =>
             {

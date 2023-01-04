@@ -43,6 +43,18 @@ namespace Flinnt.API.Controllers
             });
         }
 
+        [HttpGet]
+        [Route("{postId}/approval-request/list")]
+        public async Task<object> GetApprovalRequestByPostId(int postId)
+        {
+            Logger.Info("post");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = await _postCommentService.GetApprovalRequestByPostId(postId);
+                return Response(result, string.Empty);
+            });
+        }
+
         [HttpPost]
         [Route("create")]
         public async Task<object> CreatePostComment([FromBody] PostCommentViewModel model)

@@ -22,6 +22,12 @@ namespace Flinnt.Services
             return result.ToList();
         }
 
+        public async Task<List<PostCommentViewModel>> GetApprovalRequestByPostId(int postId)
+        {
+            var result = mapper.Map<List<PostCommentViewModel>>(await unitOfWork.PostCommentRepository.FindByAsync(x => x.Approve.Value == true));
+            return result.ToList();
+        }
+
         public async Task<bool> AddAsync(PostCommentViewModel model)
         {
             var data = await Task.FromResult(await unitOfWork.PostCommentRepository.AddAsync(mapper.Map<PostCommentViewModel, PostComment>(model)));
@@ -37,6 +43,15 @@ namespace Flinnt.Services
             var postComment = await unitOfWork.PostCommentRepository.GetAsync(model.PostCommentId);
             if (postComment != null)
             {
+                postComment.CommentText = model.CommentText;
+                postComment.UpdateDateTime = model.UpdateDateTime;
+
+                if(model.Approve.Value){
+                    postComment.Approve = model.Approve;
+                    postComment.ApproveDateTime = model.ApproveDateTime;
+                    postComment.ApproveUserId = model.ApproveUserId;
+                }
+
                 await unitOfWork.PostCommentRepository.UpdateAsync(postComment);
                 return await Task.FromResult(true);
             }

@@ -22,7 +22,7 @@ namespace Flinnt.Services
             return result.Where(x => x.PostId == postId).ToList();
         }
 
-        public async Task<PostUserViewModel> GetAsync(int id)
+        public async Task<PostUserViewModel> GetAsync(long id)
         {
             return mapper.Map<PostUserViewModel>(await unitOfWork.PostUserRepository.GetAsync(id));
         }
@@ -39,16 +39,23 @@ namespace Flinnt.Services
 
         public async Task<bool> UpdateAsync(PostUserViewModel model)
         {
-            var postUser = await unitOfWork.PostUserRepository.GetAsync(model.PostId);
+            var postUser = await unitOfWork.PostUserRepository.GetAsync(model.PostUserId);
             if (postUser != null)
             {
+                postUser.IsView = model.IsView;
+                postUser.Likes = model.Likes;
+                postUser.LikeDateTime = model.LikeDateTime;
+                postUser.ViewDateTime = model.ViewDateTime;
+                postUser.Bookmark = model.Bookmark;
+                postUser.BookmarkDateTime = model.BookmarkDateTime;
+
                 await unitOfWork.PostUserRepository.UpdateAsync(postUser);
                 return await Task.FromResult(true);
             }
             return await Task.FromResult(false);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var postUser = unitOfWork.PostUserRepository.GetAsync(id).Result;
             if (postUser != null)

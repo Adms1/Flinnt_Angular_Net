@@ -47,6 +47,10 @@ namespace Flinnt.Services
             var postAudienceGroup = await unitOfWork.PostAudienceGroupRepository.GetAsync(model.AudienceGroupId);
             if (postAudienceGroup != null)
             {
+                postAudienceGroup.FilterData = model.FilterData;
+                postAudienceGroup.GroupName = model.GroupName;
+                postAudienceGroup.GroupLogo = model.GroupLogo;
+
                 await unitOfWork.PostAudienceGroupRepository.UpdateAsync(postAudienceGroup);
                 return await Task.FromResult(true);
             }
