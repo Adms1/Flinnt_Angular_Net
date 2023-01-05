@@ -83,7 +83,7 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    await UpdatePostPollOptionAsync(model);
+                    return await UpdatePostPollOptionAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);

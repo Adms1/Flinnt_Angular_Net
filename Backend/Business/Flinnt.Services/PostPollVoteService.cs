@@ -15,9 +15,9 @@ namespace Flinnt.Services
         public PostPollVoteService(IUnitOfWork unitOfWork, IMapper _mapper) : base(unitOfWork, _mapper)
         {
         }
-        public async Task<PostPollVoteViewModel> GetAsync(int id)
+        public async Task<List<PostPollVoteViewModel>> GetAsync(int id)
         {
-            return mapper.Map<PostPollVoteViewModel>(await unitOfWork.PostPollVoteRepository.GetAsync(id));
+            return mapper.Map<List<PostPollVoteViewModel>>(await unitOfWork.PostPollVoteRepository.FindByAsync(x=>x.PostPollId == id));
         }
 
         public async Task<bool> AddAsync(PostPollVoteViewModel model)

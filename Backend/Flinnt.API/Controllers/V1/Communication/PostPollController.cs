@@ -26,6 +26,7 @@ namespace Flinnt.API.Controllers
             IPostPollService postPollService,
             IHtmlLocalizer<PostPollController> htmlLocalizer)
         {
+            _postPollService = postPollService;
             _localizer = htmlLocalizer;
         }
 
@@ -95,7 +96,7 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
-                    await UpdatePostPollAsync(model);
+                    return await UpdatePostPollAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
                 return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);

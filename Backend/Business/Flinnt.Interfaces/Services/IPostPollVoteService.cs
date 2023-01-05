@@ -7,7 +7,7 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IPostPollVoteService : IBaseService<PostPollVote>
     {
-        Task<PostPollVoteViewModel> GetAsync(int id);
+        Task<List<PostPollVoteViewModel>> GetAsync(int id);
         Task<bool> AddAsync(PostPollVoteViewModel model);
         Task<bool> UpdateAsync(PostPollVoteViewModel model);
         Task<bool> DeleteAsync(int id);

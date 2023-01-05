@@ -75,35 +75,6 @@ namespace Flinnt.API.Controllers
             return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
         }
 
-        [HttpPut]
-        [Route("update")]
-        public async Task<object> UpdatePostPollVote([FromBody] PostPollVoteViewModel model)
-        {
-            Logger.Info("Post");
-            return await GetMessage(async () =>
-            {
-                if (ModelState.IsValid && model != null)
-                {
-                    await UpdatePostPollVoteAsync(model);
-                }
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
-                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
-            });
-        }
-
-        private async Task<Tuple<bool, string, HttpStatusCode>> UpdatePostPollVoteAsync(PostPollVoteViewModel model)
-        {
-            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
-                var flag = await _postPollVoteService.UpdateAsync(model);
-                scope.Complete();
-
-                if (flag)
-                    return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
-            }
-            return Response(false, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
-        }
-
         [HttpDelete]
         [Route("delete/{postPollVoteId}")]
         public async Task<object> Delete(int postPollVoteId)

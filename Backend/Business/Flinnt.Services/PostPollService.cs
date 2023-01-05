@@ -29,7 +29,7 @@ namespace Flinnt.Services
         {
             var data = await Task.FromResult(await unitOfWork.PostPollRepository.AddAsync(mapper.Map<PostPollViewModel, PostPoll>(model)));
 
-            if (data.PostId > 0)
+            if (data.PostPollId > 0)
                 return true;
             else
                 return false;
@@ -37,9 +37,15 @@ namespace Flinnt.Services
 
         public async Task<bool> UpdateAsync(PostPollViewModel model)
         {
-            var postPoll = await unitOfWork.PostPollRepository.GetAsync(model.PostId);
+            var postPoll = await unitOfWork.PostPollRepository.GetAsync(model.PostPollId);
             if (postPoll != null)
             {
+                postPoll.EndDateTime = model.EndDateTime;
+                
+                if(model.TotalVotesReceived > 0)
+                {
+                    postPoll.TotalVotesReceived = model.TotalVotesReceived;
+                }
                 await unitOfWork.PostPollRepository.UpdateAsync(postPoll);
                 return await Task.FromResult(true);
             }

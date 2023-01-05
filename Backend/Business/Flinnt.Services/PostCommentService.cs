@@ -24,7 +24,7 @@ namespace Flinnt.Services
 
         public async Task<List<PostCommentViewModel>> GetApprovalRequestByPostId(int postId)
         {
-            var result = mapper.Map<List<PostCommentViewModel>>(await unitOfWork.PostCommentRepository.FindByAsync(x => x.Approve.Value == true));
+            var result = mapper.Map<List<PostCommentViewModel>>(await unitOfWork.PostCommentRepository.FindByAsync(x => x.Approve.Value == false));
             return result.ToList();
         }
 

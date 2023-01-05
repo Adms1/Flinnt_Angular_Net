@@ -16,9 +16,9 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<PostPollOptionViewModel> GetAsync(int id)
+        public async Task<List<PostPollOptionViewModel>> GetAsync(int id)
         {
-            return mapper.Map<PostPollOptionViewModel>(await unitOfWork.PostPollOptionRepository.GetAsync(id));
+            return mapper.Map<List<PostPollOptionViewModel>>(await unitOfWork.PostPollOptionRepository.FindByAsync(x=>x.PostPollId == id));
         }
 
         public async Task<bool> AddAsync(PostPollOptionViewModel model)
@@ -33,9 +33,12 @@ namespace Flinnt.Services
 
         public async Task<bool> UpdateAsync(PostPollOptionViewModel model)
         {
-            var data = await unitOfWork.PostPollOptionRepository.GetAsync(model.PostPollId);
+            var data = await unitOfWork.PostPollOptionRepository.GetAsync(model.PostPollOptionId);
             if (data != null)
             {
+                data.OptionText = model.OptionText;
+                data.DisplayOrder = model.DisplayOrder;
+
                 await unitOfWork.PostPollOptionRepository.UpdateAsync(data);
                 return await Task.FromResult(true);
             }
