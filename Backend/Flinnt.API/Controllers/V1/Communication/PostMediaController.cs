@@ -33,6 +33,18 @@ namespace Flinnt.API.Controllers
             _localizer = htmlLocalizer;
         }
 
+        [HttpGet]
+        [Route("get/{postId}")]
+        public async Task<object> GetById(int postId)
+        {
+            Logger.Info("post");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = await _postMediaService.GetAsync(postId);
+                return Response(result, string.Empty);
+            });
+        }
+
         [HttpPost]
         [Route("create"), DisableRequestSizeLimit]
         public async Task<object> CreatePostMedia([FromForm] PostMediumViewModel model)
