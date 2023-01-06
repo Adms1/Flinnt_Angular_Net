@@ -7,6 +7,9 @@ namespace Flinnt.Interfaces.Services
 {
     public interface IPostMediaService : IBaseService<PostMedium>
     {
+        Task<List<PostMediumViewModel>> GetAsync(int postId);
         Task<bool> AddAsync(PostMediumViewModel model);
+        Task<bool> UpdateAsync(PostMediumViewModel model);
+        Task<bool> DeleteAsync(int id);
     }
 }

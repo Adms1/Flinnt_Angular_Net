@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using Flinnt.API.Helpers;
 using Microsoft.AspNetCore.StaticFiles;
+using Flinnt.Business.ViewModels.General;
 
 namespace Flinnt.API.Controllers
 {
@@ -65,6 +66,7 @@ namespace Flinnt.API.Controllers
                         FileInfo oFileInfo = new FileInfo(fullPath);
                         model.Properties = oFileInfo.ToString();
 
+                        return await AddPostMediaAsync(model);
                     }
                     return Response(true, _localizer["RecordAddSuccess"].Value.ToString());
                 }
@@ -89,6 +91,53 @@ namespace Flinnt.API.Controllers
             }
 
             return Response(false, _localizer["RecordNotAdded"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
+
+        [HttpPut]
+        [Route("update")]
+        public async Task<object> UpdatePostMedia([FromForm] PostMediumViewModel model)
+        {
+            Logger.Info("Post");
+            return await GetMessage(async () =>
+            {
+                if (ModelState.IsValid && model != null)
+                {
+                    return await UpdatePostMediaAsync(model);
+                }
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
+                return Response(false, string.Join(",", errors), HttpStatusCode.InternalServerError);
+            });
+        }
+
+        private async Task<Tuple<bool, string, HttpStatusCode>> UpdatePostMediaAsync(PostMediumViewModel model)
+        {
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                var flag = await _postMediaService.UpdateAsync(model);
+                scope.Complete();
+
+                if (flag)
+                    return Response(flag, _localizer["RecordUpdeteSuccess"].Value.ToString());
+            }
+            return Response(false, _localizer["RecordNotUpdate"].Value.ToString(), HttpStatusCode.InternalServerError);
+        }
+
+        [HttpDelete]
+        [Route("delete/{postMediaId}")]
+        public async Task<object> Delete(int postMediaId)
+        {
+            return await GetDataWithMessage(async () =>
+            {
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    var flag = await _postMediaService.DeleteAsync(postMediaId);
+                    scope.Complete();
+
+                    if (flag)
+                        return Response(new BooleanResponseModel { Value = flag }, _localizer["RecordDeleteSuccess"].Value.ToString());
+                }
+                return Response(new BooleanResponseModel { Value = false }, _localizer["ReordNotDeleteSucess"].Value.ToString(), HttpStatusCode.InternalServerError);
+            });
         }
     }
 }
