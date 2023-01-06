@@ -16,13 +16,19 @@ namespace Flinnt.Services
         {
         }
 
-        public async Task<PostPollVoteSummaryViewModel> GetAsync(int id)
+        public async Task<List<PostPollVoteSummaryViewModel>> GetAsync(int id)
         {
-            return mapper.Map<PostPollVoteSummaryViewModel>(await unitOfWork.PostPollVoteSummaryRepository.GetAsync(id));
+            return mapper.Map<List<PostPollVoteSummaryViewModel>>(await unitOfWork.PostPollVoteSummaryRepository.FindByAsync(x=>x.PostPollId == id));
         }
 
         public async Task<bool> AddAsync(PostPollVoteSummaryViewModel model)
         {
+            var existing = await Task.FromResult(await unitOfWork.PostPollVoteSummaryRepository.FindByAsync(x=>x.PostPollId == model.PostPollId && x.PostPollOptionId == model.PostPollOptionId));
+
+            if (existing.Any())
+            {
+                return false;
+            }
             var data = await Task.FromResult(await unitOfWork.PostPollVoteSummaryRepository.AddAsync(mapper.Map<PostPollVoteSummaryViewModel, PostPollVoteSummary>(model)));
 
             if (data.PostPollId > 0)
@@ -33,9 +39,13 @@ namespace Flinnt.Services
 
         public async Task<bool> UpdateAsync(PostPollVoteSummaryViewModel model)
         {
-            var data = await unitOfWork.PostPollVoteSummaryRepository.GetAsync(model.PostPollId);
+            var data = await unitOfWork.PostPollVoteSummaryRepository.GetAsync(model.PostPollVoteSummaryId);
             if (data != null)
             {
+                data.VotesReceive = data.VotesReceive + 1;
+                //TODO: C = V/T × 100
+
+                data.VotePercentage = data.VotePercentage; 
                 await unitOfWork.PostPollVoteSummaryRepository.UpdateAsync(data);
                 return await Task.FromResult(true);
             }
