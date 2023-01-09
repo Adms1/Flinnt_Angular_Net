@@ -9,6 +9,7 @@ namespace Flinnt.Interfaces.Services
     {
         Task<List<PostViewModel>> GetAllAsync(int instituteId);
         Task<List<PostViewModel>> GetAllBookmarksAsync(int postId, int userId);
+        Task<List<PostViewModel>> GetPostByPostType(int instituteId, int postTypeId);
         Task<PostViewModel> GetAsync(int id);
         Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId);
         Task<bool> AddAsync(PostViewModel model);

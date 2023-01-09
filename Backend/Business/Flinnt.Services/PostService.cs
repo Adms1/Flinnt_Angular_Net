@@ -25,8 +25,13 @@ namespace Flinnt.Services
         public async Task<List<PostViewModel>> GetAllBookmarksAsync(int postId, int userId)
         {
             return await unitOfWork.PostRepository.GetBookmarkedPost(postId, userId);
-
         }
+
+        public async Task<List<PostViewModel>> GetPostByPostType(int instituteId, int postTypeId)
+        {
+            return await unitOfWork.PostRepository.GetPostByPostType(instituteId, postTypeId);
+        }
+
         public async Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId)
         {
             var result = mapper.Map<List<PostViewModel>>(await unitOfWork.PostRepository.FindByAsync(x=>x.ApprovalRequire.Value == true));

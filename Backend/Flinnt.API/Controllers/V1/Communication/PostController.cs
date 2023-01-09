@@ -56,6 +56,18 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
+        [Route("type/{postTypeId}")]
+        public async Task<object> GetPostByPostTypeId(int instituteId, int postTypeId)
+        {
+            Logger.Info("post list");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = await _postService.GetPostByPostType(instituteId, postTypeId);
+                return Response(result, string.Empty);
+            });
+        }
+
+        [HttpGet]
         [Route("get/{postId}")]
         public async Task<object> GetById(int postId)
         {
