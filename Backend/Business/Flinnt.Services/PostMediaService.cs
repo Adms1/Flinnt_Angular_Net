@@ -40,6 +40,8 @@ namespace Flinnt.Services
                 postMedia.FilePath = model.FilePath;
                 postMedia.SizeBytes = model.SizeBytes;
                 postMedia.Properties = model.Properties;
+                postMedia.MimeType = model.MimeType;
+                postMedia.MediaTypeId = model.MediaTypeId;
 
                 await unitOfWork.PostMediaRepository.UpdateAsync(postMedia);
                 return await Task.FromResult(true);

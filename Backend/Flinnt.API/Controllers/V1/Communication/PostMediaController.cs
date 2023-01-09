@@ -73,14 +73,13 @@ namespace Flinnt.API.Controllers
 
                         model.MimeType = contentType;
                         model.SizeBytes = Convert.ToInt32(item.Length);
+                        model.FilePath = dbPath;
 
                         // TODO: get all type of file info seperate
                         FileInfo oFileInfo = new FileInfo(fullPath);
-                        model.Properties = oFileInfo.ToString();
-
-                        return await AddPostMediaAsync(model);
+                        model.Properties = "";
                     }
-                    return Response(true, _localizer["RecordAddSuccess"].Value.ToString());
+                    return await AddPostMediaAsync(model);
                 }
                 else
                 {
@@ -114,6 +113,34 @@ namespace Flinnt.API.Controllers
             {
                 if (ModelState.IsValid && model != null)
                 {
+                    var folderName = Path.Combine("Resources", "Files");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (model.Files.Count > 0)
+                    {
+                        foreach (var item in model.Files)
+                        {
+                            var uniqueFileName = FileHelper.GetUniqueFileName(item.FileName);
+                            var fullPath = Path.Combine(pathToSave, uniqueFileName);
+                            var dbPath = Path.Combine(folderName, uniqueFileName);
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                item.CopyTo(stream);
+                            }
+
+                            //Determine the Content Type of the File.
+                            string contentType = "";
+                            new FileExtensionContentTypeProvider().TryGetContentType(uniqueFileName, out contentType);
+
+                            model.MimeType = contentType;
+                            model.SizeBytes = Convert.ToInt32(item.Length);
+                            model.FilePath = dbPath;
+
+                            // TODO: get all type of file info seperate
+                            FileInfo oFileInfo = new FileInfo(fullPath);
+                            model.Properties = "";
+                        }
+                    }
+
                     return await UpdatePostMediaAsync(model);
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage);
