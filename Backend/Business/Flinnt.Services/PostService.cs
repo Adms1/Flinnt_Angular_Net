@@ -19,10 +19,14 @@ namespace Flinnt.Services
 
         public async Task<List<PostViewModel>> GetAllAsync(int instituteId)
         {
-            var result = mapper.Map<List<PostViewModel>>(await unitOfWork.PostRepository.GetAllAsync());
-            return result.Where(x=>x.InstituteId == instituteId).ToList();
+            return await unitOfWork.PostRepository.GetFeed(instituteId);
         }
 
+        public async Task<List<PostViewModel>> GetAllBookmarksAsync(int postId, int userId)
+        {
+            return await unitOfWork.PostRepository.GetBookmarkedPost(postId, userId);
+
+        }
         public async Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId)
         {
             var result = mapper.Map<List<PostViewModel>>(await unitOfWork.PostRepository.FindByAsync(x=>x.ApprovalRequire.Value == true));
@@ -65,5 +69,7 @@ namespace Flinnt.Services
             }
             return await Task.FromResult(false);
         }
+
+        
     }
 }

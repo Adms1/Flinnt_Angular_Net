@@ -33,12 +33,24 @@ namespace Flinnt.API.Controllers
 
         [HttpGet]
         [Route("{instituteId}/list")]
-        public async Task<object> GetByInstituteId(int instituteId)
+        public async Task<object> GetFeedByInstituteId(int instituteId)
         {
             Logger.Info("post list");
             return await GetDataWithMessage(async () =>
             {
                 var result = await _postService.GetAllAsync(instituteId);
+                return Response(result, string.Empty);
+            });
+        }
+
+        [HttpGet]
+        [Route("{postId}/{userId}/bookmarks")]
+        public async Task<object> GetBookmarkedPostByInstituteId(int postId, int userId)
+        {
+            Logger.Info("post list");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = await _postService.GetAllBookmarksAsync(postId, userId);
                 return Response(result, string.Empty);
             });
         }

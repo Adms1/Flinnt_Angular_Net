@@ -8,6 +8,7 @@ namespace Flinnt.Interfaces.Services
     public interface IPostService : IBaseService<Post>
     {
         Task<List<PostViewModel>> GetAllAsync(int instituteId);
+        Task<List<PostViewModel>> GetAllBookmarksAsync(int postId, int userId);
         Task<PostViewModel> GetAsync(int id);
         Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId);
         Task<bool> AddAsync(PostViewModel model);
