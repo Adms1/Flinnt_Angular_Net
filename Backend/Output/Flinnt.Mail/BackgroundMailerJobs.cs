@@ -68,5 +68,20 @@ namespace Flinnt.Mail
                 //_mailHistoryService.InsertMailHistory(sentMailData.To.ToString(), sentMailData.Subject, sentMailData.Body, MailTypeEnum.Registration.ToString());
             }
         }
+
+        public void SendScheduledJobEmail(string message, string emailTo)
+        {
+            var schedulePostSummary = new SchedulePostSummary
+            {
+                Message = "Your post live now successfully!",
+                RecipientMail = emailTo
+            };
+            var mail = new Mail<SchedulePostSummary>("ScheduledPostEmail", schedulePostSummary);
+            lock (MailServiceLock)
+            {
+                var sentMailData = mail.SendAsync(schedulePostSummary.RecipientMail, "Scheduled PostEmail Summary");
+                //_mailHistoryService.InsertMailHistory(sentMailData.To.ToString(), sentMailData.Subject, sentMailData.Body, MailTypeEnum.Registration.ToString());
+            }
+        }
     }
 }
