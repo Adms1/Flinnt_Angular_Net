@@ -31,7 +31,11 @@ namespace Flinnt.Services
         {
             return await unitOfWork.PostRepository.GetPostByPostType(instituteId, postTypeId);
         }
-
+        public async Task<List<PostViewModel>> GetPostByMediaType(int instituteId, int mediaTypeId)
+        {
+            return await unitOfWork.PostRepository.GetPostByMediaType(instituteId, mediaTypeId);
+        }
+        
         public async Task<List<PostViewModel>> GetApprovalRequestByInstituteId(int instituteId)
         {
             var result = mapper.Map<List<PostViewModel>>(await unitOfWork.PostRepository.FindByAsync(x=>x.ApprovalRequire.Value == true));

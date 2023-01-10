@@ -68,6 +68,18 @@ namespace Flinnt.API.Controllers
         }
 
         [HttpGet]
+        [Route("media/{mediaTypeId}")]
+        public async Task<object> GetPostByMediaTypeId(int instituteId, int mediaTypeId)
+        {
+            Logger.Info("post list");
+            return await GetDataWithMessage(async () =>
+            {
+                var result = await _postService.GetPostByMediaType(instituteId, mediaTypeId);
+                return Response(result, string.Empty);
+            });
+        }
+
+        [HttpGet]
         [Route("get/{postId}")]
         public async Task<object> GetById(int postId)
         {
